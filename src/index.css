@@ -43,3 +43,16 @@
 .app-name {
    @apply font-bold text-2xl;
 }
+
+.hover-resize {
+   transition: all 0.3s ease;
+}
+
+.hover-resize:hover {
+   scale: 1.2;
+}
+
+.mygrid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, 15rem);
+}

@@ -28,9 +28,9 @@ de los ficheros al hacer import.
 
 Desarrollando **/** (la página inicial). Para ello tendremos que desarrollar:
 
-- [ ] Navigation panel (ver #5)
-- [ ] Nav block item (ver #6)
-- [ ] Página inicial
+- [x] Navigation panel (ver #5)
+- [x] Nav block item (ver #6)
+- [x] Página inicial
 
 ## Iniciar el proyecto en desarrollo
 
