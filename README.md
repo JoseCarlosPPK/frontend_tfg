@@ -26,7 +26,11 @@ de los ficheros al hacer import.
 
 ## Estado actual
 
-Inicializando el repositorio con los ficheros básicos.
+Desarrollando /login. Como es el primero se necesita:
+
+- [ ] El header
+- [ ] El footer
+- [ ] La página de login
 
 ## Iniciar el proyecto en desarrollo
 
