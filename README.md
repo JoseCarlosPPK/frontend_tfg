@@ -26,11 +26,12 @@ de los ficheros al hacer import.
 
 ## Estado actual
 
-Desarrollando **/** (la página inicial). Para ello tendremos que desarrollar:
+Refactorizando las clases de tailwind (uso de un plugin para ordenar las clases
+según recomienda tailwind) y separación en ficheros independientes de los
+SVG.
 
-- [x] Navigation panel (ver #5)
-- [x] Nav block item (ver #6)
-- [x] Página inicial
+- [ ] Ordenación de las clases de tailwind
+- [ ] Separación de los archivos SVG
 
 ## Iniciar el proyecto en desarrollo
 
