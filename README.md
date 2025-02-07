@@ -28,9 +28,9 @@ de los ficheros al hacer import.
 
 Desarrollando /login. Como es el primero se necesita:
 
-- [ ] El header
-- [ ] El footer
-- [ ] La página de login
+- [x] El header
+- [x] El footer
+- [x] La página de login
 
 ## Iniciar el proyecto en desarrollo
 
