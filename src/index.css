@@ -7,12 +7,39 @@
    line-height: 1.5;
    font-weight: 400;
 
-   color-scheme: light dark;
-   color: rgba(255, 255, 255, 0.87);
-   background-color: #242424;
-
    font-synthesis: none;
    text-rendering: optimizeLegibility;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
+
+   --color-principal: #662780;
+   --color-secundario: #9537bb;
+   --color-terciario: #ecb9e7;
+}
+
+.bg-principal {
+   background-color: var(--color-principal);
+   color: white;
+}
+
+.bg-secundario {
+   background-color: var(--color-secundario);
+   color: white;
+}
+
+.bg-terciario {
+   background-color: var(--color-terciario);
+}
+
+.border-principal {
+   border: 1px solid;
+   border-color: var(--color-principal);
+}
+
+.myoutline:focus-visible {
+   outline: 2px solid var(--color-principal);
+}
+
+.app-name {
+   @apply font-bold text-2xl;
 }
