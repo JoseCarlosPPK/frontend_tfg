@@ -26,11 +26,11 @@ de los ficheros al hacer import.
 
 ## Estado actual
 
-Desarrollando /login. Como es el primero se necesita:
+Desarrollando **/** (la página inicial). Para ello tendremos que desarrollar:
 
-- [x] El header
-- [x] El footer
-- [x] La página de login
+- [ ] Navigation panel (ver #5)
+- [ ] Nav block item (ver #6)
+- [ ] Página inicial
 
 ## Iniciar el proyecto en desarrollo
 
