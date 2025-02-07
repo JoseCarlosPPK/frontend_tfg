@@ -5,10 +5,10 @@ export function LoginPage() {
       <AppFrame>
          {/* https://flowbite.com/blocks/marketing/login/ */}
          {/* Fondo */}
-         <section className='grow bg-gray-50 content-center place-items-center'>
+         <section className='grow place-items-center content-center bg-gray-50'>
             {/* Cuadro de inicio de sesión */}
-            <div className='max-w-fit border-principal bg-white rounded-lg shadow-lg'>
-               <div className='p-6 space-y-4'>
+            <div className='border-principal max-w-fit rounded-lg bg-white shadow-lg'>
+               <div className='space-y-4 p-6'>
                   <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900'>
                      Inicio de sesión
                   </h1>
@@ -16,7 +16,7 @@ export function LoginPage() {
                      <div>
                         <label
                            htmlFor='user'
-                           className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                           className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'
                         >
                            Usuario
                         </label>
@@ -24,8 +24,7 @@ export function LoginPage() {
                            type='text'
                            name='user'
                            id='user'
-                           className='bg-gray-50 border  text-gray-900
-                           myoutline rounded-lg block w-full p-2.5'
+                           className='myoutline block w-full rounded-lg border bg-gray-50 p-2.5 text-gray-900'
                            placeholder='usuario'
                            required
                         />
@@ -33,7 +32,7 @@ export function LoginPage() {
                      <div>
                         <label
                            htmlFor='password'
-                           className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                           className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'
                         >
                            Contraseña
                         </label>
@@ -42,7 +41,7 @@ export function LoginPage() {
                            name='password'
                            id='password'
                            placeholder='••••••••'
-                           className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg myoutline block w-full p-2.5 '
+                           className='myoutline block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900'
                            required=''
                         />
                      </div>
@@ -52,13 +51,13 @@ export function LoginPage() {
                               id='remember'
                               aria-describedby='remember'
                               type='checkbox'
-                              className='w-4 h-4 border border-gray-300 rounded bg-gray-50 '
+                              className='h-4 w-4 rounded border border-gray-300 bg-gray-50'
                               required=''
                            />
 
                            <label
                               htmlFor='remember'
-                              className='text-gray-500 ml-2 text-sm'
+                              className='ml-2 text-sm text-gray-500'
                            >
                               Recordarme
                            </label>
@@ -72,7 +71,7 @@ export function LoginPage() {
                      </div>
                      <button
                         type='submit'
-                        className='w-full bg-principal font-medium rounded-lg text-sm px-5 py-2.5 text-center'
+                        className='bg-principal w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium'
                      >
                         Iniciar sesión
                      </button>

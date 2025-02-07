@@ -17,12 +17,8 @@ Los endpoints principales son:
 5. /correo
 6. /administración
 
-Durante el desarrollo, se permite que la primera versión no se conecte a la API y sea
-una página prácticamente estática o use un fichero .json con datos de prueba.
-
-Se está utilizando el paquete `prettier` con comillas simples para las cadenas,
-espacios en vez de tabulador de tamaño 3, tamaño de línea 80 y se añaden las extensiones
-de los ficheros al hacer import.
+Durante el desarrollo, la primera versión no se va a conectar a la API y será
+una página prácticamente estática o usará un fichero .json con datos de prueba.
 
 ## Estado actual
 

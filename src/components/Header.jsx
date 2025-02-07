@@ -1,6 +1,6 @@
 export function Header() {
    return (
-      <header className='flex gap-4 p-3 bg-principal items-center'>
+      <header className='bg-principal flex items-center gap-4 p-3'>
          <a href='/'>
             <svg
                width='40'
