@@ -1,7 +1,7 @@
-import admin_logo from '../assets/admin_logo.svg' //https://www.veryicon.com/icons/miscellaneous/yuanql/icon-admin.html
+import admin_logo from '../assets/logo_admin.svg' //https://www.veryicon.com/icons/miscellaneous/yuanql/icon-admin.html
 import logo_centros from '../assets/logo_centros.jpg'
 import logo_convocatorias from '../assets/logo_convocatorias.jpeg'
-import mail_logo from '../assets/mail_logo.svg'
+import mail_logo from '../assets/logo_mail.svg'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { ImageLink } from '../components/ImageLink.jsx'
 
