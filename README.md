@@ -22,12 +22,11 @@ una página prácticamente estática o usará un fichero .json con datos de prue
 
 ## Estado actual
 
-Refactorizando las clases de tailwind (uso de un plugin para ordenar las clases
-según recomienda tailwind) y separación en ficheros independientes de los
-SVG.
+Detectar y crear componentes que sean reusables en las distintas páginas de la
+app:
 
-- [ ] Ordenación de las clases de tailwind
-- [ ] Separación de los archivos SVG
+- [x] Botones de editar/añadir/borrar.
+- [ ] Indicador de navegación (te dice la ruta en la que estás)
 
 ## Iniciar el proyecto en desarrollo
 
