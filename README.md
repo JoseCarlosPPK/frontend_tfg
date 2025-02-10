@@ -26,7 +26,7 @@ Detectar y crear componentes que sean reusables en las distintas páginas de la
 app:
 
 - [x] Botones de editar/añadir/borrar.
-- [ ] Indicador de navegación (te dice la ruta en la que estás)
+- [x] Indicador de navegación (te dice la ruta en la que estás)
 
 ## Iniciar el proyecto en desarrollo
 
