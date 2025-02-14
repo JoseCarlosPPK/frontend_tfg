@@ -6,7 +6,7 @@ export function Navigation() {
       <nav className='bg-secundario flex justify-between px-5 py-3'>
          <ol className='flex gap-6'>
             <NavItem href='/'>Administración</NavItem>
-            <NavItem href='/'>Centros</NavItem>
+            <NavItem href='/centros'>Centros</NavItem>
             <NavItem href='/'>Convocatorias</NavItem>
             <NavItem href='/'>Correo</NavItem>
          </ol>
