@@ -60,3 +60,36 @@
 .h1 {
    @apply text-3xl font-bold;
 }
+
+.mytable th {
+   padding: 0.5rem;
+}
+
+.mytable th:first-child {
+   border-radius: 10px 0 0 10px;
+}
+
+.mytable th:last-child {
+   border-radius: 0 10px 10px 0;
+}
+
+.mytable tbody tr {
+   border-bottom: var(--color-principal) solid 1px;
+}
+
+.mytable tbody tr:hover {
+   background-color: var(--color-terciario);
+}
+
+.mytable tbody tr:last-child {
+   border-bottom: none;
+}
+
+.mytable tbody tr td {
+   padding-top: 0.5rem;
+   padding-bottom: 0.5rem;
+}
+
+.hover-resalt:hover {
+   background-color: var(--color-terciario);
+}

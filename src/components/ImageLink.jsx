@@ -9,7 +9,7 @@ export function ImageLink({ imgSrc, title, href }) {
                alt={title}
                className='aspect-video h-full w-full rounded-lg object-fill'
             />
-            <h2 className='mt-2'>{title}</h2>
+            <h2 className='mt-2 text-center'>{title}</h2>
          </div>
       </a>
    )
