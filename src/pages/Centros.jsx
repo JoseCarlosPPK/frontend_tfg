@@ -1,3 +1,4 @@
+import { Pagination } from '@mui/material'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { AddButton } from '../components/buttons/AddButton.jsx'
@@ -45,9 +46,10 @@ export function CentrosPage() {
                      </select>
                   </form>
                </div>
-               {/* Tabla */}
+               {/* Contenedor genérico para la tabla y paginación */}
                <div>
-                  <div className='mx-16 my-2 flex items-center justify-between gap-2'>
+                  {/* Cantidad de elementos a ver */}
+                  <div className='mx-16 my-2 flex items-center justify-between'>
                      <div className='flex items-center gap-2'>
                         <label htmlFor='amount_centers'>Ver</label>
                         <input
@@ -71,7 +73,18 @@ export function CentrosPage() {
 
                      <span>10 de 1000</span>
                   </div>
-
+                  {/* <TablePagination
+                     rowsPerPageOptions={[5, 10, 25]}
+                     component='div'
+                     count={1000}
+                     rowsPerPage={10}
+                     page={0}
+                     onPageChange={null}
+                     onRowsPerPageChange={null}
+                     labelRowsPerPage='Filas por página'
+                     className='mx-16 my-2 flex items-center justify-center gap-2'
+                  /> */}
+                  {/* Tabla */}
                   <table className='mytable w-full'>
                      <thead>
                         <tr className='bg-secundario'>
@@ -147,6 +160,20 @@ export function CentrosPage() {
                         </tr>
                      </tbody>
                   </table>
+                  {/* Pagination */}
+                  <Pagination
+                     color='secondary'
+                     count={10}
+                     boundaryCount={2}
+                     size='large'
+                     sx={{
+                        '& .MuiPaginationItem-root:hover': {
+                           backgroundColor: 'terciary.main',
+                           zIndex: 9999,
+                        },
+                     }}
+                     className='m-2 justify-self-center'
+                  />
                </div>
             </main>
          </div>
