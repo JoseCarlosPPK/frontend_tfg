@@ -10,7 +10,11 @@ export function PrincipalPage() {
       <AppNavFrame>
          <div className='mygrid m-5 grow content-center justify-center gap-8'>
             <ImageLink title='Administración' href={'/'} imgSrc={admin_logo} />
-            <ImageLink title='Centros' href={'/'} imgSrc={logo_centros} />
+            <ImageLink
+               title='Centros'
+               href={'/centros'}
+               imgSrc={logo_centros}
+            />
             <ImageLink
                title='Convocatorias'
                href={'/'}

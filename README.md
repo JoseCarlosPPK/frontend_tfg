@@ -22,11 +22,7 @@ una página prácticamente estática o usará un fichero .json con datos de prue
 
 ## Estado actual
 
-Detectar y crear componentes que sean reusables en las distintas páginas de la
-app:
-
-- [x] Botones de editar/añadir/borrar.
-- [x] Indicador de navegación (te dice la ruta en la que estás)
+Crear la versión estática de /centros. Ver [Issue 14](https://github.com/JoseCarlosPPK/frontend_tfg/issues/14) (en desarrollo).
 
 ## Iniciar el proyecto en desarrollo
 

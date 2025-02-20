@@ -5,7 +5,7 @@ export function LoginPage() {
       <AppFrame>
          {/* https://flowbite.com/blocks/marketing/login/ */}
          {/* Fondo */}
-         <section className='grow place-items-center content-center bg-gray-50'>
+         <section className='flex grow place-content-center place-items-center bg-gray-50'>
             {/* Cuadro de inicio de sesión */}
             <div className='border-principal max-w-fit rounded-lg bg-white shadow-lg'>
                <div className='space-y-4 p-6'>
@@ -45,7 +45,7 @@ export function LoginPage() {
                            required=''
                         />
                      </div>
-                     <div className='flex items-center justify-between'>
+                     <div className='flex items-center justify-between gap-2'>
                         <div className='flex items-center'>
                            <input
                               id='remember'
@@ -57,7 +57,7 @@ export function LoginPage() {
 
                            <label
                               htmlFor='remember'
-                              className='ml-2 text-sm text-gray-500'
+                              className='ml-1 text-sm text-gray-500'
                            >
                               Recordarme
                            </label>
