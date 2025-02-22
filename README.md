@@ -22,7 +22,7 @@ una página prácticamente estática o usará un fichero .json con datos de prue
 
 ## Estado actual
 
-Crear la versión estática de /centros. Ver [Issue 14](https://github.com/JoseCarlosPPK/frontend_tfg/issues/14) (en desarrollo).
+Desarrollando la versión estática de /convocatorias (la primera página).
 
 ## Iniciar el proyecto en desarrollo
 
