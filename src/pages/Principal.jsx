@@ -4,23 +4,28 @@ import logo_convocatorias from '../assets/logo_convocatorias.jpeg'
 import mail_logo from '../assets/logo_mail.svg'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { ImageLink } from '../components/ImageLink.jsx'
+import { Routes } from '../routes.js'
 
 export function PrincipalPage() {
    return (
       <AppNavFrame>
          <div className='mygrid m-5 grow content-center justify-center gap-8'>
-            <ImageLink title='Administración' href={'/'} imgSrc={admin_logo} />
+            <ImageLink
+               title='Administración'
+               href={Routes.Admin}
+               imgSrc={admin_logo}
+            />
             <ImageLink
                title='Centros'
-               href={'/centros'}
+               href={Routes.Centros}
                imgSrc={logo_centros}
             />
             <ImageLink
                title='Convocatorias'
-               href={'/'}
+               href={Routes.Convocatorias}
                imgSrc={logo_convocatorias}
             />
-            <ImageLink title='Correo' href={'/'} imgSrc={mail_logo} />
+            <ImageLink title='Correo' href={Routes.Correo} imgSrc={mail_logo} />
          </div>
       </AppNavFrame>
    )
