@@ -1,17 +1,18 @@
 /* eslint-disable react/prop-types */
+import { Routes } from '../routes.js'
 import LogoutLogo from './svg/Logout.jsx'
 
 export function Navigation() {
    return (
       <nav className='bg-secundario flex justify-between px-5 py-3'>
          <ol className='flex gap-6'>
-            <NavItem href='/'>Administración</NavItem>
-            <NavItem href='/centros'>Centros</NavItem>
-            <NavItem href='/'>Convocatorias</NavItem>
-            <NavItem href='/'>Correo</NavItem>
+            <NavItem href={Routes.Admin}>Administración</NavItem>
+            <NavItem href={Routes.Centros}>Centros</NavItem>
+            <NavItem href={Routes.Convocatorias}>Convocatorias</NavItem>
+            <NavItem href={Routes.Correo}>Correo</NavItem>
          </ol>
 
-         <a href='/login' className='hover-resize'>
+         <a href={Routes.Login} className='hover-resize'>
             <LogoutLogo />
          </a>
       </nav>
