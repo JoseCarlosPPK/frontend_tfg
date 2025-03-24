@@ -22,7 +22,7 @@ una página prácticamente estática o usará un fichero .json con datos de prue
 
 ## Estado actual
 
-Desarrollando la versión estática de /convocatorias (la primera página).
+Dev issue #22.
 
 ## Iniciar el proyecto en desarrollo
 
