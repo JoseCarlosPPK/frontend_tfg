@@ -22,7 +22,8 @@ una página prácticamente estática o usará un fichero .json con datos de prue
 
 ## Estado actual
 
-Dev issue #22.
+Desarrollando componentes para ver/editar/añadir una nueva convocatoria.
+Ver [issue #18](https://github.com/JoseCarlosPPK/frontend_tfg/issues/18).
 
 ## Iniciar el proyecto en desarrollo
 
