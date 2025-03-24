@@ -5,7 +5,7 @@ export function LoginPage() {
       <AppFrame>
          {/* https://flowbite.com/blocks/marketing/login/ */}
          {/* Fondo */}
-         <section className='flex grow place-content-center place-items-center bg-gray-50'>
+         <section className='m-3 flex grow place-content-center place-items-center bg-gray-50'>
             {/* Cuadro de inicio de sesión */}
             <div className='border-principal max-w-fit rounded-lg bg-white shadow-lg'>
                <div className='space-y-4 p-6'>
