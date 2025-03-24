@@ -25,31 +25,29 @@ export function ConvocatoriasPage() {
 
    return (
       <AppNavFrame>
-         <div className='m-3 grow'>
-            <header className='my-2'>
-               <Breadcrumb />
+         <header className='my-2'>
+            <Breadcrumb />
 
-               <div className='mt-2 flex items-center gap-2'>
-                  <h1 className='h1'>Convocatorias</h1>
-                  <a href=''>
-                     <AddButton title='Crear una nueva convocatoria' />
-                  </a>
-               </div>
-            </header>
+            <div className='mt-2 flex items-center gap-2'>
+               <h1 className='h1'>Convocatorias</h1>
+               <a href=''>
+                  <AddButton title='Crear una nueva convocatoria' />
+               </a>
+            </div>
+         </header>
 
-            {/* Listado de convocatorias por curso */}
-            <main className='m-5 max-w-full lg:max-w-fit'>
-               {[...convocatorias.keys()].map((curso) => {
-                  return (
-                     <ConvocatoriaCurso
-                        key={curso}
-                        curso={curso}
-                        convocatorias={convocatorias.get(curso)}
-                     />
-                  )
-               })}
-            </main>
-         </div>
+         {/* Listado de convocatorias por curso */}
+         <main className='m-5 max-w-full lg:max-w-fit'>
+            {[...convocatorias.keys()].map((curso) => {
+               return (
+                  <ConvocatoriaCurso
+                     key={curso}
+                     curso={curso}
+                     convocatorias={convocatorias.get(curso)}
+                  />
+               )
+            })}
+         </main>
       </AppNavFrame>
    )
 }

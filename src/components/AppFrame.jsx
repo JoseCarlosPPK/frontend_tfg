@@ -17,7 +17,7 @@ export function AppNavFrame({ children }) {
    return (
       <AppFrame>
          <Navigation />
-         {children}
+         <div className='m-5 flex grow flex-col'>{children}</div>
       </AppFrame>
    )
 }
