@@ -3,6 +3,7 @@ import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { AddButton } from '../components/buttons/AddButton.jsx'
 import { ConvocatoriaCurso } from '../components/ConvocatoriaCurso.jsx'
 import convocatorias_data from '../data/convocatorias.json'
+import { Routes } from '../routes.js'
 import { MesesDate, getCurso, stringFechaToDate } from '../utils/utils.js'
 
 const LimitMonth = MesesDate.Julio
@@ -30,7 +31,7 @@ export function ConvocatoriasPage() {
 
             <div className='mt-2 flex items-center gap-2'>
                <h1 className='h1'>Convocatorias</h1>
-               <a href=''>
+               <a href={Routes.ConvocatoriasAdd}>
                   <AddButton title='Crear una nueva convocatoria' />
                </a>
             </div>
