@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 
+import { Input } from './inputs/Input.jsx'
+
 export function DateConvocatoria({
    fecha_ini,
    fecha_fin,
@@ -8,8 +10,8 @@ export function DateConvocatoria({
    onChangeFechaFin,
 }) {
    const inputClassName = disabled
-      ? 'bg-gray-300 ml-2 border border-solid border-gray-700 rounded p-1'
-      : 'border-principal myoutline ml-2 rounded p-1'
+      ? 'bg-zinc-300 ml-2 border border-solid border-gray-700 p-1'
+      : 'ml-2 p-1'
 
    return (
       <div className='border-principal rounded-xl p-6 pb-8'>
@@ -17,7 +19,7 @@ export function DateConvocatoria({
 
          <section className='mt-4 grid grid-cols-2 items-center gap-5'>
             <label htmlFor='fecha_ini'>Fecha inicial:</label>
-            <input
+            <Input
                type='date'
                name='fecha_ini'
                id='fecha_ini'
@@ -28,7 +30,7 @@ export function DateConvocatoria({
             />
 
             <label htmlFor='fecha_fin'>Fecha final:</label>
-            <input
+            <Input
                type='date'
                name='fecha_fin'
                id='fecha_fin'

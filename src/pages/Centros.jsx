@@ -4,6 +4,7 @@ import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { AddButton } from '../components/buttons/AddButton.jsx'
 import { DeleteButton } from '../components/buttons/DeleteButton.jsx'
 import { EditButton } from '../components/buttons/EditButton.jsx'
+import { Input, Select } from '../components/inputs'
 import { MailLogo } from '../components/svg/Mail.jsx'
 import { MovilLogo } from '../components/svg/Movil.jsx'
 import { TelefonoLogo } from '../components/svg/Telefono.jsx'
@@ -24,13 +25,13 @@ export function CentrosPage() {
             {/* Search input and filters */}
             <div>
                <form className='flex justify-center gap-2'>
-                  <input
+                  <Input
                      type='text'
                      name='buscador'
-                     className='myoutline block rounded-lg border bg-gray-50 p-2.5 text-gray-900'
+                     className='p-2.5'
                      placeholder='Buscar ...'
                   />
-                  <select name='filtros' className='myoutline rounded-lg p-1'>
+                  <Select name='filtros'>
                      <option value='nombre'>Nombre del centro</option>
                      <option value='responsable'>Tutor</option>
                      <option value='localidad'>Localidad</option>
@@ -39,7 +40,7 @@ export function CentrosPage() {
                      <option value='correo'>Correo electrónico</option>
                      <option value='telefono'>Teléfono</option>
                      <option value='movil'>Móvil</option>
-                  </select>
+                  </Select>
                </form>
             </div>
             {/* Contenedor genérico para la tabla y paginación */}
@@ -48,7 +49,7 @@ export function CentrosPage() {
                <div className='mx-16 my-2 flex items-center justify-between'>
                   <div className='flex items-center gap-2'>
                      <label htmlFor='amount_centers'>Ver</label>
-                     <input
+                     <Input
                         id='amount_centers'
                         type='number'
                         inputMode='numeric'
@@ -58,7 +59,7 @@ export function CentrosPage() {
                         min='10'
                         step='10'
                         autoComplete='off'
-                        className='myoutline w-20 rounded-lg border bg-gray-50 p-1'
+                        className='w-20'
                      />
                      <datalist id='opt_amount_centers'>
                         <option value='10'></option>

@@ -4,6 +4,7 @@ import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { ArrowButton } from '../components/buttons/ArrowButton.jsx'
 import { DateConvocatoria } from '../components/DateConvocatoria.jsx'
+import { Input, Select } from '../components/inputs'
 import { Direccion } from '../components/svg/arrow_direction.js'
 import { MailLogo } from '../components/svg/Mail.jsx'
 import { MovilLogo } from '../components/svg/Movil.jsx'
@@ -76,33 +77,29 @@ export function ConvocatoriasAddPage() {
                   <div className='flex grow items-center'>
                      <aside className='border-principal bg-terciario m-4 grow-0 rounded-md !border-2 p-5'>
                         <label htmlFor='seleccion'>Mostrar</label>
-                        <select
+                        <Select
                            name='seleccion'
                            id='seleccion'
-                           className='myoutline ml-4 rounded p-2'
+                           className='ml-4'
                         >
                            <option value='todos'>Todos</option>
                            <option value='seleccionados'>Seleccionados</option>
                            <option value='no_seleccionados'>
                               No seleccionados
                            </option>
-                        </select>
+                        </Select>
                      </aside>
                      <div className='m-4 grow'>
                         <section>
                            <form className='flex justify-center gap-2'>
-                              <input
+                              <Input
                                  type='search'
                                  name='buscador'
                                  id='buscador'
-                                 className='myoutline block rounded-lg border bg-gray-50 p-2.5 text-gray-900'
+                                 className='p-2.5'
                                  placeholder='Buscar ...'
                               />
-                              <select
-                                 name='filtro'
-                                 id='filtro'
-                                 className='myoutline rounded p-2'
-                              >
+                              <Select name='filtro' id='filtro'>
                                  <option value='nombre'>
                                     Nombre del centro
                                  </option>
@@ -116,7 +113,7 @@ export function ConvocatoriasAddPage() {
                                  <option value='cp'>Código Postal</option>
                                  <option value='telefono'>Teléfono</option>
                                  <option value='movil'>Móvil</option>
-                              </select>
+                              </Select>
                            </form>
                         </section>
 
@@ -126,7 +123,7 @@ export function ConvocatoriasAddPage() {
                            <div className='mx-16 my-2 flex items-center justify-between'>
                               <div className='flex items-center gap-2'>
                                  <label htmlFor='amount_centers'>Ver</label>
-                                 <input
+                                 <Input
                                     id='amount_centers'
                                     type='number'
                                     inputMode='numeric'
@@ -136,7 +133,7 @@ export function ConvocatoriasAddPage() {
                                     min='10'
                                     step='10'
                                     autoComplete='off'
-                                    className='myoutline w-20 rounded-lg border bg-gray-50 p-1'
+                                    className='w-20'
                                  />
                                  <datalist id='opt_amount_centers'>
                                     <option value='10'></option>
@@ -271,33 +268,29 @@ export function ConvocatoriasAddPage() {
                   <div className='flex grow items-center'>
                      <aside className='border-principal bg-terciario m-4 grow-0 rounded-md !border-2 p-5'>
                         <label htmlFor='seleccion'>Mostrar</label>
-                        <select
+                        <Select
                            name='seleccion'
                            id='seleccion'
-                           className='myoutline ml-4 rounded p-2'
+                           className='ml-4'
                         >
                            <option value='todos'>Todos</option>
                            <option value='seleccionados'>Seleccionados</option>
                            <option value='no_seleccionados'>
                               No seleccionados
                            </option>
-                        </select>
+                        </Select>
                      </aside>
                      <div className='m-4 grow'>
                         <section>
                            <form className='flex justify-center gap-2'>
-                              <input
+                              <Input
                                  type='search'
                                  name='buscador'
                                  id='buscador'
-                                 className='myoutline block rounded-lg border bg-gray-50 p-2.5 text-gray-900'
+                                 className='p-2.5'
                                  placeholder='Buscar ...'
                               />
-                              <select
-                                 name='filtro'
-                                 id='filtro'
-                                 className='myoutline rounded p-2'
-                              >
+                              <Select name='filtro' id='filtro'>
                                  <option value='nombre'>
                                     Nombre del centro
                                  </option>
@@ -311,7 +304,7 @@ export function ConvocatoriasAddPage() {
                                  <option value='cp'>Código Postal</option>
                                  <option value='telefono'>Teléfono</option>
                                  <option value='movil'>Móvil</option>
-                              </select>
+                              </Select>
                            </form>
                         </section>
 
@@ -321,7 +314,7 @@ export function ConvocatoriasAddPage() {
                            <div className='mx-16 my-2 flex items-center justify-between'>
                               <div className='flex items-center gap-2'>
                                  <label htmlFor='amount_centers'>Ver</label>
-                                 <input
+                                 <Input
                                     id='amount_centers'
                                     type='number'
                                     inputMode='numeric'
@@ -331,7 +324,7 @@ export function ConvocatoriasAddPage() {
                                     min='10'
                                     step='10'
                                     autoComplete='off'
-                                    className='myoutline w-20 rounded-lg border bg-gray-50 p-1'
+                                    className='w-20'
                                  />
                                  <datalist id='opt_amount_centers'>
                                     <option value='10'></option>
