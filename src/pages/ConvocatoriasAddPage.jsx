@@ -2,8 +2,8 @@ import { Pagination } from '@mui/material'
 import { useState } from 'react'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
+import { ArrowButton } from '../components/buttons/ArrowButton.jsx'
 import { DateConvocatoria } from '../components/DateConvocatoria.jsx'
-import { Arrow } from '../components/svg/Arrow.jsx'
 import { Direccion } from '../components/svg/arrow_direction.js'
 import { MailLogo } from '../components/svg/Mail.jsx'
 import { MovilLogo } from '../components/svg/Movil.jsx'
@@ -55,13 +55,13 @@ export function ConvocatoriasAddPage() {
          </header>
 
          <main className='flex grow items-center justify-between'>
-            <button
+            <ArrowButton
                className={buttonLeftClassName}
                disabled={isButtonLeftDisabled}
                onClick={handleClickLeft}
-            >
-               <Arrow direccion={Direccion.left} />
-            </button>
+               direccion={Direccion.left}
+            />
+
             {numPaso === 1 && (
                <DateConvocatoria
                   fecha_ini={fechaIni}
@@ -460,13 +460,12 @@ export function ConvocatoriasAddPage() {
                   </div>
                </div>
             )}
-            <button
+            <ArrowButton
                className={buttonRightClassName}
                disabled={isButtonRightDisabled}
                onClick={handleClickRight}
-            >
-               <Arrow direccion={Direccion.right} />
-            </button>
+               direccion={Direccion.right}
+            />
          </main>
       </AppNavFrame>
    )
