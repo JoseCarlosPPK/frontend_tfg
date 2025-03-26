@@ -4,7 +4,8 @@ import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { ArrowButton } from '../components/buttons/ArrowButton.jsx'
 import { DateConvocatoria } from '../components/DateConvocatoria.jsx'
-import { Input, Select } from '../components/inputs'
+import { Input, Search, Select } from '../components/inputs'
+import { filters } from '../components/models/filters.js'
 import { Direccion } from '../components/svg/arrow_direction.js'
 import { MailLogo } from '../components/svg/Mail.jsx'
 import { MovilLogo } from '../components/svg/Movil.jsx'
@@ -90,32 +91,7 @@ export function ConvocatoriasAddPage() {
                         </Select>
                      </aside>
                      <div className='m-4 grow'>
-                        <section>
-                           <form className='flex justify-center gap-2'>
-                              <Input
-                                 type='search'
-                                 name='buscador'
-                                 id='buscador'
-                                 className='p-2.5'
-                                 placeholder='Buscar ...'
-                              />
-                              <Select name='filtro' id='filtro'>
-                                 <option value='nombre'>
-                                    Nombre del centro
-                                 </option>
-                                 <option value='tutor'>Tutor</option>
-                                 <option value='unidad'>Unidad</option>
-                                 <option value='localidad'>Localidad</option>
-                                 <option value='provincia'>Provincia</option>
-                                 <option value='corre'>
-                                    Correo electrónico
-                                 </option>
-                                 <option value='cp'>Código Postal</option>
-                                 <option value='telefono'>Teléfono</option>
-                                 <option value='movil'>Móvil</option>
-                              </Select>
-                           </form>
-                        </section>
+                        <Search filters={filters} />
 
                         {/* Contenedor genérico para la tabla y paginación */}
                         <div>
@@ -281,32 +257,7 @@ export function ConvocatoriasAddPage() {
                         </Select>
                      </aside>
                      <div className='m-4 grow'>
-                        <section>
-                           <form className='flex justify-center gap-2'>
-                              <Input
-                                 type='search'
-                                 name='buscador'
-                                 id='buscador'
-                                 className='p-2.5'
-                                 placeholder='Buscar ...'
-                              />
-                              <Select name='filtro' id='filtro'>
-                                 <option value='nombre'>
-                                    Nombre del centro
-                                 </option>
-                                 <option value='tutor'>Tutor</option>
-                                 <option value='unidad'>Unidad</option>
-                                 <option value='localidad'>Localidad</option>
-                                 <option value='provincia'>Provincia</option>
-                                 <option value='corre'>
-                                    Correo electrónico
-                                 </option>
-                                 <option value='cp'>Código Postal</option>
-                                 <option value='telefono'>Teléfono</option>
-                                 <option value='movil'>Móvil</option>
-                              </Select>
-                           </form>
-                        </section>
+                        <Search filters={filters} />
 
                         {/* Contenedor genérico para la tabla y paginación */}
                         <div>
