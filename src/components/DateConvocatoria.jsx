@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import { Input } from './inputs/Input.jsx'
+import { Input } from './inputs'
 
 export function DateConvocatoria({
    fecha_ini,
