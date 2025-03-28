@@ -22,8 +22,7 @@ una página prácticamente estática o usará un fichero .json con datos de prue
 
 ## Estado actual
 
-Desarrollando componentes para ver/editar/añadir una nueva convocatoria.
-Ver [issue #18](https://github.com/JoseCarlosPPK/frontend_tfg/issues/18).
+Añadiendo puntos de entrada `index.js` a los módulos de `src`. Ver [issue 27](https://github.com/JoseCarlosPPK/frontend_tfg/issues/27)
 
 ## Iniciar el proyecto en desarrollo
 
