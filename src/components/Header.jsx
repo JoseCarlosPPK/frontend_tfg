@@ -1,4 +1,4 @@
-import AppLogo from './svg/App.jsx'
+import { AppLogo } from './svg'
 
 export function Header() {
    return (

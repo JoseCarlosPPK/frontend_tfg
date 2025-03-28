@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Direccion } from './arrow_direction.js'
 
-export function Arrow({ size = 'size-10', direccion = Direccion.left }) {
+export function ArrowLogo({ size = 'size-10', direccion = Direccion.left }) {
    const className = [size, direccion].join(' ')
 
    return (

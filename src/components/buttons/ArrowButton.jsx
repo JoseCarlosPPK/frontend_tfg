@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types'
-import { Arrow } from '../svg/Arrow.jsx'
-import { Direccion } from '../svg/arrow_direction.js'
+import { ArrowLogo, Direccion } from '../svg'
 
 export function ArrowButton({ direccion, ...props }) {
    return (
       <button {...props}>
-         <Arrow direccion={direccion} />
+         <ArrowLogo direccion={direccion} />
       </button>
    )
 }

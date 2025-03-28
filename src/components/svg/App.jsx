@@ -1,4 +1,4 @@
-export default function AppLogo() {
+export function AppLogo() {
    return (
       <svg
          width='40'

@@ -1,4 +1,4 @@
-import { HomeLogo } from './svg/Home.jsx'
+import { HomeLogo } from './svg'
 
 export function Breadcrumb() {
    const pahtname = window.location.pathname

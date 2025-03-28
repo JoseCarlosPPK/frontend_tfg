@@ -2,7 +2,7 @@ import { Pagination } from '@mui/material'
 import { useState } from 'react'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
-import { ArrowButton } from '../components/buttons/ArrowButton.jsx'
+import { ArrowButton } from '../components/buttons'
 import { DateConvocatoria } from '../components/DateConvocatoria.jsx'
 import { Input, Search, Select } from '../components/inputs'
 import {
@@ -10,7 +10,7 @@ import {
    FarmaciasHospitalariasColumnas,
 } from '../components/models/columns.jsx'
 import { filters } from '../components/models/filters.js'
-import { Direccion } from '../components/svg/arrow_direction.js'
+import { Direccion } from '../components/svg'
 import { Table } from '../components/Table.jsx'
 import farmacias from '../data/farmacias.json'
 import farmacias_hospitalarias from '../data/farmacias_hospitalarias.json'

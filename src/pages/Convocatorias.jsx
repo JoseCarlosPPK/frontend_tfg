@@ -1,6 +1,6 @@
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
-import { AddButton } from '../components/buttons/AddButton.jsx'
+import { AddButton } from '../components/buttons'
 import { ConvocatoriaCurso } from '../components/ConvocatoriaCurso.jsx'
 import convocatorias_data from '../data/convocatorias.json'
 import { Routes } from '../routes.js'

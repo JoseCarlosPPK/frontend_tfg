@@ -1,6 +1,4 @@
-import { MailLogo } from '../svg/Mail.jsx'
-import { MovilLogo } from '../svg/Movil.jsx'
-import { TelefonoLogo } from '../svg/Telefono.jsx'
+import { MailLogo, MovilLogo, TelefonoLogo } from '../svg'
 
 export const FarmaciasColumnas = [
    {

@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
-import { EditLogo } from '../svg/Edit.jsx'
-import { Button } from './Button.jsx'
-import { TYPES_BUTTONS } from './types_buttons.js'
+import { Button, TYPES_BUTTONS } from '.'
+import { EditLogo } from '../svg'
 
 export function EditButton({
    onclick,

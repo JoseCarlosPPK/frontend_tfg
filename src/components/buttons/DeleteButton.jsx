@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
-import { DeleteLogo } from '../svg/Delete.jsx'
-import { Button } from './Button.jsx'
-import { TYPES_BUTTONS } from './types_buttons.js'
+import { Button, TYPES_BUTTONS } from '.'
+import { DeleteLogo } from '../svg'
 
 export function DeleteButton({
    onclick,
