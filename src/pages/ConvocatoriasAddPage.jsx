@@ -2,7 +2,7 @@ import { Pagination } from '@mui/material'
 import { useState } from 'react'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
-import { ArrowButton } from '../components/buttons/ArrowButton.jsx'
+import { ArrowButton } from '../components/buttons'
 import { DateConvocatoria } from '../components/DateConvocatoria.jsx'
 import { Input, Search, Select } from '../components/inputs'
 import {

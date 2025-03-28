@@ -1,7 +1,5 @@
 /* eslint-disable react/prop-types */
-import { DeleteButton } from '../components/buttons/DeleteButton.jsx'
-import { EditButton } from '../components/buttons/EditButton.jsx'
-import { SeeButton } from '../components/buttons/SeeButton.jsx'
+import { DeleteButton, EditButton, SeeButton } from '../components/buttons'
 import { Routes } from '../routes.js'
 import { MesesDate } from '../utils/utils.js'
 
