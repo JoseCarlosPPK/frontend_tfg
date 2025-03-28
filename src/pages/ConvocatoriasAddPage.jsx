@@ -5,11 +5,15 @@ import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { ArrowButton } from '../components/buttons/ArrowButton.jsx'
 import { DateConvocatoria } from '../components/DateConvocatoria.jsx'
 import { Input, Search, Select } from '../components/inputs'
+import {
+   FarmaciasColumnas,
+   FarmaciasHospitalariasColumnas,
+} from '../components/models/columns.jsx'
 import { filters } from '../components/models/filters.js'
 import { Direccion } from '../components/svg/arrow_direction.js'
-import { MailLogo } from '../components/svg/Mail.jsx'
-import { MovilLogo } from '../components/svg/Movil.jsx'
-import { TelefonoLogo } from '../components/svg/Telefono.jsx'
+import { Table } from '../components/Table.jsx'
+import farmacias from '../data/farmacias.json'
+import farmacias_hospitalarias from '../data/farmacias_hospitalarias.json'
 
 export function ConvocatoriasAddPage() {
    const [fechaIni, setFechaIni] = useState('')
@@ -21,7 +25,7 @@ export function ConvocatoriasAddPage() {
    const isButtonRightDisabled = numPaso === pasos.length
 
    const buttonActiveClassName =
-      'hover-resize text-[var(--color-principal)] h-full'
+      'hover-resize text-[var(--color-principal)] h-96'
    const buttonDisabledClassName = 'text-gray-500'
    const buttonLeftClassName = isButtonLeftDisabled
       ? buttonDisabledClassName
@@ -121,104 +125,12 @@ export function ConvocatoriasAddPage() {
                               <span>10 de 1000</span>
                            </div>
                            {/* Tabla */}
-                           <table className='mytable w-full'>
-                              <thead>
-                                 <tr className='bg-secundario'>
-                                    <th>
-                                       <div className='flex justify-center'>
-                                          <input
-                                             type='checkbox'
-                                             name='chk'
-                                             id='chk'
-                                             className='size-6 self-center'
-                                          />
-                                       </div>
-                                    </th>
-                                    <th>Tutor/a</th>
-                                    <th>Calle</th>
-                                    <th>Localidad</th>
-                                    <th>Provincia</th>
-                                    <th>CP</th>
-                                    <th>Contacto</th>
-                                 </tr>
-                              </thead>
-                              <tbody className=''>
-                                 <tr>
-                                    <td>
-                                       <div className='flex justify-center'>
-                                          <input
-                                             type='checkbox'
-                                             name='chk'
-                                             id='chk_1'
-                                             className='size-5 self-center'
-                                          />
-                                       </div>
-                                    </td>
-                                    <td className='text-center'>
-                                       Ángel Ruiz Zafra
-                                    </td>
-                                    <td className='text-center'>
-                                       Calle inventada 2
-                                    </td>
-                                    <td className='text-center'>Chana</td>
-                                    <td className='text-center'>Granada</td>
-                                    <td className='text-center'>18001</td>
-                                    <td className='pl-6'>
-                                       <div className='flex flex-col justify-center'>
-                                          <div className='flex items-center gap-2'>
-                                             <MailLogo />
-                                             <span>aruiz@ugr.es</span>
-                                          </div>
-                                          <div className='flex items-center gap-2'>
-                                             <TelefonoLogo />
-                                             <span>958 57 18 95</span>
-                                          </div>
-                                          <div className='flex items-center gap-2'>
-                                             <MovilLogo />
-                                             <span>675 53 05 07</span>
-                                          </div>
-                                       </div>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>
-                                       <div className='flex justify-center'>
-                                          <input
-                                             type='checkbox'
-                                             name='chk'
-                                             id='chk_2'
-                                             className='size-5 self-center'
-                                          />
-                                       </div>
-                                    </td>
-                                    <td className='text-center'>
-                                       José Carlos López Aguilar
-                                    </td>
-                                    <td className='text-center'>
-                                       C/ Azucena 2 1ºC
-                                    </td>
-                                    <td className='text-center'>Armilla</td>
-                                    <td className='text-center'>Granada</td>
-                                    <td className='text-center'>18100</td>
-                                    <td className='pl-6'>
-                                       <div className='flex flex-col justify-center'>
-                                          <div className='flex items-center gap-2'>
-                                             <MailLogo />
-                                             <span>jcarloslopez@ugr.es</span>
-                                          </div>
-                                          <div className='flex items-center gap-2'>
-                                             <TelefonoLogo />
-                                             <span>958 57 18 95</span>
-                                          </div>
-                                          <div className='flex items-center gap-2'>
-                                             <MovilLogo />
-                                             <span>675 53 05 07</span>
-                                          </div>
-                                       </div>
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
+                           <Table
+                              columns={FarmaciasColumnas}
+                              data={farmacias.data}
+                              checked={true}
+                           />
+
                            {/* Pagination */}
                            <Pagination
                               color='secondary'
@@ -287,104 +199,11 @@ export function ConvocatoriasAddPage() {
                               <span>10 de 1000</span>
                            </div>
                            {/* Tabla */}
-                           <table className='mytable w-full'>
-                              <thead>
-                                 <tr className='bg-secundario'>
-                                    <th>
-                                       <div className='flex justify-center'>
-                                          <input
-                                             type='checkbox'
-                                             name='chk'
-                                             id='chk'
-                                             className='size-6 self-center'
-                                          />
-                                       </div>
-                                    </th>
-                                    <th>Tutor/a</th>
-                                    <th>Calle</th>
-                                    <th>Localidad</th>
-                                    <th>Provincia</th>
-                                    <th>CP</th>
-                                    <th>Contacto</th>
-                                 </tr>
-                              </thead>
-                              <tbody className=''>
-                                 <tr>
-                                    <td>
-                                       <div className='flex justify-center'>
-                                          <input
-                                             type='checkbox'
-                                             name='chk'
-                                             id='chk_1'
-                                             className='size-5 self-center'
-                                          />
-                                       </div>
-                                    </td>
-                                    <td className='text-center'>
-                                       Ángel Ruiz Zafra
-                                    </td>
-                                    <td className='text-center'>
-                                       Calle inventada 2
-                                    </td>
-                                    <td className='text-center'>Chana</td>
-                                    <td className='text-center'>Granada</td>
-                                    <td className='text-center'>18001</td>
-                                    <td className='pl-6'>
-                                       <div className='flex flex-col justify-center'>
-                                          <div className='flex items-center gap-2'>
-                                             <MailLogo />
-                                             <span>aruiz@ugr.es</span>
-                                          </div>
-                                          <div className='flex items-center gap-2'>
-                                             <TelefonoLogo />
-                                             <span>958 57 18 95</span>
-                                          </div>
-                                          <div className='flex items-center gap-2'>
-                                             <MovilLogo />
-                                             <span>675 53 05 07</span>
-                                          </div>
-                                       </div>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>
-                                       <div className='flex justify-center'>
-                                          <input
-                                             type='checkbox'
-                                             name='chk'
-                                             id='chk_2'
-                                             className='size-5 self-center'
-                                          />
-                                       </div>
-                                    </td>
-                                    <td className='text-center'>
-                                       José Carlos López Aguilar
-                                    </td>
-                                    <td className='text-center'>
-                                       C/ Azucena 2 1ºC
-                                    </td>
-                                    <td className='text-center'>Armilla</td>
-                                    <td className='text-center'>Granada</td>
-                                    <td className='text-center'>18100</td>
-                                    <td className='pl-6'>
-                                       <div className='flex flex-col justify-center'>
-                                          <div className='flex items-center gap-2'>
-                                             <MailLogo />
-                                             <span>jcarloslopez@ugr.es</span>
-                                          </div>
-                                          <div className='flex items-center gap-2'>
-                                             <TelefonoLogo />
-                                             <span>958 57 18 95</span>
-                                          </div>
-                                          <div className='flex items-center gap-2'>
-                                             <MovilLogo />
-                                             <span>675 53 05 07</span>
-                                          </div>
-                                       </div>
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
+                           <Table
+                              columns={FarmaciasHospitalariasColumnas}
+                              data={farmacias_hospitalarias.data}
+                              checked={true}
+                           />
                            {/* Pagination */}
                            <Pagination
                               color='secondary'

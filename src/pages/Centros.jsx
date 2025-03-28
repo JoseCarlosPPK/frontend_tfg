@@ -5,9 +5,26 @@ import { AddButton } from '../components/buttons/AddButton.jsx'
 import { DeleteButton } from '../components/buttons/DeleteButton.jsx'
 import { EditButton } from '../components/buttons/EditButton.jsx'
 import { Input, Select } from '../components/inputs'
-import { MailLogo } from '../components/svg/Mail.jsx'
-import { MovilLogo } from '../components/svg/Movil.jsx'
-import { TelefonoLogo } from '../components/svg/Telefono.jsx'
+import { FarmaciasColumnas } from '../components/models/columns.jsx'
+import { Table } from '../components/Table.jsx'
+import farmacias from '../data/farmacias.json'
+
+const FarmaciasColumnasEdited = [
+   ...FarmaciasColumnas,
+   {
+      name: 'Acción',
+      createCell: (row) => {
+         return (
+            <td key={row.id}>
+               <div className='flex items-center justify-center gap-2'>
+                  <EditButton />
+                  <DeleteButton />
+               </div>
+            </td>
+         )
+      },
+   },
+]
 
 export function CentrosPage() {
    return (
@@ -82,81 +99,8 @@ export function CentrosPage() {
                      className='mx-16 my-2 flex items-center justify-center gap-2'
                   /> */}
                {/* Tabla */}
-               <table className='mytable w-full'>
-                  <thead>
-                     <tr className='bg-secundario'>
-                        <th>Tutor/a</th>
-                        <th>Calle</th>
-                        <th>Localidad</th>
-                        <th>Provincia</th>
-                        <th>CP</th>
-                        <th>Contacto</th>
-                        <th>Acción</th>
-                     </tr>
-                  </thead>
-                  <tbody className=''>
-                     <tr>
-                        <td className='text-center'>Ángel Ruiz Zafra</td>
-                        <td className='text-center'>Calle inventada 2</td>
-                        <td className='text-center'>Chana</td>
-                        <td className='text-center'>Granada</td>
-                        <td className='text-center'>18001</td>
-                        <td className='pl-6'>
-                           <div className='flex flex-col justify-center'>
-                              <div className='flex items-center gap-2'>
-                                 <MailLogo />
-                                 <span>aruiz@ugr.es</span>
-                              </div>
-                              <div className='flex items-center gap-2'>
-                                 <TelefonoLogo />
-                                 <span>958 57 18 95</span>
-                              </div>
-                              <div className='flex items-center gap-2'>
-                                 <MovilLogo />
-                                 <span>675 53 05 07</span>
-                              </div>
-                           </div>
-                        </td>
-                        <td>
-                           <div className='flex items-center justify-center gap-2'>
-                              <EditButton />
-                              <DeleteButton />
-                           </div>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td className='text-center'>
-                           José Carlos López Aguilar
-                        </td>
-                        <td className='text-center'>C/ Azucena 2 1ºC</td>
-                        <td className='text-center'>Armilla</td>
-                        <td className='text-center'>Granada</td>
-                        <td className='text-center'>18100</td>
-                        <td className='pl-6'>
-                           <div className='flex flex-col justify-center'>
-                              <div className='flex items-center gap-2'>
-                                 <MailLogo />
-                                 <span>jcarloslopez@ugr.es</span>
-                              </div>
-                              <div className='flex items-center gap-2'>
-                                 <TelefonoLogo />
-                                 <span>958 57 18 95</span>
-                              </div>
-                              <div className='flex items-center gap-2'>
-                                 <MovilLogo />
-                                 <span>675 53 05 07</span>
-                              </div>
-                           </div>
-                        </td>
-                        <td>
-                           <div className='flex items-center justify-center gap-2'>
-                              <EditButton />
-                              <DeleteButton />
-                           </div>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
+               <Table columns={FarmaciasColumnasEdited} data={farmacias.data} />
+
                {/* Pagination */}
                <Pagination
                   color='secondary'
