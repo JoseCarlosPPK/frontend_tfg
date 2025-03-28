@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Routes } from '../routes.js'
-import LogoutLogo from './svg/Logout.jsx'
+import { LogoutLogo } from './svg'
 
 export function Navigation() {
    return (

@@ -10,7 +10,7 @@ import {
    FarmaciasHospitalariasColumnas,
 } from '../components/models/columns.jsx'
 import { filters } from '../components/models/filters.js'
-import { Direccion } from '../components/svg/arrow_direction.js'
+import { Direccion } from '../components/svg'
 import { Table } from '../components/Table.jsx'
 import farmacias from '../data/farmacias.json'
 import farmacias_hospitalarias from '../data/farmacias_hospitalarias.json'
