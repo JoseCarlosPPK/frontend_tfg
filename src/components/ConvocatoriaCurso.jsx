@@ -2,6 +2,7 @@
 import { DeleteButton } from '../components/buttons/DeleteButton.jsx'
 import { EditButton } from '../components/buttons/EditButton.jsx'
 import { SeeButton } from '../components/buttons/SeeButton.jsx'
+import { Routes } from '../routes.js'
 import { MesesDate } from '../utils/utils.js'
 
 const SizeButtons = 'size-8'
@@ -30,10 +31,10 @@ function ConvocatoriaItem({ fechas }) {
          </a>
 
          <div className='ml-2 flex items-center gap-2'>
-            <a href=''>
+            <a href={Routes.ConvocatoriasSee}>
                <SeeButton size={SizeButtons} />
             </a>
-            <a href=''>
+            <a href={Routes.ConvocatoriasEdit}>
                <EditButton size={SizeButtons} />
             </a>
             <DeleteButton size={SizeButtons} />

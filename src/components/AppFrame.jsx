@@ -5,7 +5,7 @@ import { Navigation } from './Navigation.jsx'
 
 export function AppFrame({ children }) {
    return (
-      <div className='flex min-h-dvh min-w-max flex-col'>
+      <div className='flex min-h-screen min-w-max flex-col'>
          <Header />
          {children}
          <Footer />
@@ -17,7 +17,7 @@ export function AppNavFrame({ children }) {
    return (
       <AppFrame>
          <Navigation />
-         <div className='m-5 flex grow flex-col'>{children}</div>
+         <div className='m-5 flex h-full grow flex-col'>{children}</div>
       </AppFrame>
    )
 }

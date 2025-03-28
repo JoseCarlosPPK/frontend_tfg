@@ -1,4 +1,5 @@
 import { AppFrame } from '../components/AppFrame.jsx'
+import { Input } from '../components/inputs'
 
 export function LoginPage() {
    return (
@@ -20,12 +21,12 @@ export function LoginPage() {
                         >
                            Usuario
                         </label>
-                        <input
+                        <Input
                            type='text'
                            name='user'
                            id='user'
-                           className='myoutline block w-full rounded-lg border bg-gray-50 p-2.5 text-gray-900'
                            placeholder='usuario'
+                           className='p-2.5'
                            required
                         />
                      </div>
@@ -36,12 +37,12 @@ export function LoginPage() {
                         >
                            Contraseña
                         </label>
-                        <input
+                        <Input
                            type='password'
                            name='password'
                            id='password'
                            placeholder='••••••••'
-                           className='myoutline block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900'
+                           className='p-2.5'
                            required=''
                         />
                      </div>

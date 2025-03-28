@@ -1,0 +1,27 @@
+{
+   "data": [
+      {
+         "id": 1,
+         "nombre": "Hospital Universitario Virgen de las Nieves",
+         "tutor": "PPK",
+         "calle": "Calle Falsa 123",
+         "localidad": "Armilla",
+         "provincia": "Granada",
+         "cp": "18100",
+         "correo": "ppk@example.com",
+         "telefono": "958123456",
+         "movil": "666123456"
+      },
+      {
+         "id": 2,
+         "nombre": "Hospital Universitario Clínico San Cecilio",
+         "tutor": "Ángel",
+         "calle": "Avenida Real 45",
+         "localidad": "Chana",
+         "provincia": "Granada",
+         "cp": "18015",
+         "correo": "angel@example.com",
+         "telefono": "958654321"
+      }
+   ]
+}

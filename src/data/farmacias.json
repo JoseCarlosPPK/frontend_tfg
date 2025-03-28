@@ -1,0 +1,25 @@
+{
+   "data": [
+      {
+         "id": 1,
+         "tutor": "PPK",
+         "calle": "Calle Falsa 123",
+         "localidad": "Armilla",
+         "provincia": "Granada",
+         "cp": "18100",
+         "correo": "ppk@example.com",
+         "telefono": "958123456",
+         "movil": "666123456"
+      },
+      {
+         "id": 2,
+         "tutor": "Ángel",
+         "calle": "Avenida Real 45",
+         "localidad": "Chana",
+         "provincia": "Granada",
+         "cp": "18015",
+         "correo": "angel@example.com",
+         "telefono": "958654321"
+      }
+   ]
+}
