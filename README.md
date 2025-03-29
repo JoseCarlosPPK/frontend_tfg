@@ -22,7 +22,7 @@ una página prácticamente estática o usará un fichero .json con datos de prue
 
 ## Estado actual
 
-Añadiendo puntos de entrada `index.js` a los módulos de `src`. Ver [issue 27](https://github.com/JoseCarlosPPK/frontend_tfg/issues/27)
+Desarrollando la UI estática de /correo y /admin. Ver issues [29](https://github.com/JoseCarlosPPK/frontend_tfg/issues/29) y [30](https://github.com/JoseCarlosPPK/frontend_tfg/issues/29)
 
 ## Iniciar el proyecto en desarrollo
 
