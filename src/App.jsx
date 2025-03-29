@@ -8,7 +8,7 @@ import {
    PrincipalPage,
 } from './pages'
 
-import { AdminPage } from './pages/admin'
+import { AdminPage, RegistrosPage } from './pages/admin'
 import { Routes } from './routes.js'
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
          {currentPath === Routes.ConvocatoriasEdit && <ConvocatoriasAddPage />}
          {currentPath === Routes.ConvocatoriasSee && <ConvocatoriasAddPage />}
          {currentPath === Routes.Admin && <AdminPage />}
+         {currentPath === Routes.AdminRegistros && <RegistrosPage />}
       </>
    )
 }

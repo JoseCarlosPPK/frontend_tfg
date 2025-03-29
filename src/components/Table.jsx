@@ -52,7 +52,7 @@ export function Table({ columns, data, checked }) {
 Table.propTypes = {
    columns: PropTypes.arrayOf(
       PropTypes.shape({
-         name: PropTypes.string.isRequired,
+         name: PropTypes.any.isRequired,
          createCell: PropTypes.func.isRequired,
       })
    ).isRequired,
