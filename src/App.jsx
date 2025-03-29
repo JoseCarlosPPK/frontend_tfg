@@ -8,6 +8,7 @@ import {
    PrincipalPage,
 } from './pages'
 
+import { AdminPage, RegistrosPage } from './pages/admin'
 import { Routes } from './routes.js'
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
          {currentPath === Routes.ConvocatoriasAdd && <ConvocatoriasAddPage />}
          {currentPath === Routes.ConvocatoriasEdit && <ConvocatoriasAddPage />}
          {currentPath === Routes.ConvocatoriasSee && <ConvocatoriasAddPage />}
+         {currentPath === Routes.Admin && <AdminPage />}
+         {currentPath === Routes.AdminRegistros && <RegistrosPage />}
       </>
    )
 }

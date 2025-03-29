@@ -1,0 +1,32 @@
+{
+   "data": [
+      {
+         "id": 1,
+         "date": "12:00 1/1/2025",
+         "user": "jc",
+         "action": "delete",
+         "endpoint": "/centros"
+      },
+      {
+         "id": 2,
+         "date": "14:30 2/2/2025",
+         "user": "maria",
+         "action": "edit",
+         "endpoint": "/usuarios"
+      },
+      {
+         "id": 3,
+         "date": "09:15 3/3/2025",
+         "user": "pedro",
+         "action": "add",
+         "endpoint": "/productos"
+      },
+      {
+         "id": 4,
+         "date": "16:45 4/4/2025",
+         "user": "ana",
+         "action": "delete",
+         "endpoint": "/ordenes"
+      }
+   ]
+}
