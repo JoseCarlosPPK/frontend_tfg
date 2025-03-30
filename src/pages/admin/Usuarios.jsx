@@ -76,7 +76,7 @@ const Columns = [
                                     }
                                     disabled={true}
                                     size='size-8'
-                                 />{' '}
+                                 />
                               </>
                            )}
                         </div>
