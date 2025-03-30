@@ -1,0 +1,57 @@
+[
+   {
+      "id": 1,
+      "nombre": "jc02",
+      "correo": "jc@gmail.com",
+      "permisos": {
+         "usuarios": { "add": true, "edit": false, "delete": false },
+         "centros": { "add": true, "edit": true, "delete": true },
+         "convocatorias": { "add": false, "edit": false, "delete": false },
+         "correo": true
+      }
+   },
+   {
+      "id": 2,
+      "nombre": "ana23",
+      "correo": "ana@gmail.com",
+      "permisos": {
+         "usuarios": { "add": false, "edit": true, "delete": false },
+         "centros": { "add": true, "edit": false, "delete": false },
+         "convocatorias": { "add": true, "edit": true, "delete": false },
+         "correo": false
+      }
+   },
+   {
+      "id": 3,
+      "nombre": "mario45",
+      "correo": "mario@gmail.com",
+      "permisos": {
+         "usuarios": { "add": true, "edit": true, "delete": true },
+         "centros": { "add": false, "edit": true, "delete": false },
+         "convocatorias": { "add": false, "edit": false, "delete": true },
+         "correo": true
+      }
+   },
+   {
+      "id": 4,
+      "nombre": "luisa87",
+      "correo": "luisa@gmail.com",
+      "permisos": {
+         "usuarios": { "add": false, "edit": false, "delete": false },
+         "centros": { "add": true, "edit": true, "delete": false },
+         "convocatorias": { "add": true, "edit": false, "delete": true },
+         "correo": true
+      }
+   },
+   {
+      "id": 5,
+      "nombre": "pedro99",
+      "correo": "pedro@gmail.com",
+      "permisos": {
+         "usuarios": { "add": true, "edit": false, "delete": true },
+         "centros": { "add": false, "edit": false, "delete": true },
+         "convocatorias": { "add": true, "edit": true, "delete": true },
+         "correo": false
+      }
+   }
+]

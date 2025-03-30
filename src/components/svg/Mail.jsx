@@ -1,11 +1,13 @@
-export function MailLogo() {
+import PropTypes from 'prop-types'
+
+export function MailLogo({ strokeColor = 'currentColor' }) {
    return (
       <svg
          xmlns='http://www.w3.org/2000/svg'
          fill='none'
          viewBox='0 0 24 24'
          strokeWidth={1.5}
-         stroke='currentColor'
+         stroke={strokeColor}
          className='size-6'
       >
          <path
@@ -15,4 +17,8 @@ export function MailLogo() {
          />
       </svg>
    )
+}
+
+MailLogo.propTypes = {
+   strokeColor: PropTypes.string,
 }

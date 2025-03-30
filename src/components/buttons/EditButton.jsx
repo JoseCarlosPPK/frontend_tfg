@@ -3,16 +3,15 @@ import { Button, TYPES_BUTTONS } from '.'
 import { EditLogo } from '../svg'
 
 export function EditButton({
-   onclick,
-   title,
    size = 'size-10',
    type = TYPES_BUTTONS.DEFAULT,
+   ...props
 }) {
    const buttonColor = type.buttonColor ?? 'bg-yellow-500 hover:bg-yellow-600'
    const svgColor = type.svgColor ?? 'black'
 
    return (
-      <Button color={buttonColor} size={size} title={title} onclick={onclick}>
+      <Button color={buttonColor} size={size} {...props}>
          <EditLogo strokeColor={svgColor} />
       </Button>
    )
