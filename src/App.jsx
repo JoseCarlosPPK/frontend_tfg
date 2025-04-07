@@ -4,6 +4,7 @@ import {
    CentrosPage,
    ConvocatoriasAddPage,
    ConvocatoriasPage,
+   CorreoPage,
    LoginPage,
    PrincipalPage,
 } from './pages'
@@ -25,6 +26,7 @@ function App() {
          {currentPath === Routes.Admin && <AdminPage />}
          {currentPath === Routes.AdminRegistros && <RegistrosPage />}
          {currentPath === Routes.AdminUsuarios && <UsuariosPage />}
+         {currentPath === Routes.Correo && <CorreoPage />}
       </>
    )
 }
