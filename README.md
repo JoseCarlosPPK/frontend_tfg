@@ -22,7 +22,8 @@ una página prácticamente estática o usará un fichero .json con datos de prue
 
 ## Estado actual
 
-Desarrollando la UI estática de /correo y /admin. Ver issues [29](https://github.com/JoseCarlosPPK/frontend_tfg/issues/29) y [30](https://github.com/JoseCarlosPPK/frontend_tfg/issues/29)
+La UI estática está completada. El próximo desarrollo va a ser la **autorización**, para
+tener solo acceso si inicias sesión y poder así usar el backend protegido.
 
 ## Iniciar el proyecto en desarrollo
 
