@@ -22,8 +22,14 @@ una página prácticamente estática o usará un fichero .json con datos de prue
 
 ## Estado actual
 
-La UI estática está completada. El próximo desarrollo va a ser la **autorización**, para
-tener solo acceso si inicias sesión y poder así usar el backend protegido.
+- [x] UI estática
+- [x] Autenticación
+
+Ahora, se procede a desarrollar la parte funcional de la web. Dicho de otra manera,
+a realizar llamadas a la API, generar contenido dinámico y a interactuar con dicho contenido
+para añadir nuevo, editarlo, borrarlo. Además, tenemos la interacción de seleccionar datos
+de las tablas y paginación. Por último, será necesario mostras modales para ciertas operaciones de añadir, editar y modales de confirmación para borrar, más modales/notificaciones para los
+resultados de dichas operaciones.
 
 ## Iniciar el proyecto en desarrollo
 
