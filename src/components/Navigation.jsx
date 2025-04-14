@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
+import { useAuth } from '../hooks/useAuth.js'
 import { Routes } from '../routes.js'
 import { LogoutLogo } from './svg'
 
 export function Navigation() {
+   const { signOut } = useAuth()
+
    return (
       <nav className='bg-secundario flex justify-between px-5 py-3'>
          <ol className='flex gap-6'>
@@ -12,7 +15,7 @@ export function Navigation() {
             <NavItem href={Routes.Correo}>Correo</NavItem>
          </ol>
 
-         <a href={Routes.Login} className='hover-resize'>
+         <a href='' onClick={signOut} className='hover-resize'>
             <LogoutLogo />
          </a>
       </nav>

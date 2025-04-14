@@ -1,7 +1,21 @@
+import { useState } from 'react'
 import { AppFrame } from '../components/AppFrame.jsx'
 import { Input } from '../components/inputs'
+import { useAuth } from '../hooks/useAuth.js'
 
 export function LoginPage() {
+   const { signIn } = useAuth()
+   const [error, setError] = useState('')
+
+   function handleOnSubmit(event) {
+      event.preventDefault()
+      signIn(...new FormData(event.target).values()).then((esCorrecto) => {
+         if (!esCorrecto) {
+            setError('Credenciales incorrectas')
+         }
+      })
+   }
+
    return (
       <AppFrame>
          {/* https://flowbite.com/blocks/marketing/login/ */}
@@ -13,7 +27,12 @@ export function LoginPage() {
                   <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900'>
                      Inicio de sesión
                   </h1>
-                  <form className='space-y-4 md:space-y-6' action=''>
+                  <form
+                     className='space-y-4 md:space-y-6'
+                     onSubmit={handleOnSubmit}
+                     method='post'
+                     id='login'
+                  >
                      <div>
                         <label
                            htmlFor='user'
@@ -46,6 +65,11 @@ export function LoginPage() {
                            required=''
                         />
                      </div>
+                     {error && (
+                        <div className='text-center text-red-600'>
+                           <p>{error}</p>
+                        </div>
+                     )}
                      <div className='flex items-center justify-between gap-2'>
                         <div className='flex items-center'>
                            <input
