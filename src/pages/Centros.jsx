@@ -1,11 +1,13 @@
 import { Pagination } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { AddButton, DeleteButton, EditButton } from '../components/buttons'
 import { Input, Select } from '../components/inputs'
 import { FarmaciasColumnas } from '../components/models/columns.jsx'
 import { Table } from '../components/Table.jsx'
-import farmacias from '../data/farmacias.json'
+import { useAuth } from '../hooks/useAuth.js'
+import { request } from '../services'
 
 const FarmaciasColumnasEdited = [
    ...FarmaciasColumnas,
@@ -25,6 +27,27 @@ const FarmaciasColumnasEdited = [
 ]
 
 export function CentrosPage() {
+   const { signOut } = useAuth()
+   const [farmacias, setFarmacias] = useState([])
+   const [queryString, setQueryString] = useState({ page: 1, perPage: 10 })
+   const [totalCentros, setTotalCentros] = useState(0)
+
+   useEffect(() => {
+      request
+         .farmacias(queryString.page, queryString.perPage)
+         .then((res) => {
+            if (res.ok) {
+               res.json().then((resJson) => {
+                  setFarmacias(resJson.data)
+                  setTotalCentros(resJson.total)
+               })
+            }
+         })
+         .catch(() => {
+            signOut()
+         })
+   }, [queryString])
+
    return (
       <AppNavFrame>
          <header className='my-2'>
@@ -71,10 +94,18 @@ export function CentrosPage() {
                         name='amount_centers'
                         list='opt_amount_centers'
                         defaultValue='10'
-                        min='10'
-                        step='10'
+                        min='1'
+                        step='5'
                         autoComplete='off'
                         className='w-20'
+                        onChange={(event) => {
+                           if (event.target.value > 0) {
+                              setQueryString({
+                                 page: 1,
+                                 perPage: event.target.value,
+                              })
+                           }
+                        }}
                      />
                      <datalist id='opt_amount_centers'>
                         <option value='10'></option>
@@ -83,7 +114,12 @@ export function CentrosPage() {
                      </datalist>
                   </div>
 
-                  <span>10 de 1000</span>
+                  <span>
+                     {queryString.page * queryString.perPage -
+                        queryString.perPage +
+                        1}
+                     -{queryString.page * queryString.perPage} de {totalCentros}
+                  </span>
                </div>
                {/* <TablePagination
                      rowsPerPageOptions={[5, 10, 25]}
@@ -97,13 +133,14 @@ export function CentrosPage() {
                      className='mx-16 my-2 flex items-center justify-center gap-2'
                   /> */}
                {/* Tabla */}
-               <Table columns={FarmaciasColumnasEdited} data={farmacias.data} />
+               <Table columns={FarmaciasColumnasEdited} data={farmacias} />
 
                {/* Pagination */}
                <Pagination
                   color='secondary'
-                  count={10}
+                  count={Math.ceil(totalCentros / queryString.perPage)}
                   boundaryCount={2}
+                  page={queryString.page}
                   size='large'
                   sx={{
                      '& .MuiPaginationItem-root:hover': {
@@ -112,6 +149,12 @@ export function CentrosPage() {
                      },
                   }}
                   className='m-2 justify-self-center'
+                  onChange={(_, page) => {
+                     setQueryString((previousState) => ({
+                        ...previousState,
+                        page: page,
+                     }))
+                  }}
                />
             </div>
          </main>

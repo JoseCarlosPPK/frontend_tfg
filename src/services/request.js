@@ -23,7 +23,7 @@ export class Request {
    static request(url, method = 'GET', body = null) {
       let requestOptions = {
          method: method,
-         credentials: 'include',
+         credentials: 'include', // https://developer.okta.com/blog/2021/08/02/fix-common-problems-cors#credentials-are-a-special-case
       }
 
       if (method === 'POST' || method === 'PUT') {
@@ -44,6 +44,13 @@ export class Request {
          username: username,
          password: password,
       })
+   }
+
+   farmacias(page, perPage) {
+      return Request.request(
+         `${this.#endpoints.farmacias}?page=${page}&per_page=${perPage}`,
+         'GET'
+      )
    }
 }
 
