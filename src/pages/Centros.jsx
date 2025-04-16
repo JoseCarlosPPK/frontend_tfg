@@ -29,12 +29,22 @@ const FarmaciasColumnasEdited = [
 export function CentrosPage() {
    const { signOut } = useAuth()
    const [farmacias, setFarmacias] = useState([])
-   const [queryString, setQueryString] = useState({ page: 1, perPage: 10 })
+   const [queryString, setQueryString] = useState({
+      page: 1,
+      perPage: 10,
+      search: '',
+      filter: '',
+   })
    const [totalCentros, setTotalCentros] = useState(0)
 
    useEffect(() => {
       request
-         .farmacias(queryString.page, queryString.perPage)
+         .farmacias(
+            queryString.page,
+            queryString.perPage,
+            queryString.search,
+            queryString.filter
+         )
          .then((res) => {
             if (res.ok) {
                res.json().then((resJson) => {
@@ -47,6 +57,19 @@ export function CentrosPage() {
             signOut()
          })
    }, [queryString])
+
+   function handleSubmit(event) {
+      event.preventDefault()
+
+      const form = new FormData(event.target)
+
+      setQueryString((prev) => ({
+         ...prev,
+         page: 1,
+         search: form.get('search'),
+         filter: form.get('filter'),
+      }))
+   }
 
    return (
       <AppNavFrame>
@@ -62,16 +85,20 @@ export function CentrosPage() {
          <main className='w-full justify-self-center 2xl:w-[80%]'>
             {/* Search input and filters */}
             <div>
-               <form className='flex justify-center gap-2'>
+               <form
+                  className='flex justify-center gap-2'
+                  onSubmit={handleSubmit}
+                  id='searchForm'
+               >
                   <Input
-                     type='text'
-                     name='buscador'
+                     type='search'
+                     name='search'
                      className='p-2.5'
                      placeholder='Buscar ...'
                   />
-                  <Select name='filtros'>
+                  <Select name='filter'>
                      <option value='nombre'>Nombre del centro</option>
-                     <option value='responsable'>Tutor</option>
+                     <option value='personas'>Tutor</option>
                      <option value='localidad'>Localidad</option>
                      <option value='provincia'>Provincia</option>
                      <option value='cp'>Código Postal</option>
@@ -100,10 +127,11 @@ export function CentrosPage() {
                         className='w-20'
                         onChange={(event) => {
                            if (event.target.value > 0) {
-                              setQueryString({
+                              setQueryString((prev) => ({
+                                 ...prev,
                                  page: 1,
                                  perPage: event.target.value,
-                              })
+                              }))
                            }
                         }}
                      />
