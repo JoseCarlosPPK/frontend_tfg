@@ -46,9 +46,9 @@ export class Request {
       })
    }
 
-   farmacias(page, perPage) {
+   farmacias(page, perPage, search, filter) {
       return Request.request(
-         `${this.#endpoints.farmacias}?page=${page}&per_page=${perPage}`,
+         `${this.#endpoints.farmacias}?page=${page}&per_page=${perPage}&search=${search}&filter=${filter}`,
          'GET'
       )
    }
