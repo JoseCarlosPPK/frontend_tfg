@@ -1,25 +1,369 @@
 {
    "data": [
       {
+         "correo": "central@farmacia.com",
+         "cp": "18001",
+         "direccion": "Calle Mayor, 1",
          "id": 1,
-         "tutor": "PPK",
-         "calle": "Calle Falsa 123",
-         "localidad": "Armilla",
+         "localidad": "Granada",
+         "movil": "612000001",
+         "nombre": "Farmacia Central",
+         "personas": [
+            {
+               "id": 1,
+               "nombre": "Antonio García López"
+            },
+            {
+               "id": 11,
+               "nombre": "David Gómez Torres"
+            },
+            {
+               "id": 12,
+               "nombre": "Marta Jiménez Álvarez"
+            }
+         ],
          "provincia": "Granada",
-         "cp": "18100",
-         "correo": "ppk@example.com",
-         "telefono": "958123456",
-         "movil": "666123456"
+         "telefono": "958000001"
       },
       {
+         "correo": "parque@farmacia.com",
+         "cp": "18002",
+         "direccion": "Avenida del Parque, 2",
          "id": 2,
-         "tutor": "Ángel",
-         "calle": "Avenida Real 45",
-         "localidad": "Chana",
+         "localidad": "Granada",
+         "movil": "612000002",
+         "nombre": "Farmacia del Parque",
+         "personas": [
+            {
+               "id": 2,
+               "nombre": "Manuel Rodríguez Pérez"
+            }
+         ],
          "provincia": "Granada",
-         "cp": "18015",
-         "correo": "angel@example.com",
-         "telefono": "958654321"
+         "telefono": "958000002"
+      },
+      {
+         "correo": "sanjose@farmacia.com",
+         "cp": "18100",
+         "direccion": "Calle San José, 3",
+         "id": 3,
+         "localidad": "Armilla",
+         "movil": "612000003",
+         "nombre": "Farmacia San José",
+         "personas": [
+            {
+               "id": 3,
+               "nombre": "José González Sánchez"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000003"
+      },
+      {
+         "correo": "virgenblanca@farmacia.com",
+         "cp": "18100",
+         "direccion": "Calle Virgen Blanca, 4",
+         "id": 4,
+         "localidad": "Armilla",
+         "movil": "612000004",
+         "nombre": "Farmacia Virgen Blanca",
+         "personas": [
+            {
+               "id": 4,
+               "nombre": "María Carmen Fernández Martínez"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000004"
+      },
+      {
+         "correo": "europa@farmacia.com",
+         "cp": "18100",
+         "direccion": "Avenida Europa, 5",
+         "id": 5,
+         "localidad": "Armilla",
+         "movil": "612000005",
+         "nombre": "Farmacia Europa",
+         "personas": [
+            {
+               "id": 5,
+               "nombre": "Luis Martínez García"
+            },
+            {
+               "id": 13,
+               "nombre": "Francisco Díaz Moreno"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000005"
+      },
+      {
+         "correo": "lasalud@farmacia.com",
+         "cp": "18100",
+         "direccion": "Calle La Salud, 6",
+         "id": 6,
+         "localidad": "Armilla",
+         "movil": "612000006",
+         "nombre": "Farmacia La Salud",
+         "personas": [
+            {
+               "id": 6,
+               "nombre": "Ana María López Ruiz"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000006"
+      },
+      {
+         "correo": "elpilar@farmacia.com",
+         "cp": "18100",
+         "direccion": "Calle El Pilar, 7",
+         "id": 7,
+         "localidad": "Armilla",
+         "movil": "612000007",
+         "nombre": "Farmacia El Pilar",
+         "personas": [
+            {
+               "id": 7,
+               "nombre": "Carlos Sánchez Martín"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000007"
+      },
+      {
+         "correo": "sanmiguel@farmacia.com",
+         "cp": "18100",
+         "direccion": "Avenida San Miguel, 8",
+         "id": 8,
+         "localidad": "Armilla",
+         "movil": "612000008",
+         "nombre": "Farmacia San Miguel",
+         "personas": [
+            {
+               "id": 8,
+               "nombre": "Laura Pérez Gómez"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000008"
+      },
+      {
+         "correo": "laestrella@farmacia.com",
+         "cp": "18100",
+         "direccion": "Calle La Estrella, 9",
+         "id": 9,
+         "localidad": "Armilla",
+         "movil": "612000009",
+         "nombre": "Farmacia La Estrella",
+         "personas": [
+            {
+               "id": 9,
+               "nombre": "José Antonio Ruiz Díaz"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000009"
+      },
+      {
+         "correo": "delsol@farmacia.com",
+         "cp": "18100",
+         "direccion": "Calle del Sol, 10",
+         "id": 10,
+         "localidad": "Armilla",
+         "movil": "612000010",
+         "nombre": "Farmacia del Sol",
+         "personas": [
+            {
+               "id": 10,
+               "nombre": "Pilar Fernández Romero"
+            },
+            {
+               "id": 14,
+               "nombre": "Rosa Sánchez Vargas"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000010"
+      },
+      {
+         "correo": "lunanueva@farmacia.com",
+         "cp": "18003",
+         "direccion": "Calle Luna Nueva, 11",
+         "id": 11,
+         "localidad": "Granada",
+         "movil": "612000011",
+         "nombre": "Farmacia Luna Nueva",
+         "personas": [
+            {
+               "id": 11,
+               "nombre": "David Gómez Torres"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000011"
+      },
+      {
+         "correo": "estrellaalba@farmacia.com",
+         "cp": "18004",
+         "direccion": "Avenida Estrella del Alba, 12",
+         "id": 12,
+         "localidad": "Granada",
+         "movil": "612000012",
+         "nombre": "Farmacia Estrella del Alba",
+         "personas": [
+            {
+               "id": 12,
+               "nombre": "Marta Jiménez Álvarez"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000012"
+      },
+      {
+         "correo": "losangeles@farmacia.com",
+         "cp": "18005",
+         "direccion": "Calle Los Ángeles, 13",
+         "id": 13,
+         "localidad": "Granada",
+         "movil": "612000013",
+         "nombre": "Farmacia Los Ángeles",
+         "personas": [
+            {
+               "id": 13,
+               "nombre": "Francisco Díaz Moreno"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000013"
+      },
+      {
+         "correo": "sanrafael@farmacia.com",
+         "cp": "18006",
+         "direccion": "Calle San Rafael, 14",
+         "id": 14,
+         "localidad": "Granada",
+         "movil": "612000014",
+         "nombre": "Farmacia San Rafael",
+         "personas": [
+            {
+               "id": 14,
+               "nombre": "Rosa Sánchez Vargas"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000014"
+      },
+      {
+         "correo": "laesperanza@farmacia.com",
+         "cp": "18007",
+         "direccion": "Avenida La Esperanza, 15",
+         "id": 15,
+         "localidad": "Granada",
+         "movil": "612000015",
+         "nombre": "Farmacia La Esperanza",
+         "personas": [
+            {
+               "id": 15,
+               "nombre": "Jorge Ruiz Castro"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000015"
+      },
+      {
+         "correo": "lospinos@farmacia.com",
+         "cp": "18008",
+         "direccion": "Calle Los Pinos, 16",
+         "id": 16,
+         "localidad": "Granada",
+         "movil": "612000016",
+         "nombre": "Farmacia Los Pinos",
+         "personas": [
+            {
+               "id": 16,
+               "nombre": "Isabel Romero Hernández"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000016"
+      },
+      {
+         "correo": "elcarmen@farmacia.com",
+         "cp": "18009",
+         "direccion": "Calle El Carmen, 17",
+         "id": 17,
+         "localidad": "Granada",
+         "movil": "612000017",
+         "nombre": "Farmacia El Carmen",
+         "personas": [
+            {
+               "id": 17,
+               "nombre": "Sergio Morales Navarro"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000017"
+      },
+      {
+         "correo": "sanantonio@farmacia.com",
+         "cp": "18010",
+         "direccion": "Avenida San Antonio, 18",
+         "id": 18,
+         "localidad": "Granada",
+         "movil": "612000018",
+         "nombre": "Farmacia San Antonio",
+         "personas": [
+            {
+               "id": 18,
+               "nombre": "Elena Delgado Cruz"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000018"
+      },
+      {
+         "correo": "lamerced@farmacia.com",
+         "cp": "18011",
+         "direccion": "Calle La Merced, 19",
+         "id": 19,
+         "localidad": "Granada",
+         "movil": "612000019",
+         "nombre": "Farmacia La Merced",
+         "personas": [
+            {
+               "id": 19,
+               "nombre": "Ricardo Ortega Silva"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000019"
+      },
+      {
+         "correo": "losalamos@farmacia.com",
+         "cp": "18012",
+         "direccion": "Calle Los Álamos, 20",
+         "id": 20,
+         "localidad": "Granada",
+         "movil": "612000020",
+         "nombre": "Farmacia Los Álamos",
+         "personas": [
+            {
+               "id": 16,
+               "nombre": "Isabel Romero Hernández"
+            },
+            {
+               "id": 17,
+               "nombre": "Sergio Morales Navarro"
+            },
+            {
+               "id": 20,
+               "nombre": "Patricia Vega Ríos"
+            }
+         ],
+         "provincia": "Granada",
+         "telefono": "958000020"
       }
-   ]
+   ],
+   "total": 30
 }
