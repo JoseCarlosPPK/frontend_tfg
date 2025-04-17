@@ -63,11 +63,22 @@ export function CentrosPage() {
 
       const form = new FormData(event.target)
 
+      // Si se repite la búsqueda no la hacemos
+      if (queryString.search === form.get('search')) return
+
       setQueryString((prev) => ({
          ...prev,
          page: 1,
          search: form.get('search'),
          filter: form.get('filter'),
+      }))
+   }
+
+   function handleChange(event) {
+      setQueryString((prev) => ({
+         ...prev,
+         page: 1,
+         filter: event.target.value,
       }))
    }
 
@@ -88,7 +99,6 @@ export function CentrosPage() {
                <form
                   className='flex justify-center gap-2'
                   onSubmit={handleSubmit}
-                  id='searchForm'
                >
                   <Input
                      type='search'
@@ -96,7 +106,7 @@ export function CentrosPage() {
                      className='p-2.5'
                      placeholder='Buscar ...'
                   />
-                  <Select name='filter'>
+                  <Select name='filter' onChange={handleChange}>
                      <option value='nombre'>Nombre del centro</option>
                      <option value='personas'>Tutor</option>
                      <option value='localidad'>Localidad</option>
