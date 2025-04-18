@@ -1,29 +1,19 @@
-import PropTypes from 'prop-types'
-import { Input, Select } from '.'
+import { Input } from '.'
+import { SearchLogo } from '../svg'
 
-export function Search({ filters }) {
+export function Search({ ...props }) {
    return (
-      <form className='flex justify-center gap-2'>
+      <div className='relative'>
          <Input
             type='search'
-            name='buscador'
-            id='buscador'
-            className='p-2.5'
-            placeholder='Buscar ...'
+            name='search'
+            placeholder='Usuario'
+            className='p-2.5 pr-10'
+            {...props}
          />
-         <Select name='filtro' id='filtro'>
-            {[...filters.keys()].map((key, index) => {
-               return (
-                  <option value={key} key={index}>
-                     {filters.get(key)}
-                  </option>
-               )
-            })}
-         </Select>
-      </form>
+         <button type='submit' className='absolute right-1 top-2 text-gray-600'>
+            <SearchLogo />
+         </button>
+      </div>
    )
-}
-
-Search.propTypes = {
-   filters: PropTypes.instanceOf(Map).isRequired,
 }

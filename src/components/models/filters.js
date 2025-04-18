@@ -1,10 +1,9 @@
 export const filters = new Map([
    ['nombre', 'Nombre del centro'],
-   ['tutor', 'Tutor'],
-   ['unidad', 'Unidad'],
+   ['personas', 'Tutor'],
    ['localidad', 'Localidad'],
    ['provincia', 'Provincia'],
-   ['corre', 'Correo electrónico'],
+   ['correo', 'Correo electrónico'],
    ['cp', 'Código Postal'],
    ['telefono', 'Teléfono'],
    ['movil', 'Móvil'],

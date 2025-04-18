@@ -8,8 +8,7 @@ import {
    MailButton,
    TYPES_BUTTONS,
 } from '../../components/buttons'
-import { Input } from '../../components/inputs'
-import { SearchLogo } from '../../components/svg'
+import { Input, Search } from '../../components/inputs'
 import { Table } from '../../components/Table.jsx'
 import usuarios from '../../data/usuarios.json'
 
@@ -116,18 +115,7 @@ export function UsuariosPage() {
 
          <main className='2xl:w-[80%]'>
             <form action='' className='flex items-center justify-center'>
-               <Input
-                  type='search'
-                  name='buscador'
-                  placeholder='Usuario'
-                  className='p-2.5'
-               />
-               <button
-                  type='submit'
-                  className='relative -left-10 top-0 text-gray-600'
-               >
-                  <SearchLogo />
-               </button>
+               <Search />
             </form>
             <div>
                {/* Cantidad de elementos a ver */}

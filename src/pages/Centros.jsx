@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { AddButton, DeleteButton, EditButton } from '../components/buttons'
-import { Input, Select } from '../components/inputs'
+import { Input, SearchSelect } from '../components/inputs'
 import { FarmaciasColumnas } from '../components/models/columns.jsx'
+import { filters } from '../components/models/filters.js'
 import { Table } from '../components/Table.jsx'
 import { useAuth, useQueryString } from '../hooks'
 import { request } from '../services'
@@ -72,22 +73,10 @@ export function CentrosPage() {
                   className='flex justify-center gap-2'
                   onSubmit={handleSubmit}
                >
-                  <Input
-                     type='search'
-                     name='search'
-                     className='p-2.5'
-                     placeholder='Buscar ...'
+                  <SearchSelect
+                     filters={filters}
+                     handleSelectChange={handleSelectChange}
                   />
-                  <Select name='filter' onChange={handleSelectChange}>
-                     <option value='nombre'>Nombre del centro</option>
-                     <option value='personas'>Tutor</option>
-                     <option value='localidad'>Localidad</option>
-                     <option value='provincia'>Provincia</option>
-                     <option value='cp'>Código Postal</option>
-                     <option value='correo'>Correo electrónico</option>
-                     <option value='telefono'>Teléfono</option>
-                     <option value='movil'>Móvil</option>
-                  </Select>
                </form>
             </div>
             {/* Contenedor genérico para la tabla y paginación */}
