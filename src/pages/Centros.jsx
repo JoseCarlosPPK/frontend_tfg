@@ -6,7 +6,7 @@ import { AddButton, DeleteButton, EditButton } from '../components/buttons'
 import { Input, Select } from '../components/inputs'
 import { FarmaciasColumnas } from '../components/models/columns.jsx'
 import { Table } from '../components/Table.jsx'
-import { useAuth } from '../hooks/useAuth.js'
+import { useAuth, useQueryString } from '../hooks'
 import { request } from '../services'
 
 const FarmaciasColumnasEdited = [
@@ -29,12 +29,8 @@ const FarmaciasColumnasEdited = [
 export function CentrosPage() {
    const { signOut } = useAuth()
    const [farmacias, setFarmacias] = useState([])
-   const [queryString, setQueryString] = useState({
-      page: 1,
-      perPage: 10,
-      search: '',
-      filter: '',
-   })
+   const { queryString, setQueryString, handleSubmit, handleSelectChange } =
+      useQueryString()
    const [totalCentros, setTotalCentros] = useState(0)
 
    useEffect(() => {
@@ -57,30 +53,6 @@ export function CentrosPage() {
             signOut()
          })
    }, [queryString])
-
-   function handleSubmit(event) {
-      event.preventDefault()
-
-      const form = new FormData(event.target)
-
-      // Si se repite la búsqueda no la hacemos
-      if (queryString.search === form.get('search')) return
-
-      setQueryString((prev) => ({
-         ...prev,
-         page: 1,
-         search: form.get('search'),
-         filter: form.get('filter'),
-      }))
-   }
-
-   function handleChange(event) {
-      setQueryString((prev) => ({
-         ...prev,
-         page: 1,
-         filter: event.target.value,
-      }))
-   }
 
    return (
       <AppNavFrame>
@@ -106,7 +78,7 @@ export function CentrosPage() {
                      className='p-2.5'
                      placeholder='Buscar ...'
                   />
-                  <Select name='filter' onChange={handleChange}>
+                  <Select name='filter' onChange={handleSelectChange}>
                      <option value='nombre'>Nombre del centro</option>
                      <option value='personas'>Tutor</option>
                      <option value='localidad'>Localidad</option>

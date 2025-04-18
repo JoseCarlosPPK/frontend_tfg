@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { AppFrame } from '../components/AppFrame.jsx'
 import { Input } from '../components/inputs'
-import { useAuth } from '../hooks/useAuth.js'
+import { useAuth } from '../hooks'
 
 export function LoginPage() {
    const { signIn } = useAuth()

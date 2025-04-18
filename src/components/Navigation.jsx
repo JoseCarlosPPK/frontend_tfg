@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useAuth } from '../hooks/useAuth.js'
+import { useAuth } from '../hooks'
 import { Routes } from '../routes.js'
 import { LogoutLogo } from './svg'
 
