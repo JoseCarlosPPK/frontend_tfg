@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { ArrowButton } from '../components/buttons'
-import { Input, Search, Select } from '../components/inputs'
+import { Input, SearchSelect, Select } from '../components/inputs'
 import {
    FarmaciasColumnas,
    FarmaciasHospitalariasColumnas,
@@ -98,7 +98,9 @@ export function CorreoPage() {
                            </Select>
                         </aside>
                         <div className='m-4 grow'>
-                           <Search filters={filters} />
+                           <form className='flex justify-center gap-2'>
+                              <SearchSelect filters={filters} />
+                           </form>
 
                            {/* Contenedor genérico para la tabla y paginación */}
                            <div>
@@ -191,7 +193,7 @@ export function CorreoPage() {
                            </Select>
                         </aside>
                         <div className='m-4 grow'>
-                           <Search filters={filters} />
+                           <SearchSelect filters={filters} />
 
                            {/* Contenedor genérico para la tabla y paginación */}
                            <div>

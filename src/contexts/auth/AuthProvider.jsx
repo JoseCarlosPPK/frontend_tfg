@@ -6,7 +6,7 @@ export function AuthProvider({ children }) {
    const [isAuth, setIsAuth] = useState(
       document.cookie.includes('csrf_access_token')
    )
-   console.log(isAuth)
+
    return (
       <AuthContext.Provider value={{ isAuth, setIsAuth }}>
          {children}
