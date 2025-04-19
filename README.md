@@ -28,7 +28,7 @@ una página prácticamente estática o usará un fichero .json con datos de prue
 Ahora, se procede a desarrollar la parte funcional de la web. Dicho de otra manera,
 a realizar llamadas a la API, generar contenido dinámico y a interactuar con dicho contenido
 para añadir nuevo, editarlo, borrarlo. Además, tenemos la interacción de seleccionar datos
-de las tablas y paginación. Por último, será necesario mostras modales para ciertas operaciones de añadir, editar y modales de confirmación para borrar, más modales/notificaciones para los
+de las tablas y paginación. Por último, será necesario mostras modales para ciertas operaciones de añadir, editar y modales de confirmación para borrar, mas modales/notificaciones para los
 resultados de dichas operaciones.
 
 ## Iniciar el proyecto en desarrollo
