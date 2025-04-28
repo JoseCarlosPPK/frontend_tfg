@@ -1,3 +1,4 @@
+import { getCookie } from '../utils/cookies.js'
 import { endpoints } from './endpoints.js'
 
 export class Request {
@@ -21,17 +22,26 @@ export class Request {
     * @returns {Promise<Response>} Respuesta de la petición
     */
    static request(url, method = 'GET', body = null) {
+      let headers = {}
       let requestOptions = {
          method: method,
          credentials: 'include', // https://developer.okta.com/blog/2021/08/02/fix-common-problems-cors#credentials-are-a-special-case
+         headers: headers,
+      }
+
+      if (method != 'GET') {
+         Object.assign(headers, {
+            'X-CSRF-TOKEN': getCookie('csrf_access_token'),
+         })
       }
 
       if (method === 'POST' || method === 'PUT') {
+         Object.assign(headers, {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+         })
+
          Object.assign(requestOptions, {
-            headers: {
-               Accept: 'application/json',
-               'Content-Type': 'application/json',
-            },
             body: JSON.stringify(body),
          })
       }
@@ -51,6 +61,10 @@ export class Request {
          `${this.#endpoints.farmacias}?page=${page}&per_page=${perPage}&search=${search}&filter=${filter}`,
          'GET'
       )
+   }
+
+   deleteFarmacia(id) {
+      return Request.request(`${this.#endpoints.farmacias}/${id}`, 'DELETE')
    }
 }
 
