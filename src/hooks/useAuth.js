@@ -6,16 +6,10 @@ export function useAuth() {
    const { setIsAuth } = useContext(AuthContext)
 
    function signIn(username, password) {
-      return request
-         .auth(username, password)
-         .then((res) => {
-            setIsAuth(res.ok)
-            return res.ok
-         })
-         .catch(() => {
-            setIsAuth(false)
-            return false
-         })
+      return request.auth(username, password).then((res) => {
+         setIsAuth(res.ok)
+         return res.ok
+      })
    }
 
    function signOut() {

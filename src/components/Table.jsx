@@ -23,7 +23,7 @@ export function Table({ columns, data, checked }) {
             </tr>
          </thead>
          <tbody>
-            {data.map((row) => {
+            {data.map((row, index) => {
                return (
                   <tr key={row.id}>
                      {checked && (
@@ -39,7 +39,7 @@ export function Table({ columns, data, checked }) {
                         </td>
                      )}
                      {columns.map((column) => {
-                        return column.createCell(row)
+                        return column.createCell(row, index)
                      })}
                   </tr>
                )

@@ -1,31 +1,17 @@
 import { Pagination } from '@mui/material'
+import { useNotifications } from '@toolpad/core'
 import { useEffect, useState } from 'react'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { AddButton, DeleteButton, EditButton } from '../components/buttons'
 import { Input, SearchSelect } from '../components/inputs'
+import { Modal } from '../components/Modal.jsx'
 import { FarmaciasColumnas } from '../components/models/columns.jsx'
 import { filters } from '../components/models/filters.js'
+import { AUTO_HIDE_DURATION } from '../components/snacbarks'
 import { Table } from '../components/Table.jsx'
 import { useAuth, useQueryString } from '../hooks'
 import { request } from '../services'
-
-const FarmaciasColumnasEdited = [
-   ...FarmaciasColumnas,
-   {
-      name: 'Acción',
-      createCell: (row) => {
-         return (
-            <td key={row.id}>
-               <div className='flex items-center justify-center gap-2'>
-                  <EditButton />
-                  <DeleteButton />
-               </div>
-            </td>
-         )
-      },
-   },
-]
 
 export function CentrosPage() {
    const { signOut } = useAuth()
@@ -33,8 +19,33 @@ export function CentrosPage() {
    const { queryString, setQueryString, handleSubmit, handleSelectChange } =
       useQueryString()
    const [totalCentros, setTotalCentros] = useState(0)
+   const [centroElegido, setCentroElegido] = useState({ nombre: '', id: '' })
+   const [open, setOpen] = useState(false)
+   const notifications = useNotifications()
 
-   useEffect(() => {
+   const FarmaciasColumnasEdited = [
+      ...FarmaciasColumnas,
+      {
+         name: 'Acción',
+         createCell: (row, index) => {
+            return (
+               <td key={row.id}>
+                  <div className='flex items-center justify-center gap-2'>
+                     <EditButton />
+                     <DeleteButton
+                        onClick={() => {
+                           setCentroElegido(farmacias[index])
+                           setOpen(true)
+                        }}
+                     />
+                  </div>
+               </td>
+            )
+         },
+      },
+   ]
+
+   function fetchData() {
       request
          .farmacias(
             queryString.page,
@@ -48,15 +59,90 @@ export function CentrosPage() {
                   setFarmacias(resJson.data)
                   setTotalCentros(resJson.total)
                })
+            } else {
+               signOut()
             }
          })
          .catch(() => {
-            signOut()
+            // alerta de error
+            notifications.show('Fallo de conexión', {
+               severity: 'error',
+               autoHideDuration: AUTO_HIDE_DURATION,
+            })
          })
+   }
+
+   useEffect(() => {
+      fetchData()
    }, [queryString])
 
    return (
       <AppNavFrame>
+         <Modal
+            open={open}
+            onClose={() => setOpen(false)}
+            confirmText='Borrar'
+            title={`Borrar ${centroElegido.nombre}`}
+            confirmColorClassName='red'
+            onConfirm={() => {
+               // Mostrar alert del resultado
+               request
+                  .deleteFarmacia(centroElegido.id)
+                  .then((res) => {
+                     setOpen(false)
+
+                     if (res.ok) {
+                        if (
+                           queryString.perPage == 1 &&
+                           totalCentros - 1 < queryString.page &&
+                           queryString.page > 1
+                        ) {
+                           setQueryString((prev) => ({
+                              ...prev,
+                              page: prev.page - 1,
+                           }))
+                        } else {
+                           fetchData()
+                        }
+
+                        // alerta de éxito
+                        notifications.show(
+                           `El centro ${centroElegido.nombre} ha sido borrado`,
+
+                           {
+                              severity: 'success',
+                              autoHideDuration: AUTO_HIDE_DURATION,
+                           }
+                        )
+                     } else {
+                        if (res.status === 401) {
+                           signOut()
+                        }
+                        // alerta de error
+                        notifications.show(
+                           `El centro ${centroElegido.nombre} NO ha sido borrado`,
+                           {
+                              severity: 'error',
+                              autoHideDuration: AUTO_HIDE_DURATION,
+                           }
+                        )
+                     }
+                  })
+                  .catch(() => {
+                     // alerta de error
+                     notifications.show('Fallo de conexión', {
+                        severity: 'error',
+                        autoHideDuration: AUTO_HIDE_DURATION,
+                     })
+                  })
+            }}
+         >
+            <p>
+               ¿Está seguro de que quiere borrar el centro{' '}
+               {centroElegido.nombre}? Una vez hecho, no habrá vuelta atrás.
+            </p>
+         </Modal>
+
          <header className='my-2'>
             <Breadcrumb />
 
