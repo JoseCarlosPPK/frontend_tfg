@@ -1,19 +1,31 @@
+import { useNotifications } from '@toolpad/core'
 import { useState } from 'react'
 import { AppFrame } from '../components/AppFrame.jsx'
 import { Input } from '../components/inputs'
+import { AUTO_HIDE_DURATION } from '../components/snacbarks'
 import { useAuth } from '../hooks'
 
 export function LoginPage() {
    const { signIn } = useAuth()
    const [error, setError] = useState('')
+   const notifications = useNotifications()
 
    function handleOnSubmit(event) {
       event.preventDefault()
-      signIn(...new FormData(event.target).values()).then((esCorrecto) => {
-         if (!esCorrecto) {
-            setError('Credenciales incorrectas')
-         }
-      })
+      signIn(...new FormData(event.target).values())
+         .then((esCorrecto) => {
+            console.log('Hola')
+            if (!esCorrecto) {
+               setError('Credenciales incorrectas')
+            }
+         })
+         .catch(() => {
+            // alerta de error
+            notifications.show('Error de conexión', {
+               severity: 'error',
+               autoHideDuration: AUTO_HIDE_DURATION,
+            })
+         })
    }
 
    return (
