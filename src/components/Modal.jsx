@@ -15,6 +15,7 @@ export function Modal({
    opacity = 0.6,
    showHeader = true,
    confirmColorClassName = 'blue',
+   form = false,
    dialogProps,
 }) {
    const confirmShapeClassName =
@@ -26,6 +27,21 @@ export function Modal({
    }
 
    const confirmClassName = `${confirmShapeClassName} ${colorClassName[confirmColorClassName]}`
+
+   if (form) {
+      if (!dialogProps) {
+         dialogProps = {}
+      }
+
+      Object.assign(dialogProps, {
+         slotProps: {
+            paper: {
+               component: 'form',
+               onSubmit: onConfirm,
+            },
+         },
+      })
+   }
 
    // Dialog tiene una prop que es onClose. No la vamos a usar. Sirve para que
    // se ejecute una función cuando se presiona la tecla Esc o se clicka sobre
@@ -79,12 +95,18 @@ export function Modal({
                   {closeText}
                </button>
 
-               {onConfirm && (
+               {onConfirm && !form && (
                   <button
                      type='button'
                      className={confirmClassName}
                      onClick={onConfirm}
                   >
+                     {confirmText}
+                  </button>
+               )}
+
+               {form && (
+                  <button type='submit' className={confirmClassName}>
                      {confirmText}
                   </button>
                )}
@@ -105,5 +127,6 @@ Modal.propTypes = {
    opacity: PropTypes.number,
    showHeader: PropTypes.bool,
    confirmColorClassName: PropTypes.string,
+   form: PropTypes.bool,
    dialogProps: PropTypes.object,
 }
