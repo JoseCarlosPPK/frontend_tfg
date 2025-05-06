@@ -1,10 +1,15 @@
-import { Pagination } from '@mui/material'
+import { Pagination, Slide } from '@mui/material'
 import { useNotifications } from '@toolpad/core'
-import { useEffect, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
-import { AddButton, DeleteButton, EditButton } from '../components/buttons'
-import { Input, SearchSelect } from '../components/inputs'
+import {
+   AddButton,
+   Button,
+   DeleteButton,
+   EditButton,
+} from '../components/buttons'
+import { Input, Search, SearchSelect } from '../components/inputs'
 import { Modal } from '../components/Modal.jsx'
 import { FarmaciasColumnas } from '../components/models/columns.jsx'
 import { filters } from '../components/models/filters.js'
@@ -12,6 +17,10 @@ import { AUTO_HIDE_DURATION } from '../components/snacbarks'
 import { Table } from '../components/Table.jsx'
 import { useAuth, useQueryString } from '../hooks'
 import { request } from '../services'
+
+const Transition = forwardRef(function Transition(props, ref) {
+   return <Slide direction='up' ref={ref} {...props} />
+})
 
 export function CentrosPage() {
    const { signOut } = useAuth()
@@ -21,6 +30,8 @@ export function CentrosPage() {
    const [totalCentros, setTotalCentros] = useState(0)
    const [centroElegido, setCentroElegido] = useState({ nombre: '', id: '' })
    const [open, setOpen] = useState(false)
+   const [openAdd, setOpenAdd] = useState(false)
+   const [tutores, setTutores] = useState([])
    const notifications = useNotifications()
 
    const FarmaciasColumnasEdited = [
@@ -44,6 +55,13 @@ export function CentrosPage() {
          },
       },
    ]
+
+   /**
+    * Añade un nuevo input para añadir un tutor/a
+    */
+   function handleAddTutor() {
+      setTutores((prev) => [...prev, { idTmp: crypto.randomUUID() }])
+   }
 
    function fetchData() {
       request
@@ -78,6 +96,7 @@ export function CentrosPage() {
 
    return (
       <AppNavFrame>
+         {/* Modal DELETE */}
          <Modal
             open={open}
             onClose={() => setOpen(false)}
@@ -143,12 +162,255 @@ export function CentrosPage() {
             </p>
          </Modal>
 
+         {/* Modal ADD */}
+         <Modal
+            open={openAdd}
+            onClose={() => {
+               setOpenAdd(false)
+            }}
+            onConfirm={(event) => {
+               event.prevenDefault()
+            }}
+            title='Añadir un nuevo centro'
+            form={true}
+            dialogProps={{
+               fullWidth: true,
+               scroll: 'body',
+               fullScreen: true,
+               slots: {
+                  transition: Transition,
+               },
+            }}
+         >
+            <div className='divide-y-2 lg:grid lg:grid-cols-2 lg:divide-x-2 lg:divide-y-0'>
+               <div className='p-2'>
+                  <h2 className='h2'>Tutores</h2>
+                  <div className='my-3'>
+                     <label
+                        htmlFor='tutorBuscado'
+                        className='mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                     >
+                        Buscar al tutor/a
+                     </label>
+                     <Search
+                        name='tutorBuscado'
+                        id='tutorBuscado'
+                        placeholder='Tutor/a'
+                        className='w-full'
+                        onKeyDown={(event) => {
+                           if (event.key === 'Enter') {
+                              event.preventDefault()
+                           }
+                        }}
+                     />
+                  </div>
+
+                  <header className='flex justify-between'>
+                     <h3 className='h3'>Listado de tutores/as</h3>
+                     <span>{tutores.length} tutores/as añadidos</span>
+                  </header>
+                  <div>
+                     <ul>
+                        {tutores.map((value, index) => {
+                           return (
+                              <li
+                                 key={value.idTmp}
+                                 className='my-2 flex items-center gap-3'
+                              >
+                                 <Input
+                                    className='w-full p-1'
+                                    placeholder='Nombre y apellidos'
+                                    name={`tutor_${index}`}
+                                    required
+                                    autoFocus={index === tutores.length - 1}
+                                    onChange={(event) => {
+                                       const newTutores = [...tutores]
+                                       newTutores[index] = {
+                                          ...newTutores[index],
+                                          nombre: event.target.value,
+                                       }
+                                       setTutores(newTutores)
+                                    }}
+                                 />
+                                 <DeleteButton
+                                    type='button'
+                                    size='size-7'
+                                    onClick={() => {
+                                       const newTutores = tutores.toSpliced(
+                                          index,
+                                          1
+                                       )
+
+                                       setTutores(newTutores)
+                                    }}
+                                 ></DeleteButton>
+                              </li>
+                           )
+                        })}
+                     </ul>
+                     <div className='flex justify-center'>
+                        <Button
+                           color='bg-green-600 hover:bg-green-700 text-white'
+                           size='p-2'
+                           type='button'
+                           onClick={handleAddTutor}
+                        >
+                           Añadir
+                        </Button>
+                     </div>
+                  </div>
+               </div>
+               <div className='p-2'>
+                  <h3 className='h3'>Datos del centro</h3>
+
+                  <div className='my-3'>
+                     <label
+                        htmlFor='nombre'
+                        className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'
+                     >
+                        Nombre
+                     </label>
+                     <Input
+                        type='text'
+                        name='nombre'
+                        id='nombre'
+                        className='w-full p-2'
+                        placeholder='Farmacia San Rafael'
+                        required
+                     />
+                  </div>
+
+                  <div className='my-3'>
+                     <label
+                        htmlFor='direccion'
+                        className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'
+                     >
+                        Dirección
+                     </label>
+                     <Input
+                        type='text'
+                        name='direccion'
+                        id='direccion'
+                        className='w-full p-2'
+                        placeholder='C/ ... '
+                        required
+                     />
+                  </div>
+
+                  <div className='my-3'>
+                     <label
+                        htmlFor='localidad'
+                        className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'
+                     >
+                        Localidad
+                     </label>
+                     <Input
+                        type='text'
+                        name='localidad'
+                        id='localidad'
+                        className='w-full p-2'
+                        placeholder='Localidad'
+                        required
+                     />
+                  </div>
+
+                  <div className='my-3'>
+                     <label
+                        htmlFor='provincia'
+                        className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'
+                     >
+                        Provincia
+                     </label>
+                     <Input
+                        type='text'
+                        name='provincia'
+                        id='provincia'
+                        className='w-full p-2'
+                        placeholder='Provincia'
+                        required
+                     />
+                  </div>
+
+                  <div className='my-3'>
+                     <label
+                        htmlFor='cp'
+                        className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'
+                     >
+                        Código Postal
+                     </label>
+                     <Input
+                        type='number'
+                        name='cp'
+                        id='cp'
+                        className='w-full p-2'
+                        placeholder='Código Postal'
+                        required
+                     />
+                  </div>
+
+                  <div className='my-3'>
+                     <label
+                        htmlFor='correo'
+                        className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'
+                     >
+                        Correo electrónico
+                     </label>
+                     <Input
+                        type='email'
+                        name='correo'
+                        id='correo'
+                        className='w-full p-2'
+                        placeholder='ejemplo@gmail.com'
+                        required
+                     />
+                  </div>
+
+                  <div className='my-3'>
+                     <label
+                        htmlFor='telefono'
+                        className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'
+                     >
+                        Teléfono
+                     </label>
+                     <Input
+                        type='tel'
+                        name='telefono'
+                        id='telefono'
+                        className='w-full p-2'
+                        placeholder='XXX XX XX XX'
+                        required
+                     />
+                  </div>
+
+                  <div className='my-3'>
+                     <label
+                        htmlFor='movil'
+                        className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'
+                     >
+                        Móvil
+                     </label>
+                     <Input
+                        type='tel'
+                        name='movil'
+                        id='movil'
+                        className='w-full p-2'
+                        placeholder='XXX XX XX XX'
+                        required
+                     />
+                  </div>
+               </div>
+            </div>
+         </Modal>
+
          <header className='my-2'>
             <Breadcrumb />
 
             <div className='mt-2 flex items-center gap-2'>
                <h1 className='h1'>Centros</h1>
-               <AddButton title='Añadir un nuevo centro' />
+               <AddButton
+                  title='Añadir un nuevo centro'
+                  onClick={() => setOpenAdd(true)}
+               />
             </div>
          </header>
 

@@ -66,6 +66,10 @@
    @apply text-2xl font-bold;
 }
 
+.h3 {
+   @apply text-xl font-bold;
+}
+
 .mytable th {
    padding: 0.5rem;
 }
