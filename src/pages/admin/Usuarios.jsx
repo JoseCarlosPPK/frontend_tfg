@@ -3,10 +3,10 @@ import { AppNavFrame } from '../../components/AppFrame.jsx'
 import { Breadcrumb } from '../../components/Breadcrumb.jsx'
 import {
    AddButton,
+   BUTTONS_APPEARANCE,
    DeleteButton,
    EditButton,
    MailButton,
-   TYPES_BUTTONS,
 } from '../../components/buttons'
 import { Input, Search } from '../../components/inputs'
 import { Table } from '../../components/Table.jsx'
@@ -39,10 +39,10 @@ const Columns = [
                         <div className='flex items-center justify-center gap-1'>
                            {key === 'correo' ? (
                               <MailButton
-                                 type={
+                                 appearance={
                                     value
-                                       ? TYPES_BUTTONS.ACTIVATE
-                                       : TYPES_BUTTONS.DEACTIVATE
+                                       ? BUTTONS_APPEARANCE.ACTIVATE
+                                       : BUTTONS_APPEARANCE.DEACTIVATE
                                  }
                                  disabled={true}
                                  size='size-8'
@@ -50,28 +50,28 @@ const Columns = [
                            ) : (
                               <>
                                  <AddButton
-                                    type={
+                                    appearance={
                                        value.add
-                                          ? TYPES_BUTTONS.ACTIVATE
-                                          : TYPES_BUTTONS.DEACTIVATE
+                                          ? BUTTONS_APPEARANCE.ACTIVATE
+                                          : BUTTONS_APPEARANCE.DEACTIVATE
                                     }
                                     disabled={true}
                                     size='size-8'
                                  />
                                  <EditButton
-                                    type={
+                                    appearance={
                                        value.edit
-                                          ? TYPES_BUTTONS.ACTIVATE
-                                          : TYPES_BUTTONS.DEACTIVATE
+                                          ? BUTTONS_APPEARANCE.ACTIVATE
+                                          : BUTTONS_APPEARANCE.DEACTIVATE
                                     }
                                     disabled={true}
                                     size='size-8'
                                  />
                                  <DeleteButton
-                                    type={
+                                    appearance={
                                        value.delete
-                                          ? TYPES_BUTTONS.ACTIVATE
-                                          : TYPES_BUTTONS.DEACTIVATE
+                                          ? BUTTONS_APPEARANCE.ACTIVATE
+                                          : BUTTONS_APPEARANCE.DEACTIVATE
                                     }
                                     disabled={true}
                                     size='size-8'
