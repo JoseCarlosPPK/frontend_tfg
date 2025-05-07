@@ -1,25 +1,10 @@
 import PropTypes from 'prop-types'
-import { Input, Select } from '.'
-import { SearchLogo } from '../svg'
+import { Search, Select } from '.'
 
-export function SearchSelect({ filters, handleSelectChange = null }) {
+export function SearchSelect({ filters, handleSelectChange = null, ...props }) {
    return (
       <>
-         {/* https://www.creative-tim.com/twcomponents/component/search-bar */}
-         <div className='relative w-fit'>
-            <Input
-               type='search'
-               name='search'
-               placeholder='Usuario'
-               className='p-2.5 pr-10'
-            />
-            <button
-               type='submit'
-               className='absolute right-1 top-2 text-gray-600'
-            >
-               <SearchLogo />
-            </button>
-         </div>
+         <Search {...props} />
          <Select name='filter' onChange={handleSelectChange}>
             {[...filters.keys()].map((key, index) => {
                return (
@@ -36,4 +21,7 @@ export function SearchSelect({ filters, handleSelectChange = null }) {
 SearchSelect.propTypes = {
    filters: PropTypes.instanceOf(Map).isRequired,
    handleSelectChange: PropTypes.func,
+   placeholder: PropTypes.string,
+   searchClassName: PropTypes.string,
+   onClick: PropTypes.func,
 }
