@@ -67,6 +67,10 @@ export class Request {
       return Request.request(`${this.#endpoints.farmacias}/${id}`, 'DELETE')
    }
 
+   addFarmacia(farmacia) {
+      return Request.request(this.#endpoints.farmacias, 'POST', farmacia)
+   }
+
    getPersonas(name, page, perPage) {
       return Request.request(
          `${this.#endpoints.personas}?page=${page}&per_page=${perPage}&name=${name}`,
