@@ -66,6 +66,13 @@ export class Request {
    deleteFarmacia(id) {
       return Request.request(`${this.#endpoints.farmacias}/${id}`, 'DELETE')
    }
+
+   getPersonas(name, page, perPage) {
+      return Request.request(
+         `${this.#endpoints.personas}?page=${page}&per_page=${perPage}&name=${name}`,
+         'GET'
+      )
+   }
 }
 
 export const request = new Request(endpoints)
