@@ -10,6 +10,7 @@ import {
    DeleteButton,
    EditButton,
 } from '../components/buttons'
+import { Error } from '../components/Error.jsx'
 import { Input, Search, SearchSelect } from '../components/inputs'
 import { Modal } from '../components/Modal.jsx'
 import { FarmaciasColumnas } from '../components/models/columns.jsx'
@@ -40,6 +41,18 @@ export function CentrosPage() {
    const [totalTutores, setTotalTutores] = useState(0)
    const [searchTutores, setSearchTutores] = useState('')
    const perPageTutores = 10
+   const [errorCentro, setErrorCentro] = useState({
+      nombre: false,
+      direccion: false,
+      localidad: false,
+      provincia: false,
+      cp: false,
+      correo: false,
+      telefono: false,
+      movil: false,
+      personas: false,
+      generico: false,
+   })
 
    const FarmaciasColumnasEdited = [
       ...FarmaciasColumnas,
@@ -263,6 +276,20 @@ export function CentrosPage() {
                      } else {
                         if (res.status === 401) {
                            signOut()
+                        } else {
+                           res.json().then((resJson) => {
+                              const newErrorCentro = {}
+
+                              for (const key of Object.keys(errorCentro)) {
+                                 newErrorCentro[key] = resJson[key] ?? false
+                              }
+
+                              if (resJson.error) {
+                                 newErrorCentro.generico =
+                                    resJson.error ?? false
+                              }
+                              setErrorCentro(newErrorCentro)
+                           })
                         }
                         // alerta de error
                         notifications.show(
@@ -419,10 +446,11 @@ export function CentrosPage() {
                               >
                                  <Input
                                     value={value.nombre ?? ''}
-                                    className='w-full p-1'
+                                    className={`w-full p-1 ${value.id ? 'bg-gray-300' : ''}`}
                                     placeholder='Nombre y apellidos'
                                     name={`tutor_${index}`}
                                     required
+                                    disabled={value.id}
                                     autoFocus={index === tutores.length - 1}
                                     onChange={(event) => {
                                        const newTutores = [...tutores]
@@ -460,6 +488,9 @@ export function CentrosPage() {
                         </Button>
                      </div>
                   </div>
+                  {errorCentro.personas && (
+                     <Error>{errorCentro.personas}</Error>
+                  )}
                </div>
                <div className='p-2'>
                   <h3 className='h3'>Datos del centro</h3>
@@ -479,6 +510,8 @@ export function CentrosPage() {
                         placeholder='Farmacia San Rafael'
                         required
                      />
+
+                     {errorCentro.nombre && <Error>{errorCentro.nombre}</Error>}
                   </div>
 
                   <div className='my-3'>
@@ -496,6 +529,9 @@ export function CentrosPage() {
                         placeholder='C/ ... '
                         required
                      />
+                     {errorCentro.direccion && (
+                        <Error>{errorCentro.direccion}</Error>
+                     )}
                   </div>
 
                   <div className='my-3'>
@@ -513,6 +549,9 @@ export function CentrosPage() {
                         placeholder='Localidad'
                         required
                      />
+                     {errorCentro.localidad && (
+                        <Error>{errorCentro.localidad}</Error>
+                     )}
                   </div>
 
                   <div className='my-3'>
@@ -530,6 +569,9 @@ export function CentrosPage() {
                         placeholder='Provincia'
                         required
                      />
+                     {errorCentro.provincia && (
+                        <Error>{errorCentro.provincia}</Error>
+                     )}
                   </div>
 
                   <div className='my-3'>
@@ -547,6 +589,7 @@ export function CentrosPage() {
                         placeholder='Código Postal'
                         required
                      />
+                     {errorCentro.cp && <Error>{errorCentro.cp}</Error>}
                   </div>
 
                   <div className='my-3'>
@@ -564,6 +607,7 @@ export function CentrosPage() {
                         placeholder='ejemplo@gmail.com'
                         required
                      />
+                     {errorCentro.correo && <Error>{errorCentro.correo}</Error>}
                   </div>
 
                   <div className='my-3'>
@@ -580,6 +624,9 @@ export function CentrosPage() {
                         className='w-full p-2'
                         placeholder='XXX XX XX XX'
                      />
+                     {errorCentro.telefono && (
+                        <Error>{errorCentro.telefono}</Error>
+                     )}
                   </div>
 
                   <div className='my-3'>
@@ -596,9 +643,11 @@ export function CentrosPage() {
                         className='w-full p-2'
                         placeholder='XXX XX XX XX'
                      />
+                     {errorCentro.movil && <Error>{errorCentro.movil}</Error>}
                   </div>
                </div>
             </div>
+            {errorCentro.generico && <Error>{errorCentro.generico}</Error>}
          </Modal>
 
          <header className='my-2'>
