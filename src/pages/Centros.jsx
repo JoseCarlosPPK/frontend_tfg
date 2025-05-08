@@ -32,8 +32,8 @@ export function CentrosPage() {
       useQueryString()
    const [totalCentros, setTotalCentros] = useState(0)
    const [centroElegido, setCentroElegido] = useState({ nombre: '', id: '' })
-   const [open, setOpen] = useState(false)
-   const [openAdd, setOpenAdd] = useState(false)
+   const [openDeleteModal, setOpenDeleteModal] = useState(false)
+   const [openAddModal, setOpenAddModal] = useState(false)
    const [tutores, setTutores] = useState([])
    const notifications = useNotifications()
    const [tutoresBuscados, setTutoresBuscados] = useState([])
@@ -66,7 +66,7 @@ export function CentrosPage() {
                      <DeleteButton
                         onClick={() => {
                            setCentroElegido(farmacias[index])
-                           setOpen(true)
+                           setOpenDeleteModal(true)
                         }}
                      />
                   </div>
@@ -156,8 +156,8 @@ export function CentrosPage() {
       <AppNavFrame>
          {/* Modal DELETE */}
          <Modal
-            open={open}
-            onClose={() => setOpen(false)}
+            open={openDeleteModal}
+            onClose={() => setOpenDeleteModal(false)}
             confirmText='Borrar'
             title={`Borrar ${centroElegido.nombre}`}
             confirmColorClassName='red'
@@ -166,7 +166,7 @@ export function CentrosPage() {
                request
                   .deleteFarmacia(centroElegido.id)
                   .then((res) => {
-                     setOpen(false)
+                     setOpenDeleteModal(false)
 
                      if (res.ok) {
                         if (
@@ -222,9 +222,9 @@ export function CentrosPage() {
 
          {/* Modal ADD */}
          <Modal
-            open={openAdd}
+            open={openAddModal}
             onClose={() => {
-               setOpenAdd(false)
+               setOpenAddModal(false)
             }}
             onConfirm={(event) => {
                event.preventDefault()
@@ -259,7 +259,7 @@ export function CentrosPage() {
                   .then((res) => {
                      if (res.ok) {
                         // limpieza de estados
-                        setOpenAdd(false)
+                        setOpenAddModal(false)
                         setTutores([])
                         setTutoresBuscados([])
                         setPageTutores(1)
@@ -657,7 +657,7 @@ export function CentrosPage() {
                <h1 className='h1'>Centros</h1>
                <AddButton
                   title='Añadir un nuevo centro'
-                  onClick={() => setOpenAdd(true)}
+                  onClick={() => setOpenAddModal(true)}
                />
             </div>
          </header>
