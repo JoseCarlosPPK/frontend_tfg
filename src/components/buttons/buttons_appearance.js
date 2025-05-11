@@ -1,4 +1,4 @@
-export const TYPES_BUTTONS = {
+export const BUTTONS_APPEARANCE = {
    DEACTIVATE: {
       buttonColor: 'bg-gray-400',
       svgColor: 'black',

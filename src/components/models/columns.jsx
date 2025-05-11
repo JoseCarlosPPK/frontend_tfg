@@ -2,6 +2,16 @@ import { MailLogo, MovilLogo, TelefonoLogo } from '../svg'
 
 export const FarmaciasColumnas = [
    {
+      name: 'Nombre del centro',
+      createCell: (row) => {
+         return (
+            <td key={row.nombre} className='text-center'>
+               {row.nombre}
+            </td>
+         )
+      },
+   },
+   {
       name: 'Tutor/a',
       createCell: (row) => {
          return (

@@ -1,4 +1,4 @@
-export { CentrosPage } from './Centros.jsx'
+export { CentrosPage } from './centros/Centros.jsx'
 export { ConvocatoriasPage } from './Convocatorias.jsx'
 export { ConvocatoriasAddPage } from './ConvocatoriasAddPage.jsx'
 export { CorreoPage } from './Correo.jsx'

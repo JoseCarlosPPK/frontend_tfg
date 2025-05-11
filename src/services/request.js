@@ -66,6 +66,25 @@ export class Request {
    deleteFarmacia(id) {
       return Request.request(`${this.#endpoints.farmacias}/${id}`, 'DELETE')
    }
+
+   addFarmacia(farmacia) {
+      return Request.request(this.#endpoints.farmacias, 'POST', farmacia)
+   }
+
+   editFarmacia(farmacia) {
+      return Request.request(
+         `${this.#endpoints.farmacias}/${farmacia.id}`,
+         'PUT',
+         farmacia
+      )
+   }
+
+   getPersonas(name, page, perPage) {
+      return Request.request(
+         `${this.#endpoints.personas}?page=${page}&per_page=${perPage}&name=${name}`,
+         'GET'
+      )
+   }
 }
 
 export const request = new Request(endpoints)
