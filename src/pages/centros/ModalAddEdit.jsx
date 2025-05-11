@@ -18,6 +18,7 @@ export function ModalAddEdit({
    centro,
    setCentro,
    error,
+   edit = false,
 }) {
    const { signOut } = useAuth()
    const notifications = useNotifications()
@@ -210,11 +211,11 @@ export function ModalAddEdit({
                            >
                               <Input
                                  value={value.nombre ?? ''}
-                                 className={`w-full p-1 ${value.id ? 'bg-gray-500/60' : ''}`}
+                                 className={`w-full p-1 ${!edit && value.id ? 'bg-gray-500/60' : ''}`}
                                  placeholder='Nombre y apellidos'
                                  name={`tutor_${index}`}
                                  required
-                                 disabled={value.id}
+                                 disabled={!edit && value.id}
                                  autoFocus={
                                     index === centro.personas.length - 1
                                  }
@@ -484,4 +485,5 @@ ModalAddEdit.propTypes = {
    }).isRequired,
    setCentro: PropTypes.func.isRequired,
    error: PropTypes.object,
+   edit: PropTypes.bool,
 }

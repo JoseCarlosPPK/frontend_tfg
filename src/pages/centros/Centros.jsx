@@ -26,6 +26,7 @@ export function CentrosPage() {
    const [centroElegido, setCentroElegido] = useState(Farmacia.getCentroVacio())
    const [openDeleteModal, setOpenDeleteModal] = useState(false)
    const [openAddModal, setOpenAddModal] = useState(false)
+   const [editMode, setEditMode] = useState(false)
    const [errorCentro, setErrorCentro] = useState({
       nombre: false,
       direccion: false,
@@ -48,7 +49,13 @@ export function CentrosPage() {
             return (
                <td key={row.id}>
                   <div className='flex items-center justify-center gap-2'>
-                     <EditButton />
+                     <EditButton
+                        onClick={() => {
+                           setCentroElegido(farmacias[index])
+                           setEditMode(true)
+                           setOpenAddModal(true)
+                        }}
+                     />
                      <DeleteButton
                         onClick={() => {
                            setCentroElegido(farmacias[index])
@@ -131,6 +138,78 @@ export function CentrosPage() {
                // alerta de error
                notifications.show(
                   `El centro ${centroElegido.nombre} NO ha sido borrado`,
+                  {
+                     severity: 'error',
+                     autoHideDuration: AUTO_HIDE_DURATION,
+                  }
+               )
+            }
+         })
+         .catch(() => {
+            // alerta de error
+            notifications.show('Fallo de conexión', {
+               severity: 'error',
+               autoHideDuration: AUTO_HIDE_DURATION,
+            })
+         })
+   }
+
+   function editCentro(event) {
+      event.preventDefault()
+      // Damos el formato correcto para la API
+      const tutoresFormateados = centroElegido.personas.map((value) => {
+         if (value.id) {
+            return {
+               id: value.id,
+               nombre: value.nombre,
+            }
+         } else {
+            return {
+               nombre: value.nombre,
+            }
+         }
+      })
+
+      const centroToEdit = {
+         ...centroElegido,
+         personas: tutoresFormateados,
+      }
+
+      request
+         .editFarmacia(centroToEdit)
+         .then((res) => {
+            if (res.ok) {
+               setOpenAddModal(false)
+               fetchData()
+
+               // alerta de éxito
+               notifications.show(
+                  `El centro ${centroToEdit.nombre} ha sido editado`,
+                  {
+                     severity: 'success',
+                     autoHideDuration: AUTO_HIDE_DURATION,
+                  }
+               )
+            } else {
+               if (res.status === 401) {
+                  signOut()
+               } else {
+                  res.json().then((resJson) => {
+                     const newErrorCentro = {}
+
+                     for (const key of Object.keys(errorCentro)) {
+                        newErrorCentro[key] = resJson[key] ?? false
+                     }
+
+                     if (resJson.error) {
+                        newErrorCentro.generico = resJson.error ?? false
+                     }
+                     setErrorCentro(newErrorCentro)
+                  })
+               }
+               // alerta de error
+               notifications.show(
+                  `El centro ${centroToEdit.nombre} NO ha sido editado`,
                   {
                      severity: 'error',
                      autoHideDuration: AUTO_HIDE_DURATION,
@@ -237,10 +316,11 @@ export function CentrosPage() {
             onClose={() => {
                setOpenAddModal(false)
             }}
-            onConfirm={addCentro}
+            onConfirm={editMode ? editCentro : addCentro}
             centro={centroElegido}
             setCentro={setCentroElegido}
             error={errorCentro}
+            edit={editMode}
          />
 
          <header className='my-2'>
@@ -252,6 +332,7 @@ export function CentrosPage() {
                   title='Añadir un nuevo centro'
                   onClick={() => {
                      setOpenAddModal(true)
+                     setEditMode(false)
                      setCentroElegido(Farmacia.getCentroVacio())
                   }}
                />
