@@ -6,10 +6,10 @@ export function SearchSelect({ filters, handleSelectChange = null, ...props }) {
       <>
          <Search {...props} />
          <Select name='filter' onChange={handleSelectChange}>
-            {[...filters.keys()].map((key, index) => {
+            {filters.map((filtro, index) => {
                return (
-                  <option value={key} key={index}>
-                     {filters.get(key)}
+                  <option value={filtro.name} key={index}>
+                     {filtro.label}
                   </option>
                )
             })}
@@ -19,7 +19,12 @@ export function SearchSelect({ filters, handleSelectChange = null, ...props }) {
 }
 
 SearchSelect.propTypes = {
-   filters: PropTypes.instanceOf(Map).isRequired,
+   filters: PropTypes.arrayOf(
+      PropTypes.shape({
+         label: PropTypes.string.isRequired,
+         name: PropTypes.string.isRequired,
+      })
+   ).isRequired,
    handleSelectChange: PropTypes.func,
    placeholder: PropTypes.string,
    searchClassName: PropTypes.string,
