@@ -79,6 +79,36 @@ export class Request {
       )
    }
 
+   farmaciasHospitalarias(page, perPage, search, filter) {
+      return Request.request(
+         `${this.#endpoints.farmaciasHospitalarias}?page=${page}&per_page=${perPage}&search=${search}&filter=${filter}`,
+         'GET'
+      )
+   }
+
+   deleteFarmaciaHospitalaria(id) {
+      return Request.request(
+         `${this.#endpoints.farmaciasHospitalarias}/${id}`,
+         'DELETE'
+      )
+   }
+
+   addFarmaciaHospitalaria(farmaciasHospitalarias) {
+      return Request.request(
+         this.#endpoints.farmaciasHospitalarias,
+         'POST',
+         farmaciasHospitalarias
+      )
+   }
+
+   editFarmaciaHospitalaria(farmaciasHospitalarias) {
+      return Request.request(
+         `${this.#endpoints.farmaciasHospitalarias}/${farmaciasHospitalarias.id}`,
+         'PUT',
+         farmaciasHospitalarias
+      )
+   }
+
    getPersonas(name, page, perPage) {
       return Request.request(
          `${this.#endpoints.personas}?page=${page}&per_page=${perPage}&name=${name}`,

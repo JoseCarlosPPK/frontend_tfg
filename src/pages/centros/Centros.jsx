@@ -5,25 +5,29 @@ import { AppNavFrame } from '../../components/AppFrame.jsx'
 import { Breadcrumb } from '../../components/Breadcrumb.jsx'
 import {
    AddButton,
+   Button,
    DeleteButton,
    EditButton,
 } from '../../components/buttons/index.js'
 import { Input, SearchSelect } from '../../components/inputs/index.js'
-import { Farmacia } from '../../components/models'
+import { TIPOS_CENTROS } from '../../components/models'
 import { AUTO_HIDE_DURATION } from '../../components/snacbarks/index.js'
 import { Table } from '../../components/Table.jsx'
 import { useAuth, useQueryString } from '../../hooks/index.js'
-import { request } from '../../services/index.js'
 import { ModalAddEdit } from './ModalAddEdit.jsx'
 import { ModalDelete } from './ModalDelete.jsx'
 
 export function CentrosPage() {
    const { signOut } = useAuth()
+   const [indexTipoCentro, setIndexTipoCentro] = useState(1)
+   const tipoCentroElegido = TIPOS_CENTROS[indexTipoCentro]
    const [farmacias, setFarmacias] = useState([])
    const { queryString, setQueryString, handleSubmit, handleSelectChange } =
       useQueryString()
    const [totalCentros, setTotalCentros] = useState(0)
-   const [centroElegido, setCentroElegido] = useState(Farmacia.getCentroVacio())
+   const [centroElegido, setCentroElegido] = useState(
+      tipoCentroElegido.getCentroVacio()
+   )
    const [openDeleteModal, setOpenDeleteModal] = useState(false)
    const [openAddModal, setOpenAddModal] = useState(false)
    const [editMode, setEditMode] = useState(false)
@@ -42,7 +46,7 @@ export function CentrosPage() {
    const notifications = useNotifications()
 
    const FarmaciasColumnasEdited = [
-      ...Farmacia.getEncabezadosTabla(),
+      ...tipoCentroElegido.getEncabezadosTabla(),
       {
          name: 'Acción',
          createCell: (row, index) => {
@@ -70,8 +74,8 @@ export function CentrosPage() {
    ]
 
    function fetchData() {
-      request
-         .farmacias(
+      tipoCentroElegido
+         .getCentros(
             queryString.page,
             queryString.perPage,
             queryString.search,
@@ -84,6 +88,7 @@ export function CentrosPage() {
                   setTotalCentros(resJson.total)
                })
             } else {
+               setFarmacias([])
                if (res.status === 401) {
                   signOut()
                }
@@ -100,11 +105,11 @@ export function CentrosPage() {
 
    useEffect(() => {
       fetchData()
-   }, [queryString])
+   }, [queryString, tipoCentroElegido])
 
    function deleteCentro() {
-      request
-         .deleteFarmacia(centroElegido.id)
+      tipoCentroElegido
+         .deleteCentro(centroElegido.id)
          .then((res) => {
             setOpenDeleteModal(false)
 
@@ -175,8 +180,8 @@ export function CentrosPage() {
          personas: tutoresFormateados,
       }
 
-      request
-         .editFarmacia(centroToEdit)
+      tipoCentroElegido
+         .editCentro(centroToEdit)
          .then((res) => {
             if (res.ok) {
                setOpenAddModal(false)
@@ -248,8 +253,8 @@ export function CentrosPage() {
          personas: tutoresFormateados,
       }
 
-      request
-         .addFarmacia(centroToAdd)
+      tipoCentroElegido
+         .addCentro(centroToAdd)
          .then((res) => {
             if (res.ok) {
                setOpenAddModal(false)
@@ -333,22 +338,43 @@ export function CentrosPage() {
                   onClick={() => {
                      setOpenAddModal(true)
                      setEditMode(false)
-                     setCentroElegido(Farmacia.getCentroVacio())
+                     setCentroElegido(tipoCentroElegido.getCentroVacio())
                   }}
                />
             </div>
          </header>
 
          <main className='w-full justify-self-center 2xl:w-[80%]'>
+            <div className='flex w-full border-b-2'>
+               {TIPOS_CENTROS.map((centro, index) => {
+                  return (
+                     <Button
+                        key={index}
+                        color={`${index === indexTipoCentro ? 'bg-principal' : 'bg-terciario'} hover:bg-[var(--color-secundario)] hover:text-white`}
+                        size='p-2'
+                        value={centro.name}
+                        onClick={() => {
+                           setIndexTipoCentro(index)
+                           setQueryString((prev) => ({
+                              ...prev,
+                              page: 1,
+                           }))
+                        }}
+                     >
+                        {centro.name}
+                     </Button>
+                  )
+               })}
+            </div>
             {/* Search input and filters */}
-            <div>
+            <div className='p-2'>
                <form
                   className='flex justify-center gap-2'
                   onSubmit={handleSubmit}
                >
                   <SearchSelect
                      placeholder='Buscar'
-                     filters={Farmacia.getFiltros()}
+                     filters={tipoCentroElegido.getFiltros()}
                      handleSelectChange={handleSelectChange}
                   />
                </form>
