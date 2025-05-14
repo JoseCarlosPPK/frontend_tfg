@@ -326,6 +326,7 @@ export function CentrosPage() {
             setCentro={setCentroElegido}
             error={errorCentro}
             edit={editMode}
+            nombreTipoCentro={tipoCentroElegido.name}
          />
 
          <header className='my-2'>

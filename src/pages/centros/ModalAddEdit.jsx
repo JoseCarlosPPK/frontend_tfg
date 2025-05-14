@@ -18,6 +18,7 @@ export function ModalAddEdit({
    centro,
    setCentro,
    error,
+   nombreTipoCentro,
    edit = false,
 }) {
    const { signOut } = useAuth()
@@ -78,7 +79,7 @@ export function ModalAddEdit({
          open={open}
          onClose={onClose}
          onConfirm={onConfirm}
-         title='Añadir un nuevo centro'
+         title={`Añadir ${nombreTipoCentro}`}
          form={true}
          dialogProps={{
             fullWidth: true,
@@ -485,5 +486,6 @@ ModalAddEdit.propTypes = {
    }).isRequired,
    setCentro: PropTypes.func.isRequired,
    error: PropTypes.object,
+   nombreTipoCentro: PropTypes.string.isRequired,
    edit: PropTypes.bool,
 }
