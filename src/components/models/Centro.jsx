@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { MailLogo, MovilLogo, TelefonoLogo } from '../svg'
 
 export class Centro {
@@ -160,5 +161,22 @@ export class Centro {
             },
          },
       ]
+   }
+
+   // MÉTODOS ABSTRACTOS
+   // JS no soporta métodos abstractos o interfaces, pero esto
+   // es lo más parecido
+
+   static getCentros(page, perPage, search, filter) {
+      throw new Error('Debe implementar este método')
+   }
+   static addCentro(centro) {
+      throw new Error('Debe implementar este método')
+   }
+   static editCentro(centro) {
+      throw new Error('Debe implementar este método')
+   }
+   static deleteCentro(id) {
+      throw new Error('Debe implementar este método')
    }
 }
