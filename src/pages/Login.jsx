@@ -14,7 +14,6 @@ export function LoginPage() {
       event.preventDefault()
       signIn(...new FormData(event.target).values())
          .then((esCorrecto) => {
-            console.log('Hola')
             if (!esCorrecto) {
                setError('Credenciales incorrectas')
             }
