@@ -19,7 +19,7 @@ import { ModalDelete } from './ModalDelete.jsx'
 
 export function CentrosPage() {
    const { signOut } = useAuth()
-   const [indexTipoCentro, setIndexTipoCentro] = useState(1)
+   const [indexTipoCentro, setIndexTipoCentro] = useState(0)
    const tipoCentroElegido = TIPOS_CENTROS[indexTipoCentro]
    const [farmacias, setFarmacias] = useState([])
    const { queryString, setQueryString, handleSubmit, handleSelectChange } =
