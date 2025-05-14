@@ -79,7 +79,7 @@ export function ModalAddEdit({
          open={open}
          onClose={onClose}
          onConfirm={onConfirm}
-         title={`Añadir ${nombreTipoCentro}`}
+         title={`${edit ? 'Editar' : 'Añadir'} ${nombreTipoCentro}`}
          form={true}
          dialogProps={{
             fullWidth: true,
