@@ -345,7 +345,7 @@ export function CentrosPage() {
          </header>
 
          <main className='w-full justify-self-center 2xl:w-[80%]'>
-            <div className='flex w-full border-b-2'>
+            <div className='flex w-full border-b-2 border-[var(--color-principal)]'>
                {TIPOS_CENTROS.map((centro, index) => {
                   return (
                      <Button
