@@ -5,5 +5,6 @@ const URL = `http://${HOST}${PATH}`
 export const endpoints = {
    auth: `${URL}/auth`,
    farmacias: `${URL}/farmacias`,
+   farmaciasHospitalarias: `${URL}/farmacias-hospitalarias`,
    personas: `${URL}/personas`,
 }
