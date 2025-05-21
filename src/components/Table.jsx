@@ -1,6 +1,36 @@
 import PropTypes from 'prop-types'
+import { useEffect, useRef } from 'react'
 
-export function Table({ columns, data, checked }) {
+export function Table({
+   columns,
+   data,
+   checked,
+   selected,
+   setSelected,
+   total,
+   onSelectAllClick,
+}) {
+   const checkboxRef = useRef(null)
+
+   function handleChange(element) {
+      const newSelected = new Set(selected)
+
+      if (selected.has(element.id)) {
+         newSelected.delete(element.id)
+      } else {
+         newSelected.add(element.id)
+      }
+
+      setSelected(newSelected)
+   }
+
+   useEffect(() => {
+      if (checkboxRef.current) {
+         checkboxRef.current.indeterminate =
+            selected.size > 0 && selected.size < total
+      }
+   }, [total, selected])
+
    return (
       <table className='mytable w-full'>
          <thead>
@@ -11,8 +41,12 @@ export function Table({ columns, data, checked }) {
                         <input
                            type='checkbox'
                            name='chk'
+                           ref={checkboxRef}
                            id='chk_1'
                            className='size-6 self-center'
+                           onClick={onSelectAllClick}
+                           checked={selected.size === total}
+                           onChange={() => {}}
                         />
                      </div>
                   </th>
@@ -25,7 +59,14 @@ export function Table({ columns, data, checked }) {
          <tbody>
             {data.map((row, index) => {
                return (
-                  <tr key={row.id}>
+                  <tr
+                     key={row.id}
+                     {...(checked && {
+                        onClick: () => {
+                           handleChange(row)
+                        },
+                     })}
+                  >
                      {checked && (
                         <td>
                            <div className='flex justify-center'>
@@ -34,6 +75,10 @@ export function Table({ columns, data, checked }) {
                                  name='chk'
                                  id={`chk_${row.id}`}
                                  className='size-5 self-center'
+                                 checked={selected.has(row.id)}
+                                 onChange={() => {
+                                    handleChange(row)
+                                 }}
                               />
                            </div>
                         </td>
@@ -58,4 +103,8 @@ Table.propTypes = {
    ).isRequired,
    data: PropTypes.array.isRequired,
    checked: PropTypes.bool,
+   selected: PropTypes.object,
+   setSelected: PropTypes.func,
+   total: PropTypes.number,
+   onSelectAllClick: PropTypes.func,
 }
