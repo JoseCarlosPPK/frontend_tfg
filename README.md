@@ -25,7 +25,8 @@ una página prácticamente estática o usará un fichero .json con datos de prue
 - [x] UI estática
 - [x] Autenticación
 - [x] Functional Centros Page
-- [ ] Select functionality on tables
+- [x] Select functionality on tables
+- [ ] Working on /convocatorias
 
 Ahora, se procede a desarrollar la parte funcional de la web. Dicho de otra manera,
 a realizar llamadas a la API, generar contenido dinámico y a interactuar con dicho contenido
