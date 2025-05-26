@@ -46,11 +46,11 @@ export function getCurso(dateConvocatoria, limitMonth, limitDay = 31) {
 
 /**
  * Convierte una fecha en un formato string a un objeto Date
- * @param {string} stringFecha Fecha en formato dd/mm/yyyy, aunque depende de sep.
+ * @param {string} stringFecha Fecha en formato yyyy/mm/dd, aunque depende de sep.
  * @param {string} [sep='/'] Separador del formato fecha. Por defecto es /.
  * @returns {Date} Objeto Date que representa la fecha indicada.
  */
 export function stringFechaToDate(stringFecha, sep = '/') {
-   const [day, month, year] = stringFecha.split(sep)
+   const [year, month, day] = stringFecha.split(sep)
    return new Date(year, month - 1, day)
 }
