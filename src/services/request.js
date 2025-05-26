@@ -115,6 +115,10 @@ export class Request {
          'GET'
       )
    }
+
+   getConvocatorias() {
+      return Request.request(this.#endpoints.convocatorias)
+   }
 }
 
 export const request = new Request(endpoints)

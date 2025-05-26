@@ -7,4 +7,5 @@ export const endpoints = {
    farmacias: `${URL}/farmacias`,
    farmaciasHospitalarias: `${URL}/farmacias-hospitalarias`,
    personas: `${URL}/personas`,
+   convocatorias: `${URL}/convocatorias`,
 }
