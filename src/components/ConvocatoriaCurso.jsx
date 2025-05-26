@@ -12,24 +12,31 @@ export function ConvocatoriaCurso({ curso, convocatorias }) {
             {curso} - {curso + 1}
          </h2>
          <ol>
-            {convocatorias.map((fechas) => {
-               return <ConvocatoriaItem key={fechas} fechas={fechas} />
+            {convocatorias.map((convocatoria) => {
+               return (
+                  <ConvocatoriaItem
+                     key={convocatoria.id}
+                     convocatoria={convocatoria}
+                  />
+               )
             })}
          </ol>
       </section>
    )
 }
 
-function ConvocatoriaItem({ fechas }) {
+function ConvocatoriaItem({ convocatoria }) {
    return (
       <li className='hover-resalt m-1 flex items-center justify-between rounded-lg p-1'>
          <a href=''>
-            {fechas[0].getDate()} de {MesesDate[fechas[0].getMonth()]} -{' '}
-            {fechas[1].getDate()} de {MesesDate[fechas[1].getMonth()]}
+            {convocatoria.fecha_ini.getDate()} de{' '}
+            {MesesDate[convocatoria.fecha_ini.getMonth()]} -{' '}
+            {convocatoria.fecha_fin.getDate()} de{' '}
+            {MesesDate[convocatoria.fecha_ini.getMonth()]}
          </a>
 
          <div className='ml-2 flex items-center gap-2'>
-            <a href={Routes.ConvocatoriasSee}>
+            <a href={`${Routes.ConvocatoriasSee}/${convocatoria.id}`}>
                <SeeButton size={SizeButtons} />
             </a>
             <a href={Routes.ConvocatoriasEdit}>

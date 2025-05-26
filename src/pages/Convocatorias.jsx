@@ -1,28 +1,49 @@
+import { useEffect, useState } from 'react'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { AddButton } from '../components/buttons'
 import { ConvocatoriaCurso } from '../components/ConvocatoriaCurso.jsx'
-import convocatorias_data from '../data/convocatorias.json'
 import { Routes } from '../routes.js'
+import { request } from '../services/request.js'
 import { MesesDate, getCurso, stringFechaToDate } from '../utils/utils.js'
 
 const LimitMonth = MesesDate.Julio
 
 export function ConvocatoriasPage() {
-   let convocatorias = new Map()
+   const [convocatorias, setConvocatorias] = useState(new Map())
 
-   convocatorias_data['data'].forEach((c) => {
-      let fechasString = c.split('-')
-      let fechaIni = stringFechaToDate(fechasString[0])
-      let fechaFin = stringFechaToDate(fechasString[1])
+   function fetchConvocatorias() {
+      request.getConvocatorias().then((res) => {
+         if (res.ok) {
+            res.json().then((resJson) => {
+               const newConvocatorias = new Map()
 
-      let curso = getCurso(fechaIni, LimitMonth)
-      if (!convocatorias.has(curso)) {
-         convocatorias.set(curso, [])
-      }
+               resJson.data.forEach((convocatoria) => {
+                  convocatoria.fecha_ini = stringFechaToDate(
+                     convocatoria.fecha_ini,
+                     '-'
+                  )
+                  convocatoria.fecha_fin = stringFechaToDate(
+                     convocatoria.fecha_fin,
+                     '-'
+                  )
+                  let curso = getCurso(convocatoria.fecha_ini, LimitMonth)
+                  if (!newConvocatorias.has(curso)) {
+                     newConvocatorias.set(curso, [])
+                  }
 
-      convocatorias.get(curso).push([fechaIni, fechaFin])
-   })
+                  newConvocatorias.get(curso).push(convocatoria)
+               })
+
+               setConvocatorias(newConvocatorias)
+            })
+         }
+      })
+   }
+
+   useEffect(() => {
+      fetchConvocatorias()
+   }, [])
 
    return (
       <AppNavFrame>
