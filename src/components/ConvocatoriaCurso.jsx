@@ -1,7 +1,14 @@
 /* eslint-disable react/prop-types */
+import { useNotifications } from '@toolpad/core'
 import { Link } from 'react-router'
-import { DeleteButton, EditButton, SeeButton } from '../components/buttons'
+import {
+   DeleteButton,
+   EditButton,
+   ExcelButton,
+   SeeButton,
+} from '../components/buttons'
 import { MesesDate } from '../utils/utils.js'
+import { AUTO_HIDE_DURATION } from './snacbarks/index.js'
 
 const SizeButtons = 'size-8'
 
@@ -26,6 +33,8 @@ export function ConvocatoriaCurso({ curso, convocatorias }) {
 }
 
 function ConvocatoriaItem({ convocatoria }) {
+   const notifications = useNotifications()
+
    return (
       <li className='hover-resalt m-1 flex items-center justify-between rounded-lg p-1'>
          <Link to={`/convocatorias/${convocatoria.id}`}>
@@ -36,6 +45,18 @@ function ConvocatoriaItem({ convocatoria }) {
          </Link>
 
          <div className='ml-2 flex items-center gap-2'>
+            <a
+               href=''
+               onClick={(event) => {
+                  event.preventDefault()
+                  notifications.show('Funcionalidad no implementada', {
+                     severity: 'error',
+                     autoHideDuration: AUTO_HIDE_DURATION,
+                  })
+               }}
+            >
+               <ExcelButton size={SizeButtons} />
+            </a>
             <Link to={convocatoria.id}>
                <SeeButton size={SizeButtons} />
             </Link>
