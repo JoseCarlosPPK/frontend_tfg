@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import { HomeLogo } from './svg'
 
 export function Breadcrumb() {
@@ -17,17 +18,17 @@ export function Breadcrumb() {
    return (
       <ol className='flex items-center'>
          <li className='mx-1'>
-            <a href='/'>
+            <Link to='/'>
                <HomeLogo />
-            </a>
+            </Link>
          </li>
 
          {segments.map((e, i) => (
             <li key={i} className='before:content-["/"]'>
                {add_path(e)}
-               <a href={path} className='mx-1'>
+               <Link to={path} className='mx-1'>
                   {e}
-               </a>
+               </Link>
             </li>
          ))}
       </ol>

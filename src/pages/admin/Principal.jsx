@@ -3,7 +3,7 @@ import logo_users from '../../assets/logo_users.svg' // https://www.svgrepo.com
 import { AppNavFrame } from '../../components/AppFrame.jsx'
 import { Breadcrumb } from '../../components/Breadcrumb.jsx'
 import { ImageLink } from '../../components/ImageLink.jsx'
-import { Routes } from '../../routes.js'
+import { routes } from '../../router.jsx'
 
 export function AdminPage() {
    return (
@@ -15,12 +15,12 @@ export function AdminPage() {
          <div className='mygrid m-5 grow content-center justify-center gap-8'>
             <ImageLink
                title='Registros'
-               href={Routes.AdminRegistros}
+               href={routes.AdminRegistros}
                imgSrc={logo_registros}
             />
             <ImageLink
                title='Usuarios'
-               href={Routes.AdminUsuarios}
+               href={routes.AdminUsuarios}
                imgSrc={logo_users}
             />
          </div>

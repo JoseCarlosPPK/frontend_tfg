@@ -1,3 +1,4 @@
+export { AdminPage, RegistrosPage, UsuariosPage } from './admin'
 export { CentrosPage } from './centros/Centros.jsx'
 export { ConvocatoriasPage } from './Convocatorias.jsx'
 export { ConvocatoriasAddPage } from './ConvocatoriasAddPage.jsx'
