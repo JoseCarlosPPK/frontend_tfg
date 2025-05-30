@@ -2,6 +2,7 @@ import { Pagination } from '@mui/material'
 import { AppNavFrame } from '../../components/AppFrame.jsx'
 import { Breadcrumb } from '../../components/Breadcrumb.jsx'
 import { Input, Select } from '../../components/inputs'
+import { PaginationRangeInfo } from '../../components/PaginationRangeInfo.jsx'
 import { ClockLogo, UserLogo } from '../../components/svg'
 import { Table } from '../../components/Table.jsx'
 import registros from '../../data/registro.json'
@@ -194,7 +195,7 @@ export function RegistrosPage() {
                      </datalist>
                   </div>
 
-                  <span>10 de 1000</span>
+                  <PaginationRangeInfo page={1} perPage={10} total={100} />
                </div>
                <Table columns={Columns} data={registros.data} />
                <Pagination
