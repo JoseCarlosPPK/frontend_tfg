@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
+import { Link } from 'react-router'
 import { DeleteButton, EditButton, SeeButton } from '../components/buttons'
-import { Routes } from '../routes.js'
 import { MesesDate } from '../utils/utils.js'
 
 const SizeButtons = 'size-8'
@@ -28,20 +28,20 @@ export function ConvocatoriaCurso({ curso, convocatorias }) {
 function ConvocatoriaItem({ convocatoria }) {
    return (
       <li className='hover-resalt m-1 flex items-center justify-between rounded-lg p-1'>
-         <a href=''>
+         <Link to={`/convocatorias/${convocatoria.id}`}>
             {convocatoria.fecha_ini.getDate()} de{' '}
             {MesesDate[convocatoria.fecha_ini.getMonth()]} -{' '}
             {convocatoria.fecha_fin.getDate()} de{' '}
             {MesesDate[convocatoria.fecha_ini.getMonth()]}
-         </a>
+         </Link>
 
          <div className='ml-2 flex items-center gap-2'>
-            <a href={`${Routes.ConvocatoriasSee}/${convocatoria.id}`}>
+            <Link to={convocatoria.id}>
                <SeeButton size={SizeButtons} />
-            </a>
-            <a href={Routes.ConvocatoriasEdit}>
+            </Link>
+            <Link to={`edit/${convocatoria.id}`}>
                <EditButton size={SizeButtons} />
-            </a>
+            </Link>
             <DeleteButton size={SizeButtons} />
          </div>
       </li>

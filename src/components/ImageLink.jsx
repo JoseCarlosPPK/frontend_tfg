@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
+import { Link } from 'react-router'
 
 export function ImageLink({ imgSrc, title, href }) {
    return (
-      <a href={href} className='hover-resize max-w-56'>
+      <Link to={href} className='hover-resize max-w-56'>
          <div className='bg-terciario justify-center justify-items-center rounded-xl p-3'>
             <img
                src={imgSrc}
@@ -11,6 +12,6 @@ export function ImageLink({ imgSrc, title, href }) {
             />
             <h2 className='mt-2 text-center'>{title}</h2>
          </div>
-      </a>
+      </Link>
    )
 }
