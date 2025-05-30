@@ -11,6 +11,7 @@ import {
 } from '../../components/buttons/index.js'
 import { Input, SearchSelect } from '../../components/inputs/index.js'
 import { TIPOS_CENTROS } from '../../components/models'
+import { PaginationRangeInfo } from '../../components/PaginationRangeInfo.jsx'
 import { AUTO_HIDE_DURATION } from '../../components/snacbarks/index.js'
 import { Table } from '../../components/Table.jsx'
 import { useAuth, useQueryString } from '../../hooks/index.js'
@@ -414,12 +415,11 @@ export function CentrosPage() {
                      </datalist>
                   </div>
 
-                  <span>
-                     {queryString.page * queryString.perPage -
-                        queryString.perPage +
-                        1}
-                     -{queryString.page * queryString.perPage} de {totalCentros}
-                  </span>
+                  <PaginationRangeInfo
+                     page={queryString.page}
+                     perPage={queryString.perPage}
+                     total={totalCentros}
+                  />
                </div>
 
                {/* Tabla */}

@@ -9,6 +9,7 @@ import {
    MailButton,
 } from '../../components/buttons'
 import { Input, Search } from '../../components/inputs'
+import { PaginationRangeInfo } from '../../components/PaginationRangeInfo.jsx'
 import { Table } from '../../components/Table.jsx'
 import usuarios from '../../data/usuarios.json'
 
@@ -141,7 +142,7 @@ export function UsuariosPage() {
                      </datalist>
                   </div>
 
-                  <span>10 de 1000</span>
+                  <PaginationRangeInfo page={1} perPage={10} total={100} />
                </div>
                <Table columns={Columns} data={usuarios} />
                {/* Pagination */}

@@ -10,6 +10,7 @@ import {
    FarmaciasHospitalariasColumnas,
 } from '../components/models/columns.jsx'
 import { filters } from '../components/models/filters.js'
+import { PaginationRangeInfo } from '../components/PaginationRangeInfo.jsx'
 import { Direccion } from '../components/svg'
 import { Table } from '../components/Table.jsx'
 import farmacias from '../data/farmacias.json'
@@ -124,7 +125,11 @@ export function ConvocatoriasAddPage() {
                                  </datalist>
                               </div>
 
-                              <span>10 de 1000</span>
+                              <PaginationRangeInfo
+                                 page={1}
+                                 perPage={10}
+                                 total={100}
+                              />
                            </div>
                            {/* Tabla */}
                            <Table
