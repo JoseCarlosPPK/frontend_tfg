@@ -57,7 +57,7 @@ function ConvocatoriaItem({ convocatoria }) {
             >
                <ExcelButton size={SizeButtons} />
             </a>
-            <Link to={convocatoria.id}>
+            <Link to={`${convocatoria.id}`}>
                <SeeButton size={SizeButtons} />
             </Link>
             <Link to={`edit/${convocatoria.id}`}>

@@ -1,20 +1,15 @@
 import { Pagination } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { ArrowButton } from '../components/buttons'
 import { DateConvocatoria } from '../components/DateConvocatoria.jsx'
 import { Input, SearchSelect, Select } from '../components/inputs'
-import {
-   FarmaciasColumnas,
-   FarmaciasHospitalariasColumnas,
-} from '../components/models/columns.jsx'
-import { filters } from '../components/models/filters.js'
+import { TIPOS_CENTROS } from '../components/models'
 import { PaginationRangeInfo } from '../components/PaginationRangeInfo.jsx'
 import { Direccion } from '../components/svg'
 import { Table } from '../components/Table.jsx'
-import farmacias from '../data/farmacias.json'
-import farmacias_hospitalarias from '../data/farmacias_hospitalarias.json'
+import { useQueryString, useSelected } from '../hooks'
 
 export function ConvocatoriasAddPage() {
    const [fechaIni, setFechaIni] = useState('')
@@ -24,6 +19,19 @@ export function ConvocatoriasAddPage() {
    const [numPaso, setNumPaso] = useState(1)
    const isButtonLeftDisabled = numPaso === 1
    const isButtonRightDisabled = numPaso === pasos.length
+
+   const [indexTipoCentro, setIndexTipoCentro] = useState(0)
+   const tipoCentroElegido = TIPOS_CENTROS[indexTipoCentro]
+
+   const [centros, setCentros] = useState([])
+   const { queryString, setQueryString, handleSubmit, handleSelectChange } =
+      useQueryString()
+   const [totalCentros, setTotalCentros] = useState(0)
+   const { selected, setSelected, handleClickGeneralCheckbox } = useSelected(
+      tipoCentroElegido,
+      totalCentros,
+      queryString
+   )
 
    const buttonActiveClassName =
       'hover-resize text-[var(--color-principal)] h-96'
@@ -37,22 +45,39 @@ export function ConvocatoriasAddPage() {
       : buttonActiveClassName
 
    function onChangeFechaIni(event) {
-      event.target.value
       setFechaIni(event.target.value)
    }
 
    function onChangeFechaFin(event) {
-      event.target.value
       setFechaFin(event.target.value)
    }
 
    function handleClickRight() {
-      setNumPaso(numPaso + 1)
+      const newPaso = numPaso + 1
+      setNumPaso(newPaso)
+
+      if (newPaso > 2 && newPaso < pasos.length) {
+         setIndexTipoCentro(indexTipoCentro + 1)
+      }
    }
 
    function handleClickLeft() {
-      setNumPaso(numPaso - 1)
+      const newPaso = numPaso - 1
+      setNumPaso(newPaso)
+      if (newPaso > 1 && newPaso < pasos.length - 1) {
+         setIndexTipoCentro(indexTipoCentro - 1)
+      }
    }
+
+   useEffect(() => {
+      if (numPaso != 1 && numPaso != pasos.length) {
+         tipoCentroElegido.getCentros(1, 10, '', '').then((res) => {
+            res.json().then((resJson) => {
+               setCentros(resJson.data)
+            })
+         })
+      }
+   }, [numPaso])
 
    return (
       <AppNavFrame>
@@ -77,9 +102,9 @@ export function ConvocatoriasAddPage() {
                   onChangeFechaFin={onChangeFechaFin}
                />
             )}
-            {numPaso === 2 && (
+            {numPaso != 1 && numPaso != pasos.length && (
                <div className='mt-2 grow'>
-                  <h2 className='h2'>Selección farmacias</h2>
+                  <h2 className='h2'>Selección {tipoCentroElegido.name}</h2>
                   <div className='flex grow items-center'>
                      <aside className='border-principal bg-terciario m-4 grow-0 rounded-md !border-2 p-5'>
                         <label htmlFor='seleccion'>Mostrar</label>
@@ -97,7 +122,10 @@ export function ConvocatoriasAddPage() {
                      </aside>
                      <div className='m-4 grow'>
                         <form className='flex justify-center gap-2'>
-                           <SearchSelect filters={filters} />
+                           <SearchSelect
+                              filters={tipoCentroElegido.getFiltros()}
+                              placeholder='Buscar ... '
+                           />
                         </form>
 
                         {/* Contenedor genérico para la tabla y paginación */}
@@ -133,9 +161,13 @@ export function ConvocatoriasAddPage() {
                            </div>
                            {/* Tabla */}
                            <Table
-                              columns={FarmaciasColumnas}
-                              data={farmacias.data}
+                              columns={tipoCentroElegido.getEncabezadosTabla()}
+                              data={centros}
                               checked={true}
+                              selected={selected}
+                              setSelected={setSelected}
+                              total={totalCentros}
+                              onSelectAllClick={handleClickGeneralCheckbox}
                            />
 
                            {/* Pagination */}
@@ -157,81 +189,7 @@ export function ConvocatoriasAddPage() {
                   </div>
                </div>
             )}
-            {numPaso === 3 && (
-               <div className='mt-2 grow'>
-                  <h2 className='h2'>Selección farmacias hospitalarias</h2>
-                  <div className='flex grow items-center'>
-                     <aside className='border-principal bg-terciario m-4 grow-0 rounded-md !border-2 p-5'>
-                        <label htmlFor='seleccion'>Mostrar</label>
-                        <Select
-                           name='seleccion'
-                           id='seleccion'
-                           className='ml-4'
-                        >
-                           <option value='todos'>Todos</option>
-                           <option value='seleccionados'>Seleccionados</option>
-                           <option value='no_seleccionados'>
-                              No seleccionados
-                           </option>
-                        </Select>
-                     </aside>
-                     <div className='m-4 grow'>
-                        <form className='flex justify-center gap-2'>
-                           <SearchSelect filters={filters} />
-                        </form>
 
-                        {/* Contenedor genérico para la tabla y paginación */}
-                        <div>
-                           {/* Cantidad de elementos a ver */}
-                           <div className='mx-16 my-2 flex items-center justify-between'>
-                              <div className='flex items-center gap-2'>
-                                 <label htmlFor='amount_centers'>Ver</label>
-                                 <Input
-                                    id='amount_centers'
-                                    type='number'
-                                    inputMode='numeric'
-                                    name='amount_centers'
-                                    list='opt_amount_centers'
-                                    defaultValue='10'
-                                    min='10'
-                                    step='10'
-                                    autoComplete='off'
-                                    className='w-20'
-                                 />
-                                 <datalist id='opt_amount_centers'>
-                                    <option value='10'></option>
-                                    <option value='20'></option>
-                                    <option value='30'></option>
-                                 </datalist>
-                              </div>
-
-                              <span>10 de 1000</span>
-                           </div>
-                           {/* Tabla */}
-                           <Table
-                              columns={FarmaciasHospitalariasColumnas}
-                              data={farmacias_hospitalarias.data}
-                              checked={true}
-                           />
-                           {/* Pagination */}
-                           <Pagination
-                              color='secondary'
-                              count={10}
-                              boundaryCount={2}
-                              size='large'
-                              sx={{
-                                 '& .MuiPaginationItem-root:hover': {
-                                    backgroundColor: 'terciary.main',
-                                    zIndex: 9999,
-                                 },
-                              }}
-                              className='m-2 justify-self-center'
-                           />
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            )}
             <ArrowButton
                className={buttonRightClassName}
                disabled={isButtonRightDisabled}
