@@ -14,7 +14,7 @@ export function DateConvocatoria({
       : 'ml-2 p-1'
 
    return (
-      <div className='border-principal rounded-xl p-6 pb-8'>
+      <div className='border-principal h-fit rounded-xl p-6 pb-8'>
          <h2 className='h2'>Fechas</h2>
 
          <section className='mt-4 grid grid-cols-2 items-center gap-5'>
