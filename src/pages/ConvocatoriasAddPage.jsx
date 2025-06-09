@@ -177,10 +177,14 @@ export function ConvocatoriasAddPage() {
                                  </option>
                               </Select>
                            </div>
-                           <form className='flex justify-center gap-2'>
+                           <form
+                              className='flex justify-center gap-2'
+                              onSubmit={handleSubmit}
+                           >
                               <SearchSelect
                                  filters={tipoCentroElegido.getFiltros()}
                                  placeholder='Buscar ... '
+                                 handleSelectChange={handleSelectChange}
                               />
                            </form>
                         </div>
