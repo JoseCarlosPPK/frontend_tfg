@@ -102,6 +102,16 @@ export function ConvocatoriasAddPage() {
       }
    }, [numPaso, queryString])
 
+   useEffect(() => {
+      if (numPaso != 1 && numPaso != pasos.length) {
+         setQueryString((prev) => ({
+            ...prev,
+            page: 1,
+            search: '',
+         }))
+      }
+   }, [numPaso])
+
    return (
       <AppNavFrame>
          <header>
@@ -185,6 +195,13 @@ export function ConvocatoriasAddPage() {
                                  filters={tipoCentroElegido.getFiltros()}
                                  placeholder='Buscar ... '
                                  handleSelectChange={handleSelectChange}
+                                 value={queryString.search}
+                                 onChange={(event) => {
+                                    setQueryString((prev) => ({
+                                       ...prev,
+                                       search: event.target.value,
+                                    }))
+                                 }}
                               />
                            </form>
                         </div>
@@ -201,17 +218,19 @@ export function ConvocatoriasAddPage() {
                                     inputMode='numeric'
                                     name='amount_centers'
                                     list='opt_amount_centers'
-                                    defaultValue='10'
                                     min='1'
                                     step='5'
                                     autoComplete='off'
                                     className='w-20'
+                                    value={queryString.perPage}
                                     onChange={(event) => {
                                        if (event.target.value > 0) {
                                           setQueryString((prev) => ({
                                              ...prev,
                                              page: 1,
-                                             perPage: event.target.value,
+                                             perPage: Number(
+                                                event.target.value
+                                             ),
                                           }))
                                        }
                                     }}
