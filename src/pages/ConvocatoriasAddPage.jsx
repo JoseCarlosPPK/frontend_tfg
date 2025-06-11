@@ -33,8 +33,16 @@ export function ConvocatoriasAddPage() {
    const { queryString, setQueryString, handleSubmit, handleSelectChange } =
       useQueryString()
    const [totalCentros, setTotalCentros] = useState(0)
-   const { selected, setSelected, handleClickGeneralCheckbox } = useSelected(
-      tipoCentroElegido,
+   const selectedStructure = {}
+
+   selectedStructure['Farmacia'] = useSelected(
+      TIPOS_CENTROS[0],
+      totalCentros,
+      queryString
+   )
+
+   selectedStructure['FarmaciaHospitalaria'] = useSelected(
+      TIPOS_CENTROS[1],
       totalCentros,
       queryString
    )
@@ -253,10 +261,19 @@ export function ConvocatoriasAddPage() {
                               columns={tipoCentroElegido.getEncabezadosTabla()}
                               data={centros}
                               checked={true}
-                              selected={selected}
-                              setSelected={setSelected}
+                              selected={
+                                 selectedStructure[tipoCentroElegido.name]
+                                    .selected
+                              }
+                              setSelected={
+                                 selectedStructure[tipoCentroElegido.name]
+                                    .setSelected
+                              }
                               total={totalCentros}
-                              onSelectAllClick={handleClickGeneralCheckbox}
+                              onSelectAllClick={
+                                 selectedStructure[tipoCentroElegido.name]
+                                    .handleClickGeneralCheckbox
+                              }
                            />
 
                            {/* Pagination */}
