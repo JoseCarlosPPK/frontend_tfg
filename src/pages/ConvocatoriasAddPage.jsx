@@ -47,6 +47,48 @@ export function ConvocatoriasAddPage() {
       queryString
    )
 
+   const newTableHeaders = tipoCentroElegido
+      ?.getEncabezadosTabla()
+      .toSpliced(2, 0, {
+         name: 'Nº plazas',
+         createCell: (row) => {
+            const isSelected = selectedStructure[
+               tipoCentroElegido.name
+            ].selected.has(row.id)
+            return (
+               <td key={row.id} className='text-center'>
+                  <Input
+                     type='number'
+                     inputMode='numeric'
+                     min='1'
+                     step='1'
+                     autoComplete='off'
+                     className={`w-14 justify-self-center ${!isSelected ? 'bg-gray-500/40' : ''}`}
+                     value={
+                        selectedStructure[tipoCentroElegido.name].selected.get(
+                           row.id
+                        )?.num_plazas ?? 0
+                     }
+                     disabled={!isSelected}
+                     onChange={(event) => {
+                        const newSelected = new Map(
+                           selectedStructure[tipoCentroElegido.name].selected
+                        )
+
+                        newSelected.get(row.id).num_plazas = event.target.value
+                        selectedStructure[tipoCentroElegido.name].setSelected(
+                           newSelected
+                        )
+                     }}
+                     onDoubleClick={(event) => {
+                        event.stopPropagation()
+                     }}
+                  />
+               </td>
+            )
+         },
+      })
+
    const buttonActiveClassName = 'hover-resize text-[var(--color-principal)]'
    const buttonDisabledClassName = 'text-gray-500'
    const buttonLeftClassName = isButtonLeftDisabled
@@ -56,14 +98,6 @@ export function ConvocatoriasAddPage() {
    const buttonRightClassName = isButtonRightDisabled
       ? buttonDisabledClassName
       : buttonActiveClassName
-
-   function onChangeFechaIni(event) {
-      setFechaIni(event.target.value)
-   }
-
-   function onChangeFechaFin(event) {
-      setFechaFin(event.target.value)
-   }
 
    function handleClickRight() {
       const newPaso = numPaso + 1
@@ -167,8 +201,12 @@ export function ConvocatoriasAddPage() {
                      <DateConvocatoria
                         fecha_ini={fechaIni}
                         fecha_fin={fechaFin}
-                        onChangeFechaIni={onChangeFechaIni}
-                        onChangeFechaFin={onChangeFechaFin}
+                        onChangeFechaIni={(event) =>
+                           setFechaIni(event.target.value)
+                        }
+                        onChangeFechaFin={(event) =>
+                           setFechaFin(event.target.value)
+                        }
                      />
                   </div>
                )}
@@ -258,16 +296,16 @@ export function ConvocatoriasAddPage() {
                            </div>
                            {/* Tabla */}
                            <Table
-                              columns={tipoCentroElegido.getEncabezadosTabla()}
+                              columns={newTableHeaders}
                               data={centros}
                               checked={true}
                               selected={
                                  selectedStructure[tipoCentroElegido.name]
                                     .selected
                               }
-                              setSelected={
+                              toggleSelected={
                                  selectedStructure[tipoCentroElegido.name]
-                                    .setSelected
+                                    .toggleSelected
                               }
                               total={totalCentros}
                               onSelectAllClick={
