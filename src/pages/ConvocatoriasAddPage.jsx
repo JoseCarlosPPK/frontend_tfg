@@ -33,18 +33,28 @@ export function ConvocatoriasAddPage() {
    const { queryString, setQueryString, handleSubmit, handleSelectChange } =
       useQueryString()
    const [totalCentros, setTotalCentros] = useState(0)
+
+   function valueWhenSelected(element) {
+      return {
+         id: element.id,
+         num_plazas: 1,
+      }
+   }
+
    const selectedStructure = {}
 
    selectedStructure['Farmacia'] = useSelected(
       TIPOS_CENTROS[0],
       totalCentros,
-      queryString
+      queryString,
+      valueWhenSelected
    )
 
    selectedStructure['FarmaciaHospitalaria'] = useSelected(
       TIPOS_CENTROS[1],
       totalCentros,
-      queryString
+      queryString,
+      valueWhenSelected
    )
 
    const newTableHeaders = tipoCentroElegido

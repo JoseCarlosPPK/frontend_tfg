@@ -3,7 +3,14 @@ import { useState } from 'react'
 import { AUTO_HIDE_DURATION } from '../components/snacbarks'
 import { useAuth } from './useAuth.js'
 
-export function useSelected(tipoCentroElegido, totalCentros, queryString) {
+export function useSelected(
+   tipoCentroElegido,
+   totalCentros,
+   queryString,
+   defaultValue = (element) => {
+      return element.id
+   }
+) {
    const [selected, setSelected] = useState(new Map())
    const notifications = useNotifications()
    const { signOut } = useAuth()
@@ -19,7 +26,7 @@ export function useSelected(tipoCentroElegido, totalCentros, queryString) {
                      const newSelected = new Map(selected)
                      resJson.data.map((value) => {
                         if (!selected.has(value.id)) {
-                           newSelected.set(value.id, { num_plazas: 1 })
+                           newSelected.set(value.id, defaultValue(value))
                         }
                      })
 
@@ -94,7 +101,7 @@ export function useSelected(tipoCentroElegido, totalCentros, queryString) {
       if (selected.has(element.id)) {
          newSelected.delete(element.id)
       } else {
-         newSelected.set(element.id, { num_plazas: 1 })
+         newSelected.set(element.id, defaultValue(element))
       }
 
       setSelected(newSelected)
