@@ -351,6 +351,69 @@ export function ConvocatoriasAddPage() {
                      </div>
                   </div>
                )}
+
+               {numPaso === pasos.length && (
+                  <div className='mt-2 flex grow flex-col items-center justify-center'>
+                     <h2 className='h2 m-3'>Resumen y Confirmación</h2>
+                     <div>
+                        <section>
+                           <table className='mytable'>
+                              <thead>
+                                 <tr className='bg-secundario'>
+                                    <th>Tipo de centro</th>
+                                    <th>Nº centros seleccionados</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr>
+                                    <td>Farmacias</td>
+                                    <td className='text-center'>
+                                       {
+                                          selectedStructure[
+                                             TIPOS_CENTROS[0].name
+                                          ].selected.size
+                                       }
+                                    </td>
+                                 </tr>
+
+                                 <tr>
+                                    <td>Farmacias Hospitalarias</td>
+                                    <td className='text-center'>
+                                       {
+                                          selectedStructure[
+                                             TIPOS_CENTROS[1].name
+                                          ].selected.size
+                                       }
+                                    </td>
+                                 </tr>
+                              </tbody>
+
+                              <tfoot>
+                                 <tr>
+                                    <td className='text-right font-bold'>
+                                       Total
+                                    </td>
+                                    <td className='text-center'>
+                                       {selectedStructure[TIPOS_CENTROS[1].name]
+                                          .selected.size +
+                                          selectedStructure[
+                                             TIPOS_CENTROS[0].name
+                                          ].selected.size}
+                                    </td>
+                                 </tr>
+                              </tfoot>
+                           </table>
+                        </section>
+
+                        <Button
+                           color='bg-green-600 text-white hover:bg-green-700'
+                           size='p-1 w-full m-2'
+                        >
+                           Crear convocatoria
+                        </Button>
+                     </div>
+                  </div>
+               )}
             </main>
          </div>
       </AppNavFrame>
