@@ -32,5 +32,10 @@ export function useQueryString(page = 1, perPage = 10) {
       }))
    }
 
-   return { queryString, setQueryString, handleSubmit, handleSelectChange }
+   return {
+      queryString,
+      setQueryString,
+      handleSubmit,
+      handleSelectChange,
+   }
 }
