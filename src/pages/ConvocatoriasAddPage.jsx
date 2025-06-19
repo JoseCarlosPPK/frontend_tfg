@@ -1,6 +1,7 @@
 import { Pagination } from '@mui/material'
 import { useNotifications } from '@toolpad/core'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { ArrowButton, Button } from '../components/buttons'
@@ -12,9 +13,11 @@ import { AUTO_HIDE_DURATION } from '../components/snacbarks'
 import { Direccion } from '../components/svg'
 import { Table } from '../components/Table.jsx'
 import { useAuth, useQueryString, useSelected } from '../hooks'
+import { request } from '../services/request.js'
 
 export function ConvocatoriasAddPage() {
    const { signOut } = useAuth()
+   const navigate = useNavigate()
 
    const notifications = useNotifications()
 
@@ -408,6 +411,60 @@ export function ConvocatoriasAddPage() {
                         <Button
                            color='bg-green-600 text-white hover:bg-green-700'
                            size='p-1 w-full m-2'
+                           onClick={() => {
+                              const convocatoria = {
+                                 convocatoria: {
+                                    fecha_ini: fechaIni,
+                                    fecha_fin: fechaFin,
+                                 },
+                                 farmacias: [
+                                    ...selectedStructure[
+                                       'Farmacia'
+                                    ].selected.values(),
+                                 ],
+                                 farmacias_hospitalarias: [
+                                    ...selectedStructure[
+                                       'FarmaciaHospitalaria'
+                                    ].selected.values(),
+                                 ],
+                              }
+
+                              request
+                                 .addConvocatoria(convocatoria)
+                                 .then((res) => {
+                                    if (res.ok) {
+                                       notifications.show(
+                                          'Se creó la convocatoria',
+                                          {
+                                             severity: 'success',
+                                             autoHideDuration:
+                                                AUTO_HIDE_DURATION,
+                                          }
+                                       )
+
+                                       navigate('/convocatorias')
+                                    } else {
+                                       if (res.status === 401) {
+                                          signOut()
+                                       } else {
+                                          notifications.show(
+                                             'Error al crear la convocatoria',
+                                             {
+                                                severity: 'error',
+                                                autoHideDuration:
+                                                   AUTO_HIDE_DURATION,
+                                             }
+                                          )
+                                       }
+                                    }
+                                 })
+                                 .catch(() => {
+                                    notifications.show('Fallo de conexión', {
+                                       severity: 'error',
+                                       autoHideDuration: AUTO_HIDE_DURATION,
+                                    })
+                                 })
+                           }}
                         >
                            Crear convocatoria
                         </Button>
