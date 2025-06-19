@@ -403,7 +403,7 @@ export function CentrosPage() {
                               setQueryString((prev) => ({
                                  ...prev,
                                  page: 1,
-                                 perPage: event.target.value,
+                                 perPage: Number(event.target.value),
                               }))
                            }
                         }}
