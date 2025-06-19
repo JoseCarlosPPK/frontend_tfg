@@ -3,8 +3,15 @@ import { useState } from 'react'
 import { AUTO_HIDE_DURATION } from '../components/snacbarks'
 import { useAuth } from './useAuth.js'
 
-export function useSelected(tipoCentroElegido, totalCentros, queryString) {
-   const [selected, setSelected] = useState(new Set())
+export function useSelected(
+   tipoCentroElegido,
+   totalCentros,
+   queryString,
+   defaultValue = (element) => {
+      return element.id
+   }
+) {
+   const [selected, setSelected] = useState(new Map())
    const notifications = useNotifications()
    const { signOut } = useAuth()
 
@@ -16,9 +23,11 @@ export function useSelected(tipoCentroElegido, totalCentros, queryString) {
             .then((res) => {
                if (res.ok) {
                   res.json().then((resJson) => {
-                     const newSelected = new Set(selected)
+                     const newSelected = new Map(selected)
                      resJson.data.map((value) => {
-                        newSelected.add(value.id)
+                        if (!selected.has(value.id)) {
+                           newSelected.set(value.id, defaultValue(value))
+                        }
                      })
 
                      setSelected(newSelected)
@@ -44,7 +53,7 @@ export function useSelected(tipoCentroElegido, totalCentros, queryString) {
             })
       } else {
          if (queryString.search === '') {
-            setSelected(new Set())
+            setSelected(new Map())
          } else {
             tipoCentroElegido
                .getCentros(
@@ -56,7 +65,7 @@ export function useSelected(tipoCentroElegido, totalCentros, queryString) {
                .then((res) => {
                   if (res.ok) {
                      res.json().then((resJson) => {
-                        const newSelected = new Set(selected)
+                        const newSelected = new Map(selected)
                         resJson.data.map((value) => {
                            newSelected.delete(value.id)
                         })
@@ -86,5 +95,17 @@ export function useSelected(tipoCentroElegido, totalCentros, queryString) {
       }
    }
 
-   return { selected, setSelected, handleClickGeneralCheckbox }
+   function toggleSelected(element) {
+      const newSelected = new Map(selected)
+
+      if (selected.has(element.id)) {
+         newSelected.delete(element.id)
+      } else {
+         newSelected.set(element.id, defaultValue(element))
+      }
+
+      setSelected(newSelected)
+   }
+
+   return { selected, setSelected, handleClickGeneralCheckbox, toggleSelected }
 }

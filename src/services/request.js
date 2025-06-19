@@ -119,6 +119,14 @@ export class Request {
    getConvocatorias() {
       return Request.request(this.#endpoints.convocatorias)
    }
+
+   addConvocatoria(convocatoria) {
+      return Request.request(
+         this.#endpoints.convocatorias,
+         'POST',
+         convocatoria
+      )
+   }
 }
 
 export const request = new Request(endpoints)

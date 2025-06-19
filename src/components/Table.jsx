@@ -6,23 +6,11 @@ export function Table({
    data,
    checked,
    selected,
-   setSelected,
+   toggleSelected,
    total,
    onSelectAllClick,
 }) {
    const checkboxRef = useRef(null)
-
-   function handleChange(element) {
-      const newSelected = new Set(selected)
-
-      if (selected.has(element.id)) {
-         newSelected.delete(element.id)
-      } else {
-         newSelected.add(element.id)
-      }
-
-      setSelected(newSelected)
-   }
 
    useEffect(() => {
       if (checkboxRef.current) {
@@ -45,7 +33,7 @@ export function Table({
                            id='chk_1'
                            className='size-6 self-center'
                            onClick={onSelectAllClick}
-                           checked={selected.size === total}
+                           checked={selected.size == total}
                            onChange={() => {}}
                         />
                      </div>
@@ -62,10 +50,11 @@ export function Table({
                   <tr
                      key={row.id}
                      {...(checked && {
-                        onClick: () => {
-                           handleChange(row)
+                        onDoubleClick: () => {
+                           toggleSelected(row)
                         },
                      })}
+                     className='hover:cursor-pointer'
                   >
                      {checked && (
                         <td>
@@ -77,7 +66,7 @@ export function Table({
                                  className='size-5 self-center'
                                  checked={selected.has(row.id)}
                                  onChange={() => {
-                                    handleChange(row)
+                                    toggleSelected(row)
                                  }}
                               />
                            </div>
@@ -104,7 +93,7 @@ Table.propTypes = {
    data: PropTypes.array.isRequired,
    checked: PropTypes.bool,
    selected: PropTypes.object,
-   setSelected: PropTypes.func,
+   toggleSelected: PropTypes.func,
    total: PropTypes.number,
    onSelectAllClick: PropTypes.func,
 }
