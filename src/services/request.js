@@ -1,4 +1,5 @@
 import { getCookie } from '../utils/cookies.js'
+import { queryString } from '../utils/queryUrl.js'
 import { endpoints } from './endpoints.js'
 
 export class Request {
@@ -120,11 +121,41 @@ export class Request {
       return Request.request(this.#endpoints.convocatorias)
    }
 
+   getConvocatoria(id) {
+      return Request.request(`${this.#endpoints.convocatorias}/${id}`)
+   }
+
    addConvocatoria(convocatoria) {
       return Request.request(
          this.#endpoints.convocatorias,
          'POST',
          convocatoria
+      )
+   }
+
+   editConvocatoria(id, convocatoria) {
+      return Request.request(
+         `${this.#endpoints.convocatorias}/${id}`,
+         'PUT',
+         convocatoria
+      )
+   }
+
+   getListadoFarmacias(
+      id,
+      queryParams = { all: false, page: 1, perPage: 10, search: '', filter: '' }
+   ) {
+      return Request.request(
+         `${this.#endpoints.listadoFarmacias}/${id}?${queryString(queryParams)}`
+      )
+   }
+
+   getListadoFarmaciasHospitalarias(
+      id,
+      queryParams = { all: false, page: 1, perPage: 10, search: '', filter: '' }
+   ) {
+      return Request.request(
+         `${this.#endpoints.listadoFarmaciasHospitalarias}/${id}?${queryString(queryParams)}`
       )
    }
 }

@@ -1,7 +1,7 @@
 import { Pagination } from '@mui/material'
 import { useNotifications } from '@toolpad/core'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useLoaderData, useNavigate } from 'react-router'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { ArrowButton, Button } from '../components/buttons'
@@ -19,6 +19,8 @@ export function ConvocatoriasAddPage() {
    const { signOut } = useAuth()
    const navigate = useNavigate()
 
+   const id = useLoaderData()
+   const isEdit = id ? true : false
    const notifications = useNotifications()
 
    const [fechaIni, setFechaIni] = useState('')
@@ -125,6 +127,11 @@ export function ConvocatoriasAddPage() {
       setIndexTipoCentro(newPaso - 2)
    }
 
+   /**
+    * Carga los centros de la API cuando el número de paso no es 1 ni el último paso.
+    * Esto se hace para evitar cargar los centros en el primer paso (fechas) y
+    * en el último paso (confirmación).
+    */
    useEffect(() => {
       if (numPaso != 1 && numPaso != pasos.length) {
          tipoCentroElegido
@@ -157,6 +164,10 @@ export function ConvocatoriasAddPage() {
       }
    }, [numPaso, queryString])
 
+   /**
+    * Resetea el queryString a la página 1 y búsqueda vacía
+    * cuando se cambia de paso, excepto en el primer y último paso.
+    */
    useEffect(() => {
       if (numPaso != 1 && numPaso != pasos.length) {
          setQueryString((prev) => ({
@@ -166,6 +177,114 @@ export function ConvocatoriasAddPage() {
          }))
       }
    }, [numPaso])
+
+   /**
+    * Carga los datos de la convocatoria si se ha pasado un id a través
+    * de la URL
+    */
+   useEffect(() => {
+      if (id) {
+         request
+            .getConvocatoria(id)
+            .then((res) => {
+               if (res.ok) {
+                  res.json().then((resJson) => {
+                     setFechaIni(resJson.data.fecha_ini)
+                     setFechaFin(resJson.data.fecha_fin)
+                  })
+               } else {
+                  if (res.status === 401) {
+                     signOut()
+                  } else {
+                     notifications.show('Error al cargar la convocatoria', {
+                        severity: 'error',
+                        autoHideDuration: AUTO_HIDE_DURATION,
+                     })
+                  }
+               }
+            })
+            .catch(() => {
+               notifications.show('Fallo de conexión', {
+                  severity: 'error',
+                  autoHideDuration: AUTO_HIDE_DURATION,
+               })
+            })
+
+         request
+            .getListadoFarmacias(id, { all: true })
+            .then((res) => {
+               if (res.ok) {
+                  res.json().then((resJson) => {
+                     const newSelected = new Map(
+                        selectedStructure['Farmacia'].selected
+                     )
+
+                     resJson.data.forEach((centro) => {
+                        newSelected.set(centro.id_centro, {
+                           id: centro.id_centro,
+                           num_plazas: centro.num_plazas,
+                        })
+                     })
+
+                     selectedStructure['Farmacia'].setSelected(newSelected)
+                  })
+               } else {
+                  if (res.status === 401) {
+                     signOut()
+                  } else {
+                     notifications.show('Error al cargar la convocatoria', {
+                        severity: 'error',
+                        autoHideDuration: AUTO_HIDE_DURATION,
+                     })
+                  }
+               }
+            })
+            .catch(() => {
+               notifications.show('Fallo de conexión', {
+                  severity: 'error',
+                  autoHideDuration: AUTO_HIDE_DURATION,
+               })
+            })
+
+         request
+            .getListadoFarmaciasHospitalarias(id, { all: true })
+            .then((res) => {
+               if (res.ok) {
+                  res.json().then((resJson) => {
+                     const newSelected = new Map(
+                        selectedStructure['FarmaciaHospitalaria'].selected
+                     )
+
+                     resJson.data.forEach((centro) => {
+                        newSelected.set(centro.id_centro, {
+                           id: centro.id_centro,
+                           num_plazas: centro.num_plazas,
+                        })
+                     })
+
+                     selectedStructure['FarmaciaHospitalaria'].setSelected(
+                        newSelected
+                     )
+                  })
+               } else {
+                  if (res.status === 401) {
+                     signOut()
+                  } else {
+                     notifications.show('Error al cargar la convocatoria', {
+                        severity: 'error',
+                        autoHideDuration: AUTO_HIDE_DURATION,
+                     })
+                  }
+               }
+            })
+            .catch(() => {
+               notifications.show('Fallo de conexión', {
+                  severity: 'error',
+                  autoHideDuration: AUTO_HIDE_DURATION,
+               })
+            })
+      }
+   }, [])
 
    return (
       <AppNavFrame>
@@ -409,7 +528,11 @@ export function ConvocatoriasAddPage() {
                         </section>
 
                         <Button
-                           color='bg-green-600 text-white hover:bg-green-700'
+                           color={
+                              isEdit
+                                 ? 'bg-yellow-500 hover:bg-yellow-600'
+                                 : 'bg-green-600 hover:bg-green-700 text-white'
+                           }
                            size='p-1 w-full m-2'
                            onClick={() => {
                               const convocatoria = {
@@ -429,44 +552,84 @@ export function ConvocatoriasAddPage() {
                                  ],
                               }
 
-                              request
-                                 .addConvocatoria(convocatoria)
-                                 .then((res) => {
-                                    if (res.ok) {
-                                       notifications.show(
-                                          'Se creó la convocatoria',
-                                          {
-                                             severity: 'success',
-                                             autoHideDuration:
-                                                AUTO_HIDE_DURATION,
-                                          }
-                                       )
-
-                                       navigate('/convocatorias')
-                                    } else {
-                                       if (res.status === 401) {
-                                          signOut()
-                                       } else {
+                              if (isEdit) {
+                                 request
+                                    .editConvocatoria(id, convocatoria)
+                                    .then((res) => {
+                                       if (res.ok) {
                                           notifications.show(
-                                             'Error al crear la convocatoria',
+                                             'Se editó la convocatoria',
                                              {
-                                                severity: 'error',
+                                                severity: 'success',
                                                 autoHideDuration:
                                                    AUTO_HIDE_DURATION,
                                              }
                                           )
+
+                                          navigate('/convocatorias')
+                                       } else {
+                                          if (res.status === 401) {
+                                             signOut()
+                                          } else {
+                                             notifications.show(
+                                                'Error al editar la convocatoria',
+                                                {
+                                                   severity: 'error',
+                                                   autoHideDuration:
+                                                      AUTO_HIDE_DURATION,
+                                                }
+                                             )
+                                          }
                                        }
-                                    }
-                                 })
-                                 .catch(() => {
-                                    notifications.show('Fallo de conexión', {
-                                       severity: 'error',
-                                       autoHideDuration: AUTO_HIDE_DURATION,
                                     })
-                                 })
+                                    .catch(() => {
+                                       notifications.show('Fallo de conexión', {
+                                          severity: 'error',
+                                          autoHideDuration: AUTO_HIDE_DURATION,
+                                       })
+                                    })
+                              } else {
+                                 request
+                                    .addConvocatoria(convocatoria)
+                                    .then((res) => {
+                                       if (res.ok) {
+                                          notifications.show(
+                                             'Se creó la convocatoria',
+                                             {
+                                                severity: 'success',
+                                                autoHideDuration:
+                                                   AUTO_HIDE_DURATION,
+                                             }
+                                          )
+
+                                          navigate('/convocatorias')
+                                       } else {
+                                          if (res.status === 401) {
+                                             signOut()
+                                          } else {
+                                             notifications.show(
+                                                'Error al crear la convocatoria',
+                                                {
+                                                   severity: 'error',
+                                                   autoHideDuration:
+                                                      AUTO_HIDE_DURATION,
+                                                }
+                                             )
+                                          }
+                                       }
+                                    })
+                                    .catch(() => {
+                                       notifications.show('Fallo de conexión', {
+                                          severity: 'error',
+                                          autoHideDuration: AUTO_HIDE_DURATION,
+                                       })
+                                    })
+                              }
                            }}
                         >
-                           Crear convocatoria
+                           {isEdit
+                              ? 'Editar convocatoria'
+                              : 'Crear convocatoria'}
                         </Button>
                      </div>
                   </div>
