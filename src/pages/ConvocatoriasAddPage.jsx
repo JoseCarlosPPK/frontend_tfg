@@ -208,6 +208,42 @@ export function ConvocatoriasAddPage() {
                   autoHideDuration: AUTO_HIDE_DURATION,
                })
             })
+
+         request
+            .getListadoFarmacias(id, { all: true })
+            .then((res) => {
+               if (res.ok) {
+                  res.json().then((resJson) => {
+                     const newSelected = new Map(
+                        selectedStructure['Farmacia'].selected
+                     )
+
+                     resJson.data.forEach((centro) => {
+                        newSelected.set(centro.id_centro, {
+                           id: centro.id_centro,
+                           num_plazas: centro.num_plazas,
+                        })
+                     })
+
+                     selectedStructure['Farmacia'].setSelected(newSelected)
+                  })
+               } else {
+                  if (res.status === 401) {
+                     signOut()
+                  } else {
+                     notifications.show('Error al cargar la convocatoria', {
+                        severity: 'error',
+                        autoHideDuration: AUTO_HIDE_DURATION,
+                     })
+                  }
+               }
+            })
+            .catch(() => {
+               notifications.show('Fallo de conexión', {
+                  severity: 'error',
+                  autoHideDuration: AUTO_HIDE_DURATION,
+               })
+            })
       }
    }, [])
 
