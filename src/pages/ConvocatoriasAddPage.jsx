@@ -20,6 +20,7 @@ export function ConvocatoriasAddPage() {
    const navigate = useNavigate()
 
    const id = useLoaderData()
+   const isEdit = id ? true : false
    const notifications = useNotifications()
 
    const [fechaIni, setFechaIni] = useState('')
@@ -527,7 +528,11 @@ export function ConvocatoriasAddPage() {
                         </section>
 
                         <Button
-                           color='bg-green-600 text-white hover:bg-green-700'
+                           color={
+                              isEdit
+                                 ? 'bg-yellow-500 hover:bg-yellow-600'
+                                 : 'bg-green-600 hover:bg-green-700 text-white'
+                           }
                            size='p-1 w-full m-2'
                            onClick={() => {
                               const convocatoria = {
@@ -547,44 +552,84 @@ export function ConvocatoriasAddPage() {
                                  ],
                               }
 
-                              request
-                                 .addConvocatoria(convocatoria)
-                                 .then((res) => {
-                                    if (res.ok) {
-                                       notifications.show(
-                                          'Se creó la convocatoria',
-                                          {
-                                             severity: 'success',
-                                             autoHideDuration:
-                                                AUTO_HIDE_DURATION,
-                                          }
-                                       )
-
-                                       navigate('/convocatorias')
-                                    } else {
-                                       if (res.status === 401) {
-                                          signOut()
-                                       } else {
+                              if (isEdit) {
+                                 request
+                                    .editConvocatoria(id, convocatoria)
+                                    .then((res) => {
+                                       if (res.ok) {
                                           notifications.show(
-                                             'Error al crear la convocatoria',
+                                             'Se editó la convocatoria',
                                              {
-                                                severity: 'error',
+                                                severity: 'success',
                                                 autoHideDuration:
                                                    AUTO_HIDE_DURATION,
                                              }
                                           )
+
+                                          navigate('/convocatorias')
+                                       } else {
+                                          if (res.status === 401) {
+                                             signOut()
+                                          } else {
+                                             notifications.show(
+                                                'Error al editar la convocatoria',
+                                                {
+                                                   severity: 'error',
+                                                   autoHideDuration:
+                                                      AUTO_HIDE_DURATION,
+                                                }
+                                             )
+                                          }
                                        }
-                                    }
-                                 })
-                                 .catch(() => {
-                                    notifications.show('Fallo de conexión', {
-                                       severity: 'error',
-                                       autoHideDuration: AUTO_HIDE_DURATION,
                                     })
-                                 })
+                                    .catch(() => {
+                                       notifications.show('Fallo de conexión', {
+                                          severity: 'error',
+                                          autoHideDuration: AUTO_HIDE_DURATION,
+                                       })
+                                    })
+                              } else {
+                                 request
+                                    .addConvocatoria(convocatoria)
+                                    .then((res) => {
+                                       if (res.ok) {
+                                          notifications.show(
+                                             'Se creó la convocatoria',
+                                             {
+                                                severity: 'success',
+                                                autoHideDuration:
+                                                   AUTO_HIDE_DURATION,
+                                             }
+                                          )
+
+                                          navigate('/convocatorias')
+                                       } else {
+                                          if (res.status === 401) {
+                                             signOut()
+                                          } else {
+                                             notifications.show(
+                                                'Error al crear la convocatoria',
+                                                {
+                                                   severity: 'error',
+                                                   autoHideDuration:
+                                                      AUTO_HIDE_DURATION,
+                                                }
+                                             )
+                                          }
+                                       }
+                                    })
+                                    .catch(() => {
+                                       notifications.show('Fallo de conexión', {
+                                          severity: 'error',
+                                          autoHideDuration: AUTO_HIDE_DURATION,
+                                       })
+                                    })
+                              }
                            }}
                         >
-                           Crear convocatoria
+                           {isEdit
+                              ? 'Editar convocatoria'
+                              : 'Crear convocatoria'}
                         </Button>
                      </div>
                   </div>
