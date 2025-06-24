@@ -1,7 +1,7 @@
 import { Pagination } from '@mui/material'
 import { useNotifications } from '@toolpad/core'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useLoaderData, useNavigate } from 'react-router'
 import { AppNavFrame } from '../components/AppFrame.jsx'
 import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { ArrowButton, Button } from '../components/buttons'
@@ -19,6 +19,7 @@ export function ConvocatoriasAddPage() {
    const { signOut } = useAuth()
    const navigate = useNavigate()
 
+   const id = useLoaderData()
    const notifications = useNotifications()
 
    const [fechaIni, setFechaIni] = useState('')

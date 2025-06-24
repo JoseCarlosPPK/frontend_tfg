@@ -37,6 +37,9 @@ export const router = createBrowserRouter([
                {
                   path: 'edit/:id',
                   element: <ConvocatoriasAddPage />,
+                  loader: ({ params }) => {
+                     return params.id
+                  },
                },
                {
                   path: 'add',
