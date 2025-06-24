@@ -120,6 +120,10 @@ export class Request {
       return Request.request(this.#endpoints.convocatorias)
    }
 
+   getConvocatoria(id) {
+      return Request.request(`${this.#endpoints.convocatorias}/${id}`)
+   }
+
    addConvocatoria(convocatoria) {
       return Request.request(
          this.#endpoints.convocatorias,
