@@ -126,6 +126,11 @@ export function ConvocatoriasAddPage() {
       setIndexTipoCentro(newPaso - 2)
    }
 
+   /**
+    * Carga los centros de la API cuando el número de paso no es 1 ni el último paso.
+    * Esto se hace para evitar cargar los centros en el primer paso (fechas) y
+    * en el último paso (confirmación).
+    */
    useEffect(() => {
       if (numPaso != 1 && numPaso != pasos.length) {
          tipoCentroElegido
@@ -158,6 +163,10 @@ export function ConvocatoriasAddPage() {
       }
    }, [numPaso, queryString])
 
+   /**
+    * Resetea el queryString a la página 1 y búsqueda vacía
+    * cuando se cambia de paso, excepto en el primer y último paso.
+    */
    useEffect(() => {
       if (numPaso != 1 && numPaso != pasos.length) {
          setQueryString((prev) => ({
@@ -167,6 +176,40 @@ export function ConvocatoriasAddPage() {
          }))
       }
    }, [numPaso])
+
+   /**
+    * Carga los datos de la convocatoria si se ha pasado un id a través
+    * de la URL
+    */
+   useEffect(() => {
+      if (id) {
+         request
+            .getConvocatoria(id)
+            .then((res) => {
+               if (res.ok) {
+                  res.json().then((resJson) => {
+                     setFechaIni(resJson.data.fecha_ini)
+                     setFechaFin(resJson.data.fecha_fin)
+                  })
+               } else {
+                  if (res.status === 401) {
+                     signOut()
+                  } else {
+                     notifications.show('Error al cargar la convocatoria', {
+                        severity: 'error',
+                        autoHideDuration: AUTO_HIDE_DURATION,
+                     })
+                  }
+               }
+            })
+            .catch(() => {
+               notifications.show('Fallo de conexión', {
+                  severity: 'error',
+                  autoHideDuration: AUTO_HIDE_DURATION,
+               })
+            })
+      }
+   }, [])
 
    return (
       <AppNavFrame>
