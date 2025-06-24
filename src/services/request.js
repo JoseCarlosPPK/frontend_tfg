@@ -135,10 +135,19 @@ export class Request {
 
    getListadoFarmacias(
       id,
-      queryParams = { all: true, page: 1, perPage: 10, search: '', filter: '' }
+      queryParams = { all: false, page: 1, perPage: 10, search: '', filter: '' }
    ) {
       return Request.request(
          `${this.#endpoints.listadoFarmacias}/${id}?${queryString(queryParams)}`
+      )
+   }
+
+   getListadoFarmaciasHospitalarias(
+      id,
+      queryParams = { all: false, page: 1, perPage: 10, search: '', filter: '' }
+   ) {
+      return Request.request(
+         `${this.#endpoints.listadoFarmaciasHospitalarias}/${id}?${queryString(queryParams)}`
       )
    }
 }

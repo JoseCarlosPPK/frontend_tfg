@@ -9,4 +9,5 @@ export const endpoints = {
    personas: `${URL}/personas`,
    convocatorias: `${URL}/convocatorias`,
    listadoFarmacias: `${URL}/listado-farmacias`,
+   listadoFarmaciasHospitalarias: `${URL}/listado-farmacias-hospitalarias`,
 }
