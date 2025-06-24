@@ -1,4 +1,5 @@
 import { getCookie } from '../utils/cookies.js'
+import { queryString } from '../utils/queryUrl.js'
 import { endpoints } from './endpoints.js'
 
 export class Request {
@@ -129,6 +130,15 @@ export class Request {
          this.#endpoints.convocatorias,
          'POST',
          convocatoria
+      )
+   }
+
+   getListadoFarmacias(
+      id,
+      queryParams = { all: true, page: 1, perPage: 10, search: '', filter: '' }
+   ) {
+      return Request.request(
+         `${this.#endpoints.listadoFarmacias}/${id}?${queryString(queryParams)}`
       )
    }
 }
