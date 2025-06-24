@@ -133,6 +133,14 @@ export class Request {
       )
    }
 
+   editConvocatoria(id, convocatoria) {
+      return Request.request(
+         `${this.#endpoints.convocatorias}/${id}`,
+         'PUT',
+         convocatoria
+      )
+   }
+
    getListadoFarmacias(
       id,
       queryParams = { all: false, page: 1, perPage: 10, search: '', filter: '' }
