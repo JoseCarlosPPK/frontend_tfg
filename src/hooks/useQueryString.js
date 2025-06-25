@@ -5,7 +5,7 @@ export function useQueryString({
    perPage = 10,
    search = '',
    filter = '',
-}) {
+} = {}) {
    const [queryString, setQueryString] = useState({
       page: page,
       perPage: perPage,
