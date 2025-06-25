@@ -1,7 +1,6 @@
 export { AdminPage, RegistrosPage, UsuariosPage } from './admin'
 export { CentrosPage } from './centros/Centros.jsx'
-export { ConvocatoriasPage } from './Convocatorias.jsx'
-export { ConvocatoriasAddPage } from './ConvocatoriasAddPage.jsx'
+export { ConvocatoriasAddEditPage, ConvocatoriasPage } from './convocatorias'
 export { CorreoPage } from './Correo.jsx'
 export { LoginPage } from './Login.jsx'
 export { PrincipalPage } from './Principal.jsx'
