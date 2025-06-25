@@ -1,7 +1,7 @@
 import { Pagination } from '@mui/material'
 import { useNotifications } from '@toolpad/core'
 import { useEffect, useState } from 'react'
-import { useLoaderData, useNavigate } from 'react-router'
+import { useLoaderData } from 'react-router'
 import { AppNavFrame } from '../../components/AppFrame.jsx'
 import { Breadcrumb } from '../../components/Breadcrumb.jsx'
 import { ArrowButton, Button } from '../../components/buttons/index.js'
@@ -17,16 +17,14 @@ import { request } from '../../services/request.js'
 
 export function ConvocatoriasSeePage() {
    const { signOut } = useAuth()
-   const navigate = useNavigate()
 
    const id = useLoaderData()
-   const isEdit = id ? true : false
    const notifications = useNotifications()
 
    const [fechaIni, setFechaIni] = useState('')
    const [fechaFin, setFechaFin] = useState('')
 
-   const pasos = ['Fechas', ...TIPOS_CENTROS, 'Confirmación']
+   const pasos = ['Fechas', ...TIPOS_CENTROS, 'Resumen']
    const [numPaso, setNumPaso] = useState(1)
    const isButtonLeftDisabled = numPaso === 1
    const isButtonRightDisabled = numPaso === pasos.length
@@ -477,7 +475,7 @@ export function ConvocatoriasSeePage() {
 
                {numPaso === pasos.length && (
                   <div className='mt-2 flex grow flex-col items-center justify-center'>
-                     <h2 className='h2 m-3'>Resumen y Confirmación</h2>
+                     <h2 className='h2 m-3'>Resumen</h2>
                      <div>
                         <section>
                            <table className='mytable'>
@@ -527,111 +525,6 @@ export function ConvocatoriasSeePage() {
                               </tfoot>
                            </table>
                         </section>
-
-                        <Button
-                           color={
-                              isEdit
-                                 ? 'bg-yellow-500 hover:bg-yellow-600'
-                                 : 'bg-green-600 hover:bg-green-700 text-white'
-                           }
-                           size='p-1 w-full m-2'
-                           onClick={() => {
-                              const convocatoria = {
-                                 convocatoria: {
-                                    fecha_ini: fechaIni,
-                                    fecha_fin: fechaFin,
-                                 },
-                                 farmacias: [
-                                    ...selectedStructure[
-                                       'Farmacia'
-                                    ].selected.values(),
-                                 ],
-                                 farmacias_hospitalarias: [
-                                    ...selectedStructure[
-                                       'FarmaciaHospitalaria'
-                                    ].selected.values(),
-                                 ],
-                              }
-
-                              if (isEdit) {
-                                 request
-                                    .editConvocatoria(id, convocatoria)
-                                    .then((res) => {
-                                       if (res.ok) {
-                                          notifications.show(
-                                             'Se editó la convocatoria',
-                                             {
-                                                severity: 'success',
-                                                autoHideDuration:
-                                                   AUTO_HIDE_DURATION,
-                                             }
-                                          )
-
-                                          navigate('/convocatorias')
-                                       } else {
-                                          if (res.status === 401) {
-                                             signOut()
-                                          } else {
-                                             notifications.show(
-                                                'Error al editar la convocatoria',
-                                                {
-                                                   severity: 'error',
-                                                   autoHideDuration:
-                                                      AUTO_HIDE_DURATION,
-                                                }
-                                             )
-                                          }
-                                       }
-                                    })
-                                    .catch(() => {
-                                       notifications.show('Fallo de conexión', {
-                                          severity: 'error',
-                                          autoHideDuration: AUTO_HIDE_DURATION,
-                                       })
-                                    })
-                              } else {
-                                 request
-                                    .addConvocatoria(convocatoria)
-                                    .then((res) => {
-                                       if (res.ok) {
-                                          notifications.show(
-                                             'Se creó la convocatoria',
-                                             {
-                                                severity: 'success',
-                                                autoHideDuration:
-                                                   AUTO_HIDE_DURATION,
-                                             }
-                                          )
-
-                                          navigate('/convocatorias')
-                                       } else {
-                                          if (res.status === 401) {
-                                             signOut()
-                                          } else {
-                                             notifications.show(
-                                                'Error al crear la convocatoria',
-                                                {
-                                                   severity: 'error',
-                                                   autoHideDuration:
-                                                      AUTO_HIDE_DURATION,
-                                                }
-                                             )
-                                          }
-                                       }
-                                    })
-                                    .catch(() => {
-                                       notifications.show('Fallo de conexión', {
-                                          severity: 'error',
-                                          autoHideDuration: AUTO_HIDE_DURATION,
-                                       })
-                                    })
-                              }
-                           }}
-                        >
-                           {isEdit
-                              ? 'Editar convocatoria'
-                              : 'Crear convocatoria'}
-                        </Button>
                      </div>
                   </div>
                )}
