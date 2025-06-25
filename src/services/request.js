@@ -58,8 +58,15 @@ export class Request {
    }
 
    farmacias(page, perPage, search, filter) {
+      const queryParams = {
+         page: page,
+         per_page: perPage,
+         search: search,
+         filter: filter,
+      }
+
       return Request.request(
-         `${this.#endpoints.farmacias}?page=${page}&per_page=${perPage}&search=${search}&filter=${filter}`,
+         `${this.#endpoints.farmacias}?${queryString(queryParams)}`,
          'GET'
       )
    }
@@ -81,8 +88,15 @@ export class Request {
    }
 
    farmaciasHospitalarias(page, perPage, search, filter) {
+      const queryParams = {
+         page: page,
+         per_page: perPage,
+         search: search,
+         filter: filter,
+      }
+
       return Request.request(
-         `${this.#endpoints.farmaciasHospitalarias}?page=${page}&per_page=${perPage}&search=${search}&filter=${filter}`,
+         `${this.#endpoints.farmaciasHospitalarias}?${queryString(queryParams)}`,
          'GET'
       )
    }

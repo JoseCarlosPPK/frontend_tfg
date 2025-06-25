@@ -36,7 +36,7 @@ export function ConvocatoriasAddEditPage() {
 
    const [centros, setCentros] = useState([])
    const { queryString, setQueryString, handleSubmit, handleSelectChange } =
-      useQueryString()
+      useQueryString({ filter: 'nombre' })
    const [totalCentros, setTotalCentros] = useState(0)
 
    function valueWhenSelected(element) {
@@ -377,6 +377,7 @@ export function ConvocatoriasAddEditPage() {
                                  onChange={(event) => {
                                     setQueryString((prev) => ({
                                        ...prev,
+                                       page: 1,
                                        search: event.target.value,
                                     }))
                                  }}
