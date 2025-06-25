@@ -2,20 +2,20 @@ import { Pagination } from '@mui/material'
 import { useNotifications } from '@toolpad/core'
 import { useEffect, useState } from 'react'
 import { useLoaderData, useNavigate } from 'react-router'
-import { AppNavFrame } from '../components/AppFrame.jsx'
-import { Breadcrumb } from '../components/Breadcrumb.jsx'
-import { ArrowButton, Button } from '../components/buttons'
-import { DateConvocatoria } from '../components/DateConvocatoria.jsx'
-import { Input, SearchSelect, Select } from '../components/inputs'
-import { TIPOS_CENTROS } from '../components/models'
-import { PaginationRangeInfo } from '../components/PaginationRangeInfo.jsx'
-import { AUTO_HIDE_DURATION } from '../components/snacbarks'
-import { Direccion } from '../components/svg'
-import { Table } from '../components/Table.jsx'
-import { useAuth, useQueryString, useSelected } from '../hooks'
-import { request } from '../services/request.js'
+import { AppNavFrame } from '../../components/AppFrame.jsx'
+import { Breadcrumb } from '../../components/Breadcrumb.jsx'
+import { ArrowButton, Button } from '../../components/buttons/index.js'
+import { DateConvocatoria } from '../../components/DateConvocatoria.jsx'
+import { Input, SearchSelect, Select } from '../../components/inputs/index.js'
+import { TIPOS_CENTROS } from '../../components/models/index.js'
+import { PaginationRangeInfo } from '../../components/PaginationRangeInfo.jsx'
+import { AUTO_HIDE_DURATION } from '../../components/snacbarks/index.js'
+import { Direccion } from '../../components/svg/index.js'
+import { Table } from '../../components/Table.jsx'
+import { useAuth, useQueryString, useSelected } from '../../hooks/index.js'
+import { request } from '../../services/request.js'
 
-export function ConvocatoriasAddPage() {
+export function ConvocatoriasAddEditPage() {
    const { signOut } = useAuth()
    const navigate = useNavigate()
 

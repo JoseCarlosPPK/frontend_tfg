@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router'
 import {
    AdminPage,
    CentrosPage,
-   ConvocatoriasAddPage,
+   ConvocatoriasAddEditPage,
    ConvocatoriasPage,
    CorreoPage,
    PrincipalPage,
@@ -32,18 +32,18 @@ export const router = createBrowserRouter([
                },
                {
                   path: ':id',
-                  element: <ConvocatoriasAddPage />,
+                  element: <ConvocatoriasAddEditPage />,
                },
                {
                   path: 'edit/:id',
-                  element: <ConvocatoriasAddPage />,
+                  element: <ConvocatoriasAddEditPage />,
                   loader: ({ params }) => {
                      return params.id
                   },
                },
                {
                   path: 'add',
-                  element: <ConvocatoriasAddPage />,
+                  element: <ConvocatoriasAddEditPage />,
                },
             ],
          },

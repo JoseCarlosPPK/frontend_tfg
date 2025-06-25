@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
-import { AppNavFrame } from '../components/AppFrame.jsx'
-import { Breadcrumb } from '../components/Breadcrumb.jsx'
-import { AddButton } from '../components/buttons'
-import { ConvocatoriaCurso } from '../components/ConvocatoriaCurso.jsx'
-import { routes } from '../router.jsx'
-import { request } from '../services/request.js'
-import { MesesDate, getCurso, stringFechaToDate } from '../utils/utils.js'
+import { AppNavFrame } from '../../components/AppFrame.jsx'
+import { Breadcrumb } from '../../components/Breadcrumb.jsx'
+import { AddButton } from '../../components/buttons/index.js'
+import { ConvocatoriaCurso } from '../../components/ConvocatoriaCurso.jsx'
+import { routes } from '../../router.jsx'
+import { request } from '../../services/request.js'
+import { MesesDate, getCurso, stringFechaToDate } from '../../utils/utils.js'
 
 const LimitMonth = MesesDate.Julio
 
