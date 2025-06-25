@@ -1,11 +1,16 @@
 import { useState } from 'react'
 
-export function useQueryString(page = 1, perPage = 10) {
+export function useQueryString({
+   page = 1,
+   perPage = 10,
+   search = '',
+   filter = '',
+}) {
    const [queryString, setQueryString] = useState({
       page: page,
       perPage: perPage,
-      search: '',
-      filter: '',
+      search: search,
+      filter: filter,
    })
 
    function handleSubmit(event) {
