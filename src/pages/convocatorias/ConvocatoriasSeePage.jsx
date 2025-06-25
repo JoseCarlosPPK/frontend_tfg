@@ -12,7 +12,7 @@ import { PaginationRangeInfo } from '../../components/PaginationRangeInfo.jsx'
 import { AUTO_HIDE_DURATION } from '../../components/snacbarks/index.js'
 import { Direccion } from '../../components/svg/index.js'
 import { Table } from '../../components/Table.jsx'
-import { useAuth, useQueryString, useSelected } from '../../hooks/index.js'
+import { useAuth, useQueryString } from '../../hooks/index.js'
 import { request } from '../../services/request.js'
 
 export function ConvocatoriasSeePage() {
@@ -36,71 +36,6 @@ export function ConvocatoriasSeePage() {
    const { queryString, setQueryString, handleSubmit, handleSelectChange } =
       useQueryString({ filter: 'nombre' })
    const [totalCentros, setTotalCentros] = useState(0)
-
-   function valueWhenSelected(element) {
-      return {
-         id: element.id,
-         num_plazas: 1,
-      }
-   }
-
-   const selectedStructure = {}
-
-   selectedStructure['Farmacia'] = useSelected(
-      TIPOS_CENTROS[0],
-      totalCentros,
-      queryString,
-      valueWhenSelected
-   )
-
-   selectedStructure['FarmaciaHospitalaria'] = useSelected(
-      TIPOS_CENTROS[1],
-      totalCentros,
-      queryString,
-      valueWhenSelected
-   )
-
-   const newTableHeaders = tipoCentroElegido
-      ?.getEncabezadosTabla()
-      .toSpliced(2, 0, {
-         name: 'Nº plazas',
-         createCell: (row) => {
-            const isSelected = selectedStructure[
-               tipoCentroElegido.name
-            ].selected.has(row.id)
-            return (
-               <td key={row.id} className='text-center'>
-                  <Input
-                     type='number'
-                     inputMode='numeric'
-                     min='1'
-                     step='1'
-                     autoComplete='off'
-                     className={`w-14 justify-self-center ${!isSelected ? 'bg-gray-500/40' : ''}`}
-                     value={
-                        selectedStructure[tipoCentroElegido.name].selected.get(
-                           row.id
-                        )?.num_plazas ?? 0
-                     }
-                     disabled={!isSelected}
-                     onChange={(event) => {
-                        const newSelected = new Map(
-                           selectedStructure[tipoCentroElegido.name].selected
-                        )
-
-                        newSelected.get(row.id).num_plazas = event.target.value
-                        selectedStructure[tipoCentroElegido.name].setSelected(
-                           newSelected
-                        )
-                     }}
-                     onDoubleClick={(event) => {
-                        event.stopPropagation()
-                     }}
-                  />
-               </td>
-            )
-         },
-      })
 
    const buttonActiveClassName = 'hover-resize text-[var(--color-principal)]'
    const buttonDisabledClassName = 'text-gray-500'
@@ -212,20 +147,7 @@ export function ConvocatoriasSeePage() {
             .getListadoFarmacias(id, { all: true })
             .then((res) => {
                if (res.ok) {
-                  res.json().then((resJson) => {
-                     const newSelected = new Map(
-                        selectedStructure['Farmacia'].selected
-                     )
-
-                     resJson.data.forEach((centro) => {
-                        newSelected.set(centro.id_centro, {
-                           id: centro.id_centro,
-                           num_plazas: centro.num_plazas,
-                        })
-                     })
-
-                     selectedStructure['Farmacia'].setSelected(newSelected)
-                  })
+                  res.json().then((resJson) => {})
                } else {
                   if (res.status === 401) {
                      signOut()
@@ -248,22 +170,7 @@ export function ConvocatoriasSeePage() {
             .getListadoFarmaciasHospitalarias(id, { all: true })
             .then((res) => {
                if (res.ok) {
-                  res.json().then((resJson) => {
-                     const newSelected = new Map(
-                        selectedStructure['FarmaciaHospitalaria'].selected
-                     )
-
-                     resJson.data.forEach((centro) => {
-                        newSelected.set(centro.id_centro, {
-                           id: centro.id_centro,
-                           num_plazas: centro.num_plazas,
-                        })
-                     })
-
-                     selectedStructure['FarmaciaHospitalaria'].setSelected(
-                        newSelected
-                     )
-                  })
+                  res.json().then((resJson) => {})
                } else {
                   if (res.status === 401) {
                      signOut()
@@ -427,22 +334,8 @@ export function ConvocatoriasSeePage() {
                            </div>
                            {/* Tabla */}
                            <Table
-                              columns={newTableHeaders}
+                              columns={tipoCentroElegido.getEncabezadosTabla()}
                               data={centros}
-                              checked={true}
-                              selected={
-                                 selectedStructure[tipoCentroElegido.name]
-                                    .selected
-                              }
-                              toggleSelected={
-                                 selectedStructure[tipoCentroElegido.name]
-                                    .toggleSelected
-                              }
-                              total={totalCentros}
-                              onSelectAllClick={
-                                 selectedStructure[tipoCentroElegido.name]
-                                    .handleClickGeneralCheckbox
-                              }
                            />
 
                            {/* Pagination */}
@@ -488,24 +381,12 @@ export function ConvocatoriasSeePage() {
                               <tbody>
                                  <tr>
                                     <td>Farmacias</td>
-                                    <td className='text-center'>
-                                       {
-                                          selectedStructure[
-                                             TIPOS_CENTROS[0].name
-                                          ].selected.size
-                                       }
-                                    </td>
+                                    <td className='text-center'>{0}</td>
                                  </tr>
 
                                  <tr>
                                     <td>Farmacias Hospitalarias</td>
-                                    <td className='text-center'>
-                                       {
-                                          selectedStructure[
-                                             TIPOS_CENTROS[1].name
-                                          ].selected.size
-                                       }
-                                    </td>
+                                    <td className='text-center'>{0}</td>
                                  </tr>
                               </tbody>
 
@@ -514,13 +395,7 @@ export function ConvocatoriasSeePage() {
                                     <td className='text-right font-bold'>
                                        Total
                                     </td>
-                                    <td className='text-center'>
-                                       {selectedStructure[TIPOS_CENTROS[1].name]
-                                          .selected.size +
-                                          selectedStructure[
-                                             TIPOS_CENTROS[0].name
-                                          ].selected.size}
-                                    </td>
+                                    <td className='text-center'>{0}</td>
                                  </tr>
                               </tfoot>
                            </table>
