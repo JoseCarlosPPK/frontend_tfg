@@ -4,6 +4,7 @@ import {
    CentrosPage,
    ConvocatoriasAddEditPage,
    ConvocatoriasPage,
+   ConvocatoriasSeePage,
    CorreoPage,
    PrincipalPage,
    RegistrosPage,
@@ -32,7 +33,10 @@ export const router = createBrowserRouter([
                },
                {
                   path: ':id',
-                  element: <ConvocatoriasAddEditPage />,
+                  element: <ConvocatoriasSeePage />,
+                  loader: ({ params }) => {
+                     return params.id
+                  },
                },
                {
                   path: 'edit/:id',
