@@ -1,6 +1,6 @@
 import { Pagination } from '@mui/material'
 import { useNotifications } from '@toolpad/core'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLoaderData } from 'react-router'
 import { AppNavFrame } from '../../components/AppFrame.jsx'
 import { Breadcrumb } from '../../components/Breadcrumb.jsx'
@@ -8,6 +8,7 @@ import { ArrowButton, Button } from '../../components/buttons/index.js'
 import { DateConvocatoria } from '../../components/DateConvocatoria.jsx'
 import { Input, SearchSelect } from '../../components/inputs/index.js'
 import { TIPOS_CENTROS } from '../../components/models/index.js'
+import { Listado } from '../../components/models/Listado.jsx'
 import { PaginationRangeInfo } from '../../components/PaginationRangeInfo.jsx'
 import { AUTO_HIDE_DURATION } from '../../components/snacbarks/index.js'
 import { Direccion } from '../../components/svg/index.js'
@@ -24,13 +25,36 @@ export function ConvocatoriasSeePage() {
    const [fechaIni, setFechaIni] = useState('')
    const [fechaFin, setFechaFin] = useState('')
 
-   const pasos = ['Fechas', ...TIPOS_CENTROS, 'Resumen']
+   const [indexListado, setIndexListado] = useState(0)
+   // https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Function/bind#ejemplo_crear_una_funci%C3%B3n_ligada
+   const listados = useRef([
+      new Listado(
+         id,
+         TIPOS_CENTROS[0],
+         request.getListadoFarmacias.bind(request)
+      ),
+      new Listado(
+         id,
+         TIPOS_CENTROS[1],
+         request.getListadoFarmaciasHospitalarias.bind(request)
+      ),
+   ])
+
+   const listado_elegido = listados.current[indexListado]
+   const [listadosLength, setListadosLength] = useState(
+      new Array(listados.current.length).fill(0)
+   )
+
+   const pasos = [
+      'Fechas',
+      ...listados.current.map((listado) => {
+         return listado.model.name
+      }),
+      'Resumen',
+   ]
    const [numPaso, setNumPaso] = useState(1)
    const isButtonLeftDisabled = numPaso === 1
    const isButtonRightDisabled = numPaso === pasos.length
-
-   const [indexTipoCentro, setIndexTipoCentro] = useState(0)
-   const tipoCentroElegido = TIPOS_CENTROS[indexTipoCentro]
 
    const [centros, setCentros] = useState([])
    const { queryString, setQueryString, handleSubmit, handleSelectChange } =
@@ -51,23 +75,24 @@ export function ConvocatoriasSeePage() {
       const newPaso = numPaso + 1
       setNumPaso(newPaso)
 
-      setIndexTipoCentro(newPaso - 2)
+      setIndexListado(newPaso - 2)
    }
 
    function handleClickLeft() {
       const newPaso = numPaso - 1
       setNumPaso(newPaso)
-      setIndexTipoCentro(newPaso - 2)
+      setIndexListado(newPaso - 2)
    }
 
    /**
-    * Carga los centros de la API cuando el número de paso no es 1 ni el último paso.
+    * Carga los centros que fueron elegidos de la API cuando el número de paso
+    * no es 1 ni el último paso.
     * Esto se hace para evitar cargar los centros en el primer paso (fechas) y
-    * en el último paso (confirmación).
+    * en el último paso (resumen).
     */
    useEffect(() => {
       if (numPaso != 1 && numPaso != pasos.length) {
-         tipoCentroElegido
+         listado_elegido
             .getCentros(
                queryString.page,
                queryString.perPage,
@@ -77,7 +102,12 @@ export function ConvocatoriasSeePage() {
             .then((res) => {
                if (res.ok) {
                   res.json().then((resJson) => {
-                     setCentros(resJson.data)
+                     setCentros(
+                        resJson.data.map((centro) => {
+                           centro.id = centro.id_centro
+                           return centro
+                        })
+                     )
                      setTotalCentros(resJson.total)
                   })
                } else {
@@ -100,6 +130,10 @@ export function ConvocatoriasSeePage() {
    /**
     * Resetea el queryString a la página 1 y búsqueda vacía
     * cuando se cambia de paso, excepto en el primer y último paso.
+    *
+    * En el último paso realiza una petición a la API para
+    * obtener el número de farmacias y farmacias hospitalarias.
+    * Esto es necesario para mostrar el resumen correctamente.
     */
    useEffect(() => {
       if (numPaso != 1 && numPaso != pasos.length) {
@@ -108,12 +142,41 @@ export function ConvocatoriasSeePage() {
             page: 1,
             search: '',
          }))
+      } else if (numPaso === pasos.length) {
+         listados.current.forEach((listado, index) => {
+            listado
+               .getCentros(1, 1)
+               .then((res) => {
+                  if (res.ok) {
+                     res.json().then((resJson) => {
+                        setListadosLength((prev) => {
+                           const updated = [...prev]
+                           updated[index] = resJson.total
+                           return updated
+                        })
+                     })
+                  } else {
+                     setListadosLength((prev) => {
+                        const updated = [...prev]
+                        updated[index] = 0
+                        return updated
+                     })
+                  }
+               })
+               .catch(() => {
+                  setListadosLength((prev) => {
+                     const updated = [...prev]
+                     updated[index] = 0
+                     return updated
+                  })
+               })
+         })
       }
    }, [numPaso])
 
    /**
     * Carga los datos de la convocatoria si se ha pasado un id a través
-    * de la URL
+    * de la URL. Solo carga las fechas
     */
    useEffect(() => {
       if (id) {
@@ -125,52 +188,6 @@ export function ConvocatoriasSeePage() {
                      setFechaIni(resJson.data.fecha_ini)
                      setFechaFin(resJson.data.fecha_fin)
                   })
-               } else {
-                  if (res.status === 401) {
-                     signOut()
-                  } else {
-                     notifications.show('Error al cargar la convocatoria', {
-                        severity: 'error',
-                        autoHideDuration: AUTO_HIDE_DURATION,
-                     })
-                  }
-               }
-            })
-            .catch(() => {
-               notifications.show('Fallo de conexión', {
-                  severity: 'error',
-                  autoHideDuration: AUTO_HIDE_DURATION,
-               })
-            })
-
-         request
-            .getListadoFarmacias(id, { all: true })
-            .then((res) => {
-               if (res.ok) {
-                  res.json().then((resJson) => {})
-               } else {
-                  if (res.status === 401) {
-                     signOut()
-                  } else {
-                     notifications.show('Error al cargar la convocatoria', {
-                        severity: 'error',
-                        autoHideDuration: AUTO_HIDE_DURATION,
-                     })
-                  }
-               }
-            })
-            .catch(() => {
-               notifications.show('Fallo de conexión', {
-                  severity: 'error',
-                  autoHideDuration: AUTO_HIDE_DURATION,
-               })
-            })
-
-         request
-            .getListadoFarmaciasHospitalarias(id, { all: true })
-            .then((res) => {
-               if (res.ok) {
-                  res.json().then((resJson) => {})
                } else {
                   if (res.status === 401) {
                      signOut()
@@ -218,10 +235,10 @@ export function ConvocatoriasSeePage() {
                         key={index}
                         onClick={() => {
                            setNumPaso(index + 1)
-                           setIndexTipoCentro(index - 1)
+                           setIndexListado(index - 1)
                         }}
                      >
-                        {paso.name ?? paso}
+                        {paso}
                      </Button>
                   )
                })}
@@ -249,7 +266,9 @@ export function ConvocatoriasSeePage() {
                )}
                {numPaso != 1 && numPaso != pasos.length && (
                   <div className='mt-2 grow'>
-                     <h2 className='h2'>Selección {tipoCentroElegido.name}</h2>
+                     <h2 className='h2'>
+                        Listado {listado_elegido.model.name}
+                     </h2>
 
                      <div className='m-4 grow'>
                         <div className='flex items-center justify-center'>
@@ -258,7 +277,7 @@ export function ConvocatoriasSeePage() {
                               onSubmit={handleSubmit}
                            >
                               <SearchSelect
-                                 filters={tipoCentroElegido.getFiltros()}
+                                 filters={listado_elegido.getFiltros()}
                                  placeholder='Buscar ... '
                                  handleSelectChange={handleSelectChange}
                                  value={queryString.search}
@@ -317,7 +336,7 @@ export function ConvocatoriasSeePage() {
                            </div>
                            {/* Tabla */}
                            <Table
-                              columns={tipoCentroElegido.getEncabezadosTabla()}
+                              columns={listado_elegido.getEncabezadosTabla()}
                               data={centros}
                            />
 
@@ -364,12 +383,16 @@ export function ConvocatoriasSeePage() {
                               <tbody>
                                  <tr>
                                     <td>Farmacias</td>
-                                    <td className='text-center'>{0}</td>
+                                    <td className='text-center'>
+                                       {listadosLength[0]}
+                                    </td>
                                  </tr>
 
                                  <tr>
                                     <td>Farmacias Hospitalarias</td>
-                                    <td className='text-center'>{0}</td>
+                                    <td className='text-center'>
+                                       {listadosLength[1]}
+                                    </td>
                                  </tr>
                               </tbody>
 
@@ -378,7 +401,9 @@ export function ConvocatoriasSeePage() {
                                     <td className='text-right font-bold'>
                                        Total
                                     </td>
-                                    <td className='text-center'>{0}</td>
+                                    <td className='text-center'>
+                                       {listadosLength[0] + listadosLength[1]}
+                                    </td>
                                  </tr>
                               </tfoot>
                            </table>
