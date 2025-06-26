@@ -6,7 +6,7 @@ import { AppNavFrame } from '../../components/AppFrame.jsx'
 import { Breadcrumb } from '../../components/Breadcrumb.jsx'
 import { ArrowButton, Button } from '../../components/buttons/index.js'
 import { DateConvocatoria } from '../../components/DateConvocatoria.jsx'
-import { Input, SearchSelect, Select } from '../../components/inputs/index.js'
+import { Input, SearchSelect } from '../../components/inputs/index.js'
 import { TIPOS_CENTROS } from '../../components/models/index.js'
 import { PaginationRangeInfo } from '../../components/PaginationRangeInfo.jsx'
 import { AUTO_HIDE_DURATION } from '../../components/snacbarks/index.js'
@@ -253,23 +253,6 @@ export function ConvocatoriasSeePage() {
 
                      <div className='m-4 grow'>
                         <div className='flex items-center justify-center'>
-                           <div className='border-principal bg-terciario m-4 w-fit rounded-md !border-2 p-5'>
-                              <label htmlFor='seleccion'>Mostrar</label>
-                              <Select
-                                 name='seleccion'
-                                 id='seleccion'
-                                 className='ml-4'
-                                 disabled={true}
-                              >
-                                 <option value='todos'>Todos</option>
-                                 <option value='seleccionados'>
-                                    Seleccionados
-                                 </option>
-                                 <option value='no_seleccionados'>
-                                    No seleccionados
-                                 </option>
-                              </Select>
-                           </div>
                            <form
                               className='flex justify-center gap-2'
                               onSubmit={handleSubmit}
