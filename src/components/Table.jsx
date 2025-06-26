@@ -54,7 +54,7 @@ export function Table({
                            toggleSelected(row)
                         },
                      })}
-                     className='hover:cursor-pointer'
+                     className={checked ? 'hover:cursor-pointer' : ''}
                   >
                      {checked && (
                         <td>
