@@ -12,7 +12,7 @@ import { AUTO_HIDE_DURATION } from './snacbarks/index.js'
 
 const SizeButtons = 'size-8'
 
-export function ConvocatoriaCurso({ curso, convocatorias }) {
+export function ConvocatoriaCurso({ curso, convocatorias, onClickDelete }) {
    return (
       <section className='border-principal m-2 rounded-xl p-2'>
          <h2 className='text-2xl font-bold'>
@@ -24,6 +24,9 @@ export function ConvocatoriaCurso({ curso, convocatorias }) {
                   <ConvocatoriaItem
                      key={convocatoria.id}
                      convocatoria={convocatoria}
+                     onClickDelete={() => {
+                        onClickDelete(convocatoria)
+                     }}
                   />
                )
             })}
@@ -32,7 +35,7 @@ export function ConvocatoriaCurso({ curso, convocatorias }) {
    )
 }
 
-function ConvocatoriaItem({ convocatoria }) {
+function ConvocatoriaItem({ convocatoria, onClickDelete }) {
    const notifications = useNotifications()
 
    return (
@@ -63,7 +66,7 @@ function ConvocatoriaItem({ convocatoria }) {
             <Link to={`edit/${convocatoria.id}`}>
                <EditButton size={SizeButtons} />
             </Link>
-            <DeleteButton size={SizeButtons} />
+            <DeleteButton size={SizeButtons} onClick={onClickDelete} />
          </div>
       </li>
    )
