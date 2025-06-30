@@ -155,6 +155,10 @@ export class Request {
       )
    }
 
+   deleteConvocatoria(id) {
+      return Request.request(`${this.#endpoints.convocatorias}/${id}`, 'DELETE')
+   }
+
    getListadoFarmacias(
       id,
       queryParams = {
