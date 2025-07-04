@@ -10,4 +10,5 @@ export const endpoints = {
    convocatorias: `${URL}/convocatorias`,
    listadoFarmacias: `${URL}/listado-farmacias`,
    listadoFarmaciasHospitalarias: `${URL}/listado-farmacias-hospitalarias`,
+   excel: `${URL}/excel`,
 }
