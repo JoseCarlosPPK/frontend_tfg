@@ -188,6 +188,14 @@ export class Request {
          `${this.#endpoints.listadoFarmaciasHospitalarias}/${id}?${queryString(queryParams)}`
       )
    }
+
+   sendEmail(asunto, mensaje, destinatarios) {
+      return Request.request(this.#endpoints.correo, 'POST', {
+         asunto: asunto,
+         mensaje: mensaje,
+         destinatarios: destinatarios,
+      })
+   }
 }
 
 export const request = new Request(endpoints)
