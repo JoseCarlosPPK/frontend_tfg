@@ -62,9 +62,8 @@ export function CorreoPage() {
 
    const notifications = useNotifications()
 
-   const buttonActiveClassName =
-      'hover-resize text-[var(--color-principal)] h-96'
-   const buttonDisabledClassName = 'hidden'
+   const buttonActiveClassName = 'hover-resize text-[var(--color-principal)]'
+   const buttonDisabledClassName = 'text-gray-500'
 
    const isButtonLeftDisabled = numPaso === 1
    const isButtonRightDisabled = numPaso === pasos.length
@@ -215,13 +214,38 @@ export function CorreoPage() {
             </div>
          </header>
 
-         <main className='flex items-center'>
+         <section className='flex w-full justify-center gap-2'>
             <ArrowButton
                className={buttonLeftClassName}
                disabled={isButtonLeftDisabled}
                onClick={handleClickLeft}
                direccion={Direccion.left}
             />
+            {pasos.map((paso, index) => {
+               return (
+                  <Button
+                     color={
+                        numPaso - 1 === index ? 'bg-secundario' : 'bg-terciario'
+                     }
+                     size='p-2'
+                     key={index}
+                     onClick={() => {
+                        setNumPaso(index + 1)
+                        setIndexTipoCentro(index)
+                     }}
+                  >
+                     {paso.name ?? paso}
+                  </Button>
+               )
+            })}
+            <ArrowButton
+               className={buttonRightClassName}
+               disabled={isButtonRightDisabled}
+               onClick={handleClickRight}
+               direccion={Direccion.right}
+            />
+         </section>
+         <main className='flex items-center'>
             <div className='grow'>
                {numPaso != pasos.length && (
                   <>
@@ -468,12 +492,6 @@ export function CorreoPage() {
                   </>
                )}
             </div>
-            <ArrowButton
-               className={buttonRightClassName}
-               disabled={isButtonRightDisabled}
-               onClick={handleClickRight}
-               direccion={Direccion.right}
-            />
          </main>
       </AppNavFrame>
    )
