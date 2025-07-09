@@ -11,4 +11,5 @@ export const endpoints = {
    listadoFarmacias: `${URL}/listado-farmacias`,
    listadoFarmaciasHospitalarias: `${URL}/listado-farmacias-hospitalarias`,
    excel: `${URL}/excel`,
+   correo: `${URL}/correo`,
 }
