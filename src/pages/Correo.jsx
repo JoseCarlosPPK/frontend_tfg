@@ -23,9 +23,9 @@ export function CorreoPage() {
    const [numPaso, setNumPaso] = useState(1)
    const pasos = [
       ...TIPOS_CENTROS.map((centro) => {
-         return 'Destinatarios ' + centro.name
+         return centro.name
       }),
-      'subject_msg',
+      'Asunto y mensaje',
    ]
 
    const { queryString, setQueryString, handleSubmit, handleSelectChange } =
@@ -62,9 +62,8 @@ export function CorreoPage() {
 
    const notifications = useNotifications()
 
-   const buttonActiveClassName =
-      'hover-resize text-[var(--color-principal)] h-96'
-   const buttonDisabledClassName = 'hidden'
+   const buttonActiveClassName = 'hover-resize text-[var(--color-principal)]'
+   const buttonDisabledClassName = 'text-gray-500'
 
    const isButtonLeftDisabled = numPaso === 1
    const isButtonRightDisabled = numPaso === pasos.length
@@ -215,19 +214,48 @@ export function CorreoPage() {
             </div>
          </header>
 
-         <main className='flex items-center'>
+         {/* Botones de navegación entre pasos */}
+         <section className='flex w-full justify-center gap-2'>
             <ArrowButton
                className={buttonLeftClassName}
                disabled={isButtonLeftDisabled}
                onClick={handleClickLeft}
                direccion={Direccion.left}
             />
-            <div className='grow'>
-               {numPaso != pasos.length && (
-                  <>
-                     <h2 className='h2'>Selección {tipoCentroElegido.name}</h2>
-                     <div className='grow items-center lg:flex'>
-                        <aside className='border-principal bg-terciario m-4 grid grow-0 grid-cols-2 gap-2 rounded-md !border-2 p-5'>
+            {pasos.map((paso, index) => {
+               return (
+                  <Button
+                     color={
+                        numPaso - 1 === index ? 'bg-secundario' : 'bg-terciario'
+                     }
+                     size='p-2'
+                     key={index}
+                     onClick={() => {
+                        setNumPaso(index + 1)
+                        setIndexTipoCentro(index)
+                     }}
+                  >
+                     {paso.name ?? paso}
+                  </Button>
+               )
+            })}
+            <ArrowButton
+               className={buttonRightClassName}
+               disabled={isButtonRightDisabled}
+               onClick={handleClickRight}
+               direccion={Direccion.right}
+            />
+         </section>
+
+         <main className='m-2 grow'>
+            {numPaso != pasos.length && (
+               <>
+                  <h2 className='h2'>Destinatarios {tipoCentroElegido.name}</h2>
+
+                  <div className='m-4 grow'>
+                     {/* Búsqueda y selección */}
+                     <div className='flex items-center justify-center'>
+                        <div className='border-principal bg-terciario m-4 grid grow-0 grid-cols-2 gap-2 rounded-md !border-2 p-5'>
                            <label htmlFor='seleccion' className='grow-0'>
                               Seleccionar
                            </label>
@@ -260,220 +288,204 @@ export function CorreoPage() {
                                  No seleccionados
                               </option>
                            </Select>
-                        </aside>
-                        <div className='m-4 grow'>
-                           <form
-                              className='flex justify-center gap-2'
-                              onSubmit={handleSubmit}
-                           >
-                              <SearchSelect
-                                 placeholder='Buscar'
-                                 filters={tipoCentroElegido.getFiltros()}
-                                 handleSelectChange={handleSelectChange}
-                                 value={queryString.search}
+                        </div>
+
+                        <form
+                           className='flex justify-center gap-2'
+                           onSubmit={handleSubmit}
+                        >
+                           <SearchSelect
+                              placeholder='Buscar'
+                              filters={tipoCentroElegido.getFiltros()}
+                              handleSelectChange={handleSelectChange}
+                              value={queryString.search}
+                              onChange={(event) => {
+                                 setQueryString((prev) => ({
+                                    ...prev,
+                                    page: 1,
+                                    search: event.target.value,
+                                 }))
+                              }}
+                           />
+                        </form>
+                     </div>
+
+                     {/* Contenedor genérico para la tabla y paginación */}
+                     <div>
+                        {/* Cantidad de elementos a ver */}
+                        <div className='mx-16 my-2 flex items-center justify-between'>
+                           <div className='flex items-center gap-2'>
+                              <label htmlFor='amount_centers'>Ver</label>
+                              <Input
+                                 id='amount_centers'
+                                 type='number'
+                                 inputMode='numeric'
+                                 name='amount_centers'
+                                 list='opt_amount_centers'
+                                 min='1'
+                                 step='5'
+                                 autoComplete='off'
+                                 className='w-20'
+                                 value={queryString.perPage}
                                  onChange={(event) => {
-                                    setQueryString((prev) => ({
-                                       ...prev,
-                                       page: 1,
-                                       search: event.target.value,
-                                    }))
+                                    if (event.target.value > 0) {
+                                       setQueryString((prev) => ({
+                                          ...prev,
+                                          page: 1,
+                                          perPage: Number(event.target.value),
+                                       }))
+                                    }
                                  }}
                               />
-                           </form>
-
-                           {/* Contenedor genérico para la tabla y paginación */}
-                           <div>
-                              {/* Cantidad de elementos a ver */}
-                              <div className='mx-16 my-2 flex items-center justify-between'>
-                                 <div className='flex items-center gap-2'>
-                                    <label htmlFor='amount_centers'>Ver</label>
-                                    <Input
-                                       id='amount_centers'
-                                       type='number'
-                                       inputMode='numeric'
-                                       name='amount_centers'
-                                       list='opt_amount_centers'
-                                       min='1'
-                                       step='5'
-                                       autoComplete='off'
-                                       className='w-20'
-                                       value={queryString.perPage}
-                                       onChange={(event) => {
-                                          if (event.target.value > 0) {
-                                             setQueryString((prev) => ({
-                                                ...prev,
-                                                page: 1,
-                                                perPage: Number(
-                                                   event.target.value
-                                                ),
-                                             }))
-                                          }
-                                       }}
-                                    />
-                                    <datalist id='opt_amount_centers'>
-                                       <option value='10'></option>
-                                       <option value='20'></option>
-                                       <option value='30'></option>
-                                    </datalist>
-                                 </div>
-
-                                 <PaginationRangeInfo
-                                    page={queryString.page}
-                                    perPage={queryString.perPage}
-                                    total={totalCentros}
-                                 />
-                              </div>
-                              {/* Tabla */}
-                              <Table
-                                 columns={tipoCentroElegido.getEncabezadosTabla()}
-                                 data={centros}
-                                 checked={true}
-                                 selected={
-                                    selectedStructure[tipoCentroElegido.name]
-                                       .selected
-                                 }
-                                 toggleSelected={
-                                    selectedStructure[tipoCentroElegido.name]
-                                       .toggleSelected
-                                 }
-                                 total={totalCentros}
-                                 onSelectAllClick={
-                                    selectedStructure[tipoCentroElegido.name]
-                                       .handleClickGeneralCheckbox
-                                 }
-                              />
-
-                              {/* Pagination */}
-                              <Pagination
-                                 color='secondary'
-                                 count={Math.ceil(
-                                    totalCentros / queryString.perPage
-                                 )}
-                                 boundaryCount={2}
-                                 page={queryString.page}
-                                 size='large'
-                                 sx={{
-                                    '& .MuiPaginationItem-root:hover': {
-                                       backgroundColor: 'terciary.main',
-                                       zIndex: 9999,
-                                    },
-                                 }}
-                                 className='m-2 justify-self-center'
-                                 onChange={(_, page) => {
-                                    setQueryString((previousState) => ({
-                                       ...previousState,
-                                       page: page,
-                                    }))
-                                 }}
-                              />
+                              <datalist id='opt_amount_centers'>
+                                 <option value='10'></option>
+                                 <option value='20'></option>
+                                 <option value='30'></option>
+                              </datalist>
                            </div>
-                        </div>
-                     </div>
-                  </>
-               )}
 
-               {numPaso === pasos.length && (
-                  <>
-                     <div className='m-5 w-5/6 justify-self-center'>
-                        <h2 className='h2 my-2'>Asunto y mensaje</h2>
-                        <div className='my-2'>
-                           <label htmlFor='asunto' className='text-lg'>
-                              Asunto
-                           </label>
-                           <Input
-                              type='text'
-                              name='asunto'
-                              id='asunto'
-                              className='bg-terciario border-principal w-full'
+                           <PaginationRangeInfo
+                              page={queryString.page}
+                              perPage={queryString.perPage}
+                              total={totalCentros}
                            />
                         </div>
+                        {/* Tabla */}
+                        <Table
+                           columns={tipoCentroElegido.getEncabezadosTabla()}
+                           data={centros}
+                           checked={true}
+                           selected={
+                              selectedStructure[tipoCentroElegido.name].selected
+                           }
+                           toggleSelected={
+                              selectedStructure[tipoCentroElegido.name]
+                                 .toggleSelected
+                           }
+                           total={totalCentros}
+                           onSelectAllClick={
+                              selectedStructure[tipoCentroElegido.name]
+                                 .handleClickGeneralCheckbox
+                           }
+                        />
 
-                        <div className='my-2'>
-                           <label htmlFor='msg' className='text-lg'>
-                              Mensaje
-                           </label>
-                           <textarea
-                              name='msg'
-                              id='msg'
-                              className='bg-terciario myoutline border-principal h-60 w-full rounded-lg p-1'
-                           />
-                        </div>
+                        {/* Pagination */}
+                        <Pagination
+                           color='secondary'
+                           count={Math.ceil(totalCentros / queryString.perPage)}
+                           boundaryCount={2}
+                           page={queryString.page}
+                           size='large'
+                           sx={{
+                              '& .MuiPaginationItem-root:hover': {
+                                 backgroundColor: 'terciary.main',
+                                 zIndex: 9999,
+                              },
+                           }}
+                           className='m-2 justify-self-center'
+                           onChange={(_, page) => {
+                              setQueryString((previousState) => ({
+                                 ...previousState,
+                                 page: page,
+                              }))
+                           }}
+                        />
+                     </div>
+                  </div>
+               </>
+            )}
 
-                        <div className='flex justify-end'>
-                           <Button
-                              color='bg-secundario hover:bg-purple-800'
-                              size='p-2'
-                              onClick={() => setOpenModal(true)}
-                           >
-                              Enviar
-                           </Button>
-                        </div>
+            {numPaso === pasos.length && (
+               <>
+                  <div className='m-5 w-5/6 justify-self-center'>
+                     <h2 className='h2 my-2'>Asunto y mensaje</h2>
+                     <div className='my-2'>
+                        <label htmlFor='asunto' className='text-lg'>
+                           Asunto
+                        </label>
+                        <Input
+                           type='text'
+                           name='asunto'
+                           id='asunto'
+                           className='bg-terciario border-principal w-full'
+                        />
                      </div>
 
-                     <Modal
-                        open={openModal}
-                        onClose={() => {
-                           setOpenModal(false)
-                        }}
-                        onConfirm={handleConfirm}
-                        title='Enviar correo'
-                        dialogProps={{
-                           fullWidth: true,
-                        }}
-                     >
-                        <div className='ml-5'>
-                           <h3 className='h3'>Destinatarios</h3>
-                           <ul className='mb-3 list-disc pl-5'>
-                              <li>
-                                 Farmacias:{' '}
-                                 <span className='text-lg'>
-                                    {
-                                       selectedStructure['Farmacia'].selected
-                                          .size
-                                    }
-                                 </span>
-                              </li>
-                              <li>
-                                 Farmacias Hospitalarias:{' '}
-                                 <span className='text-lg'>
-                                    {
-                                       selectedStructure['FarmaciaHospitalaria']
-                                          .selected.size
-                                    }
-                                 </span>
-                              </li>
-                           </ul>
+                     <div className='my-2'>
+                        <label htmlFor='msg' className='text-lg'>
+                           Mensaje
+                        </label>
+                        <textarea
+                           name='msg'
+                           id='msg'
+                           className='bg-terciario myoutline border-principal h-60 w-full rounded-lg p-1'
+                        />
+                     </div>
 
-                           {document.getElementById('asunto')?.value.trim() ==
-                              '' && (
-                              <p>
-                                 <WarningLogo className='mr-2' />
-                                 <strong className='font-semibold'>
-                                    Sin asunto
-                                 </strong>
-                              </p>
-                           )}
+                     <div className='flex justify-end'>
+                        <Button
+                           color='bg-secundario hover:bg-purple-800'
+                           size='py-2 px-4'
+                           onClick={() => setOpenModal(true)}
+                        >
+                           Enviar
+                        </Button>
+                     </div>
+                  </div>
 
-                           {document.getElementById('msg')?.value.trim() ==
-                              '' && (
-                              <p>
-                                 <WarningLogo className='mr-2' />
-                                 <strong className='font-semibold'>
-                                    Sin cuerpo de mensaje
-                                 </strong>
-                              </p>
-                           )}
-                        </div>
-                     </Modal>
-                  </>
-               )}
-            </div>
-            <ArrowButton
-               className={buttonRightClassName}
-               disabled={isButtonRightDisabled}
-               onClick={handleClickRight}
-               direccion={Direccion.right}
-            />
+                  <Modal
+                     open={openModal}
+                     onClose={() => {
+                        setOpenModal(false)
+                     }}
+                     onConfirm={handleConfirm}
+                     title='Enviar correo'
+                     dialogProps={{
+                        fullWidth: true,
+                     }}
+                  >
+                     <div className='ml-5'>
+                        <h3 className='h3'>Destinatarios</h3>
+                        <ul className='mb-3 list-disc pl-5'>
+                           <li>
+                              Farmacias:{' '}
+                              <span className='text-lg'>
+                                 {selectedStructure['Farmacia'].selected.size}
+                              </span>
+                           </li>
+                           <li>
+                              Farmacias Hospitalarias:{' '}
+                              <span className='text-lg'>
+                                 {
+                                    selectedStructure['FarmaciaHospitalaria']
+                                       .selected.size
+                                 }
+                              </span>
+                           </li>
+                        </ul>
+
+                        {document.getElementById('asunto')?.value.trim() ==
+                           '' && (
+                           <p>
+                              <WarningLogo className='mr-2' />
+                              <strong className='font-semibold'>
+                                 Sin asunto
+                              </strong>
+                           </p>
+                        )}
+
+                        {document.getElementById('msg')?.value.trim() == '' && (
+                           <p>
+                              <WarningLogo className='mr-2' />
+                              <strong className='font-semibold'>
+                                 Sin cuerpo de mensaje
+                              </strong>
+                           </p>
+                        )}
+                     </div>
+                  </Modal>
+               </>
+            )}
          </main>
       </AppNavFrame>
    )
