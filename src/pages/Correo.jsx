@@ -7,7 +7,7 @@ import { Breadcrumb } from '../components/Breadcrumb.jsx'
 import { ArrowButton, Button } from '../components/buttons'
 import { Input, SearchSelect, Select } from '../components/inputs'
 import { Modal } from '../components/Modal.jsx'
-import { TIPOS_CENTROS } from '../components/models'
+import { Listado, TIPOS_CENTROS } from '../components/models'
 import { PaginationRangeInfo } from '../components/PaginationRangeInfo.jsx'
 import { AUTO_HIDE_DURATION } from '../components/snacbarks'
 import { Direccion, WarningLogo } from '../components/svg'
@@ -15,6 +15,7 @@ import { Table } from '../components/Table.jsx'
 import { useAuth, useSelected } from '../hooks'
 import { useQueryString } from '../hooks/useQueryString.js'
 import { request } from '../services/request.js'
+import { stringFechaToDate } from '../utils/utils.js'
 
 export function CorreoPage() {
    const { signOut } = useAuth()
@@ -34,6 +35,8 @@ export function CorreoPage() {
    const tipoCentroElegido = TIPOS_CENTROS[indexTipoCentro]
    const [centros, setCentros] = useState([])
    const [totalCentros, setTotalCentros] = useState(0)
+
+   const [listadosFecha, setListadosFecha] = useState([])
 
    function valueWhenSelected(element) {
       return {
@@ -176,6 +179,20 @@ export function CorreoPage() {
       setOpenModal(false)
    }
 
+   useEffect(() => {
+      request.getConvocatorias().then((res) => {
+         if (res.ok) {
+            res.json().then((resJson) => {
+               setListadosFecha(resJson.data)
+            })
+         } else {
+            if (res.status === 401) {
+               signOut()
+            }
+         }
+      })
+   }, [])
+
    /**
     * Carga los centros de la API menos cuando el número de paso es el último.
     * Esto se hace para evitar cargar los centros de manera innecesaria
@@ -264,16 +281,90 @@ export function CorreoPage() {
                               id='seleccion'
                               className='ml-4'
                               defaultValue=''
+                              onChange={(event) => {
+                                 const getListado =
+                                    indexTipoCentro == 0
+                                       ? request.getListadoFarmacias.bind(
+                                            request
+                                         )
+                                       : request.getListadoFarmaciasHospitalarias.bind(
+                                            request
+                                         )
+
+                                 const listadoCentro = new Listado(
+                                    event.target.value,
+                                    TIPOS_CENTROS[indexTipoCentro],
+                                    getListado
+                                 )
+
+                                 listadoCentro
+                                    .getAllCentros()
+                                    .then((res) => {
+                                       if (res.ok) {
+                                          res.json().then((resJson) => {
+                                             // en .data me llegan todos los centros del listado. Tengo que añadir a selected los nuevos centros -> {id, correo}
+
+                                             const newSelected = new Map(
+                                                selectedStructure[
+                                                   tipoCentroElegido.name
+                                                ].selected
+                                             )
+
+                                             resJson.data.forEach(
+                                                (centroListado) => {
+                                                   centroListado.id =
+                                                      centroListado.id_centro
+                                                   newSelected.set(
+                                                      centroListado.id,
+                                                      valueWhenSelected(
+                                                         centroListado
+                                                      )
+                                                   )
+                                                }
+                                             )
+
+                                             selectedStructure[
+                                                tipoCentroElegido.name
+                                             ].setSelected(newSelected)
+                                          })
+                                       } else {
+                                          if (res.status === 401) {
+                                             signOut()
+                                          }
+                                       }
+                                    })
+                                    .catch(() => {
+                                       // alerta de error
+                                       notifications.show('Fallo de conexión', {
+                                          severity: 'error',
+                                          autoHideDuration: AUTO_HIDE_DURATION,
+                                       })
+                                    })
+
+                                 event.target.value = '' // reseteamos el valor para que vuelva a ser seleccionable
+                              }}
                            >
                               <option value='' disabled={true}>
                                  -- Elija una opción
                               </option>
-                              <option value='1/1/2025'>
-                                 1/1/2025 - 1/2/2025
-                              </option>
-                              <option value='2/6/2000'>
-                                 2/6/2000 - 1/10/2000
-                              </option>
+                              {listadosFecha.map((listado) => {
+                                 let fecha_ini = stringFechaToDate(
+                                    listado.fecha_ini,
+                                    '-'
+                                 )
+                                 let fecha_fin = stringFechaToDate(
+                                    listado.fecha_fin,
+                                    '-'
+                                 )
+
+                                 return (
+                                    <option value={listado.id} key={listado.id}>
+                                       {`${fecha_ini.getDate()}/${fecha_ini.getMonth() + 1}-${fecha_ini.getFullYear()}`}{' '}
+                                       -{' '}
+                                       {`${fecha_fin.getDate()}/${fecha_fin.getMonth() + 1}-${fecha_fin.getFullYear()}`}
+                                    </option>
+                                 )
+                              })}
                            </Select>
 
                            <label htmlFor='mostrar' className='grow-0'>

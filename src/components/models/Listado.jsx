@@ -48,4 +48,11 @@ export class Listado {
 
       return this.#getRequest(this.#id, queryParams)
    }
+
+   getAllCentros() {
+      const queryParams = {
+         all: true,
+      }
+      return this.#getRequest(this.#id, queryParams)
+   }
 }
